@@ -26,55 +26,6 @@ Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于
 - **粒子效果**：激光起点的圆形轨道粒子、终点的螺旋粒子和路径上的波浪粒子
 - **使用方法**：手持猪符咒，右键点击释放
 
-## 粒子API（DC Render API）
-
-### 概述
-
-DC Render API是一个专为Dragon Curse Chronicles模组开发的自定义粒子渲染API。该API提供了以下功能：
-
-- **粒子创建与管理**：支持创建和管理各种类型的粒子
-- **粒子动画系统**：支持圆形轨道、螺旋、波浪等多种动画效果
-- **网络同步**：确保粒子效果在服务器和客户端之间同步
-- **性能优化**：采用高效的粒子更新和渲染机制
-
-### 核心类
-
-- `DcRenderApi`：API主类，负责初始化和注册事件监听器
-- `DcRenderApiParticleManager`：粒子管理器，负责粒子的创建、更新和移除
-- `ServerParticleGroupManager`：服务器端粒子组管理
-- `ClientParticleGroupManager`：客户端粒子组管理
-- `ParticleAnimation`：Kotlin实现的动画系统，提供各种粒子动画效果
-
-### 使用示例
-
-```java
-// 创建圆形轨道粒子效果
-ParticleAnimationExample.createCircleOrbitEffect(
-    level,
-    eyePos,
-    1.0, // 半径
-    10   // 粒子数量
-);
-
-// 创建螺旋粒子效果
-ParticleAnimationExample.createSpiralEffect(
-    level,
-    startPos,
-    1.5, // 半径
-    2.0, // 高度
-    15   // 粒子数量
-);
-
-// 创建波浪粒子效果
-ParticleAnimationExample.createWaveEffect(
-    level,
-    eyePos.add(lookVec.x * 2, lookVec.y * 2, lookVec.z * 2),
-    3.0,  // 长度
-    0.5,  // 振幅
-    10    // 粒子数量
-);
-```
-
 ## 安装方法
 
 1. 确保已安装Minecraft Forge 1.20.1
@@ -106,8 +57,6 @@ ParticleAnimationExample.createWaveEffect(
 ## 未来计划
 
 - 实现更多符咒能力
-- 扩展粒子API功能
-- 添加更多粒子动画效果
 - 优化性能和兼容性
 
 ## 贡献
