@@ -1,13 +1,13 @@
-# 十二符咒模组 (Twelve Talismans)
+# Dragon Curse Chronicles
 
 ## 模组概述
 
-十二符咒模组是一个基于Minecraft Forge的模组，灵感来源于动画《成龙历险记》中的十二符咒，为玩家提供了各种强大的符咒能力。该模组不仅实现了符咒的核心功能，还开发了自定义的粒子渲染API（Twelve Render API），用于创建各种华丽的粒子效果。
+Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于动画《成龙历险记》中的十二符咒，为玩家提供了各种强大的符咒能力。该模组不仅实现了符咒的核心功能，还开发了自定义的粒子渲染API（DC Render API），用于创建各种华丽的粒子效果。
 
 ## 功能特性
 
 - **十二符咒系统**：实现了多种符咒能力，包括龙符咒（火焰弹）、猪符咒（激光）等
-- **自定义粒子API**：开发了Twelve Render API，支持创建复杂的粒子动画效果
+- **自定义粒子API**：开发了DC Render API，支持创建复杂的粒子动画效果
 - **Java与Kotlin混合开发**：核心功能使用Java实现，动画系统使用Kotlin实现
 - **网络同步**：实现了服务器与客户端之间的粒子效果同步
 - **性能优化**：采用高效的粒子管理和渲染机制
@@ -26,11 +26,11 @@
 - **粒子效果**：激光起点的圆形轨道粒子、终点的螺旋粒子和路径上的波浪粒子
 - **使用方法**：手持猪符咒，右键点击释放
 
-## 粒子API（Twelve Render API）
+## 粒子API（DC Render API）
 
 ### 概述
 
-Twelve Render API是一个专为十二符咒模组开发的自定义粒子渲染API，替代了之前使用的AAAParticles模组。该API提供了以下功能：
+DC Render API是一个专为Dragon Curse Chronicles模组开发的自定义粒子渲染API，替代了之前使用的AAAParticles模组。该API提供了以下功能：
 
 - **粒子创建与管理**：支持创建和管理各种类型的粒子
 - **粒子动画系统**：支持圆形轨道、螺旋、波浪等多种动画效果
@@ -39,8 +39,8 @@ Twelve Render API是一个专为十二符咒模组开发的自定义粒子渲染
 
 ### 核心类
 
-- `Trapi`：API主类，负责初始化和注册事件监听器
-- `TrapiParticleManager`：粒子管理器，负责粒子的创建、更新和移除
+- `DcRenderApi`：API主类，负责初始化和注册事件监听器
+- `DcRenderApiParticleManager`：粒子管理器，负责粒子的创建、更新和移除
 - `ServerParticleGroupManager`：服务器端粒子组管理
 - `ClientParticleGroupManager`：客户端粒子组管理
 - `ParticleAnimation`：Kotlin实现的动画系统，提供各种粒子动画效果
@@ -78,7 +78,7 @@ ParticleAnimationExample.createWaveEffect(
 ## 安装方法
 
 1. 确保已安装Minecraft Forge 1.20.1
-2. 下载十二符咒模组的jar文件
+2. 下载Dragon Curse Chronicles模组的jar文件
 3. 将jar文件放入mods文件夹
 4. 启动游戏，享受符咒的力量
 
@@ -86,9 +86,9 @@ ParticleAnimationExample.createWaveEffect(
 
 ### 项目结构
 
-- `src/main/java/com/qituo/twelvetelismans/`：主要模组代码
-- `Twelve Render API/src/main/java/com/qituo/trapi/`：粒子API代码
-- `Twelve Render API/src/main/kotlin/com/qituo/trapi/`：Kotlin实现的动画系统
+- `src/main/java/com/qituo/dcc/`：主要模组代码
+- `DC Render API/src/main/java/com/qituo/dcrapi/`：粒子API代码
+- `DC Render API/src/main/kotlin/com/qituo/dcrapi/`：Kotlin实现的动画系统
 
 ### 构建项目
 
