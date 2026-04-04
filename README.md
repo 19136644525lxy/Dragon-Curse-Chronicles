@@ -2,7 +2,7 @@
 
 ## 模组概述
 
-Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于动画《成龙历险记》中的十二符咒，为玩家提供了各种强大的符咒能力。该模组不仅实现了符咒的核心功能，还开发了自定义的粒子渲染API（DC Render API），用于创建各种华丽的粒子效果。
+Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于动画《成龙历险记》，为玩家提供了各种强大的符咒能力。该模组不仅实现了符咒的部分功能，还开发了自定义的粒子渲染API（DC Render API），用于创建各种华丽的粒子效果。
 
 ## 功能特性
 
@@ -30,7 +30,7 @@ Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于
 
 ### 概述
 
-DC Render API是一个专为Dragon Curse Chronicles模组开发的自定义粒子渲染API，替代了之前使用的AAAParticles模组。该API提供了以下功能：
+DC Render API是一个专为Dragon Curse Chronicles模组开发的自定义粒子渲染API。该API提供了以下功能：
 
 - **粒子创建与管理**：支持创建和管理各种类型的粒子
 - **粒子动画系统**：支持圆形轨道、螺旋、波浪等多种动画效果
@@ -101,8 +101,7 @@ ParticleAnimationExample.createWaveEffect(
 
 ### 依赖
 
-- Minecraft Forge 1.20.1-47.4.16
-- Kotlin For Forge
+- Minecraft Forge 1.20.1-47.4.17
 
 ## 未来计划
 
