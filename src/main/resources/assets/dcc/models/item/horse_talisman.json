@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dcc:item/horse_talisman_spell"
+  }
+}

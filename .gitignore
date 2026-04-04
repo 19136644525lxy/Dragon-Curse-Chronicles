@@ -1,0 +1,35 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+gradle/
+logs/
+
+# other
+eclipse
+run
+Twelve Render API/
+libs/
+temple.png
+CooParticlesAPI-multiplatform/
+DC Render API/
+
+# Files from Forge MDK
+forge*changelog.txt
+
+# log
+log/

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dcc:item/mouse_talisman_spell"
+  }
+}
