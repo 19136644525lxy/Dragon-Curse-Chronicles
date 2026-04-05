@@ -27,6 +27,8 @@ public class TalismanCreativeTab {
                 output.accept(TalismanItems.CHICKEN_TALISMAN.get());
                 output.accept(TalismanItems.DOG_TALISMAN.get());
                 output.accept(TalismanItems.PIG_TALISMAN.get());
+                output.accept(TalismanItems.UNCLES_DRIED_PUFFER_FISH.get());
+                output.accept(TalismanItems.TALISMAN_BASE.get());
             })
             .build());
     
