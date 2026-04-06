@@ -53,6 +53,7 @@ Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于
 ### 依赖
 
 - Minecraft Forge 1.20.1-47.4.17
+- DC Render API 0.1.0+
 
 ## 未来计划
 
