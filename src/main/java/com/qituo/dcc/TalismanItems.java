@@ -1,5 +1,6 @@
 package com.qituo.dcc;
 
+import com.qituo.dcc.items.UnclesDriedPufferFish;
 import com.qituo.dcc.talismans.MouseTalisman;
 import com.qituo.dcc.talismans.TigerTalisman;
 import com.qituo.dcc.talismans.CowTalisman;
@@ -45,7 +46,7 @@ public class TalismanItems {
     
     public static final RegistryObject<Item> PIG_TALISMAN = ITEMS.register("pig_talisman", () -> new PigTalisman(new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> UNCLES_DRIED_PUFFER_FISH = ITEMS.register("uncles_dried_puffer_fish", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> UNCLES_DRIED_PUFFER_FISH = ITEMS.register("uncles_dried_puffer_fish", () -> new UnclesDriedPufferFish(new Item.Properties().stacksTo(1)));
     
     public static final RegistryObject<Item> TALISMAN_BASE = ITEMS.register("talisman_base", () -> new Item(new Item.Properties().stacksTo(64)));
     

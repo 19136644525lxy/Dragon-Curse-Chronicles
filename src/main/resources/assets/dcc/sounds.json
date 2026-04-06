@@ -1,0 +1,12 @@
+{
+  "madgaq": {
+    "sounds": [
+      "dcc:madgaq"
+    ]
+  },
+  "laser": {
+    "sounds": [
+      "dcc:laser"
+    ]
+  }
+}

@@ -20,5 +20,11 @@
   "effect.dcc.chicken_power": "鸡之力",
   "effect.dcc.dog_power": "狗之力",
   "item.dcc.uncles_dried_puffer_fish": "老爹的河豚干",
-  "item.dcc.talisman_base": "符咒基"
+  "item.dcc.talisman_base": "符咒基",
+  "casting.dcc.casting": "施法中...",
+  "casting.dcc.cancelled": "您已取消施法",
+  "death.attack.origin_end": "%1$s 被始源终末之力抹杀了",
+  "death.attack.origin_end.player": "%1$s 被 %2$s 用始源终末之力抹杀了",
+  "subtitles.dcc.madgaq": "老爹: 妖魔鬼怪快离开",
+  "subtitles.dcc.laser": "激光发射"
 }

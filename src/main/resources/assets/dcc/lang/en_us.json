@@ -20,5 +20,8 @@
   "effect.dcc.chicken_power": "Chicken Power",
   "effect.dcc.dog_power": "Dog Power",
   "item.dcc.uncles_dried_puffer_fish": "Uncle's Dried Puffer Fish",
-  "item.dcc.talisman_base": "Talisman Base"
+  "item.dcc.talisman_base": "Talisman Base",
+  "casting.dcc.casting": "Casting...",
+  "death.attack.origin_end": "%1$s was erased by Origin End power",
+  "death.attack.origin_end.player": "%1$s was erased by %2$s using Origin End power"
 }
