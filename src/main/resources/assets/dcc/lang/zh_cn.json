@@ -1,5 +1,4 @@
 {
-  "itemGroup.dcc.dragon_curse_chronicles": "龙咒异闻录",
   "item.dcc.mouse_talisman": "鼠符咒",
   "item.dcc.cow_talisman": "牛符咒",
   "item.dcc.tiger_talisman": "虎符咒",
@@ -26,5 +25,21 @@
   "death.attack.origin_end": "%1$s 被始源终末之力抹杀了",
   "death.attack.origin_end.player": "%1$s 被 %2$s 用始源终末之力抹杀了",
   "subtitles.dcc.madgaq": "老爹: 妖魔鬼怪快离开",
-  "subtitles.dcc.laser": "激光发射"
+  "subtitles.dcc.laser": "激光发射",
+
+  "enchantment.dcc.origin_power": "始源之力",
+  "enchantment.level.1": "I",
+  "enchantment.level.2": "II",
+  "enchantment.level.3": "III",
+  "enchantment.level.4": "IV",
+  "enchantment.level.5": "V",
+  "enchantment.level.6": "VI",
+  "enchantment.level.7": "VII",
+  "enchantment.level.8": "VIII",
+  "enchantment.level.9": "IX",
+  "enchantment.level.10": "X",
+  
+  "itemGroup.dcc.dragon_curse_chronicles_items": "龙咒异闻录物品",
+  "itemGroup.dcc.dragon_curse_chronicles_enchantments": "龙咒异闻录附魔",
+  "itemGroup.dcc.dragon_curse_chronicles_materials": "龙咒异闻录材料"
 }

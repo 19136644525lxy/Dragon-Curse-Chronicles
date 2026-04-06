@@ -2,7 +2,8 @@ package com.qituo.dcc.items;
 
 import com.qituo.dcc.DragonCurseChronicles;
 import com.qituo.dcc.damage.DamagePresets;
-import com.qituo.dcc.damage.OriginEndDamageSource;
+import com.qituo.dcc.damage.ModDamageSources;
+import com.qituo.dcc.enchantments.ModEnchantments;
 import com.qituo.dcc.sounds.ModSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.network.chat.Component;
@@ -31,6 +33,17 @@ public class UnclesDriedPufferFish extends Item {
     
     public UnclesDriedPufferFish(Properties properties) {
         super(properties);
+    }
+    
+    @Override
+    public ItemStack getDefaultInstance() {
+        ItemStack stack = super.getDefaultInstance();
+        // 为默认物品添加始源之力10级附魔
+        EnchantmentHelper.setEnchantments(
+            java.util.Map.of(ModEnchantments.ORIGIN_POWER.get(), 10),
+            stack
+        );
+        return stack;
     }
     
     @Override
@@ -113,8 +126,8 @@ public class UnclesDriedPufferFish extends Item {
             List<Entity> entities = level.getEntities(player, laserAABB);
             LOGGER.info("[Uncle's Puffer Fish] Found {} entities in laser path", entities.size());
             
-            // 使用预设的抹杀伤害值
-            float damage = DamagePresets.OMEGA; // 使用1314520伤害值
+            // 使用预设的抹杀伤害值 - 对应始源之力10级
+            float damage = DamagePresets.getDamage(10); // 使用5201314伤害值
             
             for (Entity target : entities) {
                 if (target != player) {
@@ -124,7 +137,7 @@ public class UnclesDriedPufferFish extends Item {
                     if (target instanceof LivingEntity livingEntity) {
                         LOGGER.info("[Uncle's Puffer Fish] Entity health before: {}", livingEntity.getHealth());
                         // 创建伤害源并造成伤害
-                        OriginEndDamageSource damageSource = new OriginEndDamageSource(player);
+                        var damageSource = ModDamageSources.causeOriginEndDamage(player, 10);
                         
                         // 针对Draconic Guardian的特殊处理
                         if (target.getClass().getName().equals("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianEntity")) {

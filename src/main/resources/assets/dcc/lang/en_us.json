@@ -1,5 +1,4 @@
 {
-  "itemGroup.dcc.dragon_curse_chronicles": "Dragon Curse Chronicles",
   "item.dcc.mouse_talisman": "Mouse Talisman",
   "item.dcc.cow_talisman": "Cow Talisman",
   "item.dcc.tiger_talisman": "Tiger Talisman",
@@ -22,6 +21,25 @@
   "item.dcc.uncles_dried_puffer_fish": "Uncle's Dried Puffer Fish",
   "item.dcc.talisman_base": "Talisman Base",
   "casting.dcc.casting": "Casting...",
+  "casting.dcc.cancelled": "You have cancelled casting",
   "death.attack.origin_end": "%1$s was erased by Origin End power",
-  "death.attack.origin_end.player": "%1$s was erased by %2$s using Origin End power"
+  "death.attack.origin_end.player": "%1$s was erased by %2$s using Origin End power",
+  "subtitles.dcc.madgaq": "Uncle: Demons and monsters, leave quickly",
+  "subtitles.dcc.laser": "Laser firing",
+  
+  "enchantment.dcc.origin_power": "Origin Power",
+  "enchantment.level.1": "I",
+  "enchantment.level.2": "II",
+  "enchantment.level.3": "III",
+  "enchantment.level.4": "IV",
+  "enchantment.level.5": "V",
+  "enchantment.level.6": "VI",
+  "enchantment.level.7": "VII",
+  "enchantment.level.8": "VIII",
+  "enchantment.level.9": "IX",
+  "enchantment.level.10": "X",
+  
+  "itemGroup.dcc.dragon_curse_chronicles_items": "Dragon Curse Chronicles Items",
+  "itemGroup.dcc.dragon_curse_chronicles_enchantments": "Dragon Curse Chronicles Enchantments",
+  "itemGroup.dcc.dragon_curse_chronicles_materials": "Dragon Curse Chronicles Materials"
 }
