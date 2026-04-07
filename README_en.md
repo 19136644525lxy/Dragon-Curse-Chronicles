@@ -4,6 +4,8 @@
 
 Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series "Jackie Chan Adventures", providing players with various powerful talisman abilities. The mod not only implements some of the talisman functions but also develops a custom particle rendering API (DC Render API) for creating various magnificent particle effects.
 
+跳转至中文介绍： [README.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/6389b5969bf56083bc95ec9ec892a4a5c7c0cf46/README_en.md)
+
 ## Features
 
 - **Twelve Talismans System**: Implements multiple talisman abilities, including the Dragon Talisman (fireball) and Pig Talisman (laser)
