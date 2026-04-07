@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "dcc:mouse_talisman",
+    "count": 1
+  },
+  "pattern": [
+    "abc",
+    "def",
+    "ghi"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:coal"
+    },
+    "b": {
+      "item": "minecraft:charcoal"
+    },
+    "c": {
+      "item": "minecraft:raw_iron"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "e": {
+      "item": "dcc:talisman_base"
+    },
+    "f": {
+      "item": "minecraft:raw_copper"
+    },
+    "g": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "h": {
+      "item": "minecraft:emerald"
+    },
+    "i": {
+      "item": "minecraft:raw_gold"
+    }
+  }
+}

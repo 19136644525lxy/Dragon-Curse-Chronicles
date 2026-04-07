@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "dcc:dog_talisman",
+    "count": 1
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "dbd"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:golden_carrot"
+    },
+    "b": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "c": {
+      "item": "dcc:talisman_base"
+    },
+    "d": {
+      "item": "minecraft:golden_apple"
+    }
+  }
+}
