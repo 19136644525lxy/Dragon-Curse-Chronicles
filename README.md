@@ -4,7 +4,7 @@
 
 Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于动画《成龙历险记》，为玩家提供了各种强大的符咒能力。该模组不仅实现了符咒的部分功能，还开发了自定义的粒子渲染API（DC Render API），用于创建各种华丽的粒子效果。
 
-Jump to the English introduction:[README_en.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/6389b5969bf56083bc95ec9ec892a4a5c7c0cf46/README.md)
+Jump to the English introduction:[README_en.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/6389b5969bf56083bc95ec9ec892a4a5c7c0cf46/README_en.md)
 
 ## 功能特性
 
