@@ -1,7 +1,7 @@
 # 栖拓工坊作品开源协议 (Qituo Studio Open Source Protocol - QSUP)
 
 ## 版权信息
-Copyright (c) 2025-2026 Qituo Studio
+Copyright (c) 2026-2100 Qituo Studio
 
 ## 版本信息
 - 版本: 1.5
