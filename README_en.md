@@ -32,8 +32,8 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 - **Usage**: Hold the Pig Talisman and right-click to release
 
 #### Chicken Talisman
-- **Ability**: Toggles flight mode, providing flight capability
-- **Usage**: Hold the Chicken Talisman and right-click to toggle flight status
+- **Ability**: Gain Slow Falling Power or Levitation Power
+- **Usage**: Hold the Chicken Talisman and right-click to release, Shift+right-click to switch between Slow Falling Power and Levitation Power
 
 #### Dog Talisman
 - **Ability**: Provides life recovery, clears negative effects, and grants temporary invulnerability
@@ -48,7 +48,7 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 - **Usage**: Hold the Snake Talisman and right-click to release
 
 #### Rabbit Talisman
-- **Ability**: Increases movement speed and enables short-range teleportation
+- **Ability**: Increases movement speed and enables short-range teleportation, when the Chicken Talisman's Levitation Power is active, right-clicking this talisman will grant Chicken-Rabbit Power (flight ability)
 - **Usage**: Hold the Rabbit Talisman and right-click to release
 
 #### Cow Talisman
