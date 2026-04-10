@@ -41,5 +41,15 @@
   
   "itemGroup.dcc.dragon_curse_chronicles_items": "Dragon Curse Chronicles Items",
   "itemGroup.dcc.dragon_curse_chronicles_enchantments": "Dragon Curse Chronicles Enchantments",
-  "itemGroup.dcc.dragon_curse_chronicles_materials": "Dragon Curse Chronicles Materials"
+  "itemGroup.dcc.dragon_curse_chronicles_materials": "Dragon Curse Chronicles Materials",
+  
+  "dcc.mod_prefix": "[Dragon Curse Chronicles] ",
+  "dcc.levitation_power": "Levitation Power",
+  "dcc.slow_falling_power": "Slow Falling Power",
+  "dcc.switched_to_mode": "Switched to %s",
+  "dcc.levitation_activated": "Levitation Power activated",
+  "dcc.slow_falling_activated": "Slow Falling Power activated",
+  "dcc.chicken_talisman_deactivated": "Chicken Talisman effects deactivated",
+  "dcc.chicken_rabbit_power_activated": "Chicken-Rabbit Power activated! Gained creative flight ability!",
+  "dcc.chicken_rabbit_power_deactivated": "Chicken-Rabbit Power deactivated"
 }

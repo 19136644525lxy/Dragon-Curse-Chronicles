@@ -41,5 +41,15 @@
   
   "itemGroup.dcc.dragon_curse_chronicles_items": "龙咒异闻录物品",
   "itemGroup.dcc.dragon_curse_chronicles_enchantments": "龙咒异闻录附魔",
-  "itemGroup.dcc.dragon_curse_chronicles_materials": "龙咒异闻录材料"
+  "itemGroup.dcc.dragon_curse_chronicles_materials": "龙咒异闻录材料",
+  
+  "dcc.mod_prefix": "[龙咒异闻录] ",
+  "dcc.levitation_power": "漂浮之力",
+  "dcc.slow_falling_power": "缓降之力",
+  "dcc.switched_to_mode": "已切换到%s",
+  "dcc.levitation_activated": "已激活漂浮之力",
+  "dcc.slow_falling_activated": "已激活缓降之力",
+  "dcc.chicken_talisman_deactivated": "已取消鸡符咒效果",
+  "dcc.chicken_rabbit_power_activated": "已激活鸡兔之力，获得创造飞行能力！",
+  "dcc.chicken_rabbit_power_deactivated": "已取消鸡兔之力"
 }
