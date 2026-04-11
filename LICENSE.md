@@ -1,104 +1,21 @@
-# 栖拓工坊作品开源协议 (Qituo Studio Open Source Protocol - QSUP)
+MIT License
 
-## 版权信息
-Copyright (c) 2026-2100 Qituo Studio
+Copyright (c) 2026-2076 Qituo Studio
 
-## 版本信息
-- 版本: 2.0
-- 生效日期: 2026-04-11
-- 适用范围: 所有栖拓工坊作品
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## 重要提示
-本协议是您与栖拓工坊（以下简称"QT"）之间关于QT作品使用的法律约定，旨在明确知识产权归属、规范使用行为并界定双方权利义务。请在使用QT作品前务必完整阅读本协议。您的使用行为即视为对本协议全部条款的认可，若您不同意协议内容，请勿使用相关作品。
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## 第一章 定义与术语
-
-### QT作品
-指由栖拓工坊独立开发或经授权发布的适用于Minecraft游戏的软件、模组、插件、地图、资源包、行为包、代码、美术素材、音频、视频及其他形式的数字化创作成果，包括但不限于QT官方版本、测试版本、更新版本及衍生内容。
-
-### 用户
-指通过任何渠道获取、安装、使用、传播或展示QT作品的自然人、法人或其他组织（以下统称"用户"）。
-
-### 衍生作品
-指基于QT作品进行改编、翻译、汇编、修改、二次创作形成的新内容，包括但不限于模组二次开发、地图改编、素材衍生设计、剧情扩展等。
-
-### 内容创作者
-指通过视频、直播、图文等形式公开展示QT作品的个人或团队，包括但不限于主播、UP主、自媒体创作者、攻略作者等。
-
-## 第二章 知识产权条款
-
-### 2.1 权利归属
-- QT作品的所有知识产权（包括但不限于版权、商标权、专利权、商业秘密及其他专有权利）均归栖拓工坊或其授权方所有，用户获得本协议授予的开源使用权。
-- QT作品中涉及的第三方素材（如开源组件、合作方资源）适用其独立许可协议，用户需同时遵守对应条款，QT不对此类第三方素材承担责任。
-
-### 2.2 许可范围
-
-#### 自由再分发
-用户可在遵守本协议的前提下，自由下载、安装、运行、复制、分发QT作品，包括作为其他软件分发的一部分，无需向QT支付任何费用。
-
-#### 源代码获取
-QT作品将以源代码形式发布，用户有权获取、修改和分发源代码。
-
-#### 衍生作品
-用户有权基于QT作品创建衍生作品，并在本协议条款下分发这些衍生作品。
-
-#### 商业使用
-用户有权将QT作品用于商业目的，包括但不限于：
-- 将作品或素材纳入付费软件、服务或会员体系
-- 在商业广告、品牌推广、线下展览中使用QT作品元素
-- 以QT作品为基础开发收费模组、插件或衍生产品
-- 在商业服务器中使用QT作品
-
-## 第三章 用户权利与义务
-
-### 3.1 源代码完整性
-用户在分发修改后的QT作品时，必须提供源代码，并允许他人在相同条款下修改和分发。
-
-### 3.2 署名要求
-用户在使用、修改或分发QT作品时，需：
-- 完整保留原始版权声明及所有权利标识
-- 在作品描述或相关文档中明确标注"基于栖拓工坊的作品"
-- 提供QT官方发布渠道的链接（如有）
-
-### 3.3 合法使用
-用户不得使用QT作品进行违法、违规或违背公序良俗的活动，包括但不限于：
-- 引入恶意代码或违反法律法规的内容
-- 以任何形式误导他人认为修改内容为QT官方版本
-- 通过使用QT作品直接或间接损害QT的声誉或权益
-
-### 3.4 服务器使用规范
-在服务器中使用QT作品时，需：
-- 在服务器公告或相关页面标注QT作品的使用
-- 及时更新至QT作品的最新稳定版本（推荐）
-- 不得将QT作品与违反法律法规的内容或服务捆绑使用
-
-## 第四章 违约责任
-
-### 4.1 违约行为
-用户如有以下行为，视为违约：
-- 侵犯QT作品的知识产权
-- 传播修改后的作品而未提供源代码
-- 移除或篡改版权信息、署名及版本标识
-- 违反本协议其他条款的行为
-
-### 4.2 违约责任
-对于违约行为，QT有权：
-- 要求立即停止违约行为并消除影响
-- 要求赔偿由此造成的经济损失
-- 通过法律途径维护自身权益
-
-## 第五章 协议修改与终止
-
-### 5.1 协议修改
-本协议为稳定版本，一旦发布，其条款对已发布的QT作品版本具有约束力。QT可发布新版本的协议，但新版本仅适用于新发布的作品版本，不影响用户基于本版本协议获得的权利。
-
-### 5.2 协议终止
-本协议自用户开始使用QT作品之日起生效，至用户停止使用QT作品并删除所有相关文件时终止。QT可在用户违反本协议时提前终止协议。
-
-## 第六章 法律适用与争议解决
-本协议的订立、执行、解释及争议解决均适用中华人民共和国法律。如双方就本协议发生争议，应首先通过友好协商解决；协商不成的，任何一方均有权向QT所在地有管辖权的人民法院提起诉讼。
-
-## 第七章 其他条款
-本协议的任何条款被认定为无效或不可执行，不影响其他条款的效力。本协议未明确规定的事项，按照相关法律法规及行业惯例处理。
-
-© 2026-2100 栖拓工坊 保留所有权利。
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
