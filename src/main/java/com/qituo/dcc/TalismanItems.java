@@ -50,6 +50,8 @@ public class TalismanItems {
     
     public static final RegistryObject<Item> TALISMAN_BASE = ITEMS.register("talisman_base", () -> new Item(new Item.Properties().stacksTo(64)));
     
+    public static final RegistryObject<Item> TALISMAN_BOX = ITEMS.register("talisman_box", () -> new Item(new Item.Properties().stacksTo(64)));
+    
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
