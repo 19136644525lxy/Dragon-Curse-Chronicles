@@ -26,6 +26,7 @@ public class DragonCurseChronicles {
         com.qituo.dcc.effects.TalismanEffects.EFFECTS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         com.qituo.dcc.sounds.ModSounds.SOUNDS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         com.qituo.dcc.enchantments.ModEnchantments.ENCHANTMENTS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
+        com.qituo.dcc.entity.EntityTypes.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         MENUS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
     }
 }

@@ -1,5 +1,6 @@
 package com.qituo.dcc.talismans;
 
+import com.qituo.dcc.entity.DragonFireball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
@@ -32,77 +33,45 @@ public class DragonTalisman extends TalismanBase {
             return;
         }
         
-        // 随机生成 1-3 个初始火球
-        int fireballCount = random.nextInt(3) + 1;
+        // 只发射1个火球
+        int fireballCount = 1;
         
         // 获取玩家视线方向
         Vec3 lookVec = player.getViewVector(1.0F);
         Vec3 eyePos = player.getEyePosition(1.0F);
         
-        // 发射多个火球
-        for (int i = 0; i < fireballCount; i++) {
-            // 播放火焰弹发射音效
-            level.playSound(null, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F + random.nextFloat() * 0.2F);
-            
-            // 计算扇形分布参数
-            double fanAngle = Math.PI / 6; // 30度扇形角度（初始火球不需要太大角度）
-            double startAngle = -fanAngle / 2;
-            double angleStep = fireballCount > 1 ? fanAngle / (fireballCount - 1) : 0;
-            
-            // 计算当前火球的角度
-            double currentAngle = startAngle + (i * angleStep);
-            
-            // 计算扇形分布的速度向量
-            double speedMultiplier = 0.8 + random.nextDouble() * 0.4;
-            
-            // 基础速度向量
-            double baseMotionX = lookVec.x * speedMultiplier;
-            double baseMotionY = lookVec.y * speedMultiplier;
-            double baseMotionZ = lookVec.z * speedMultiplier;
-            
-            // 应用扇形角度偏移（水平方向）
-            double cosAngle = Math.cos(currentAngle);
-            double sinAngle = Math.sin(currentAngle);
-            
-            // 计算垂直于视线方向的向量
-            double rightX = -lookVec.z;
-            double rightZ = lookVec.x;
-            double rightLength = Math.sqrt(rightX * rightX + rightZ * rightZ);
-            if (rightLength > 0) {
-                rightX /= rightLength;
-                rightZ /= rightLength;
-            }
-            
-            // 应用扇形偏移
-            double motionX = baseMotionX * cosAngle + rightX * sinAngle * 0.5;
-            double motionY = baseMotionY + Math.sin(currentAngle) * 0.1;
-            double motionZ = baseMotionZ * cosAngle + rightZ * sinAngle * 0.5;
-            
-            // 计算火焰弹的生成位置（向前移动1.0格，远离玩家）
-            Vec3 spawnPos = eyePos.add(lookVec.x * 1.0, lookVec.y * 1.0, lookVec.z * 1.0);
-            
-            // 发射原版火球（不会分裂）
-            net.minecraft.world.entity.projectile.LargeFireball fireball = new net.minecraft.world.entity.projectile.LargeFireball(
-                level,
-                player,
-                motionX,
-                motionY,
-                motionZ,
-                4 // 爆炸威力
-            );
-            
-            // 设置火焰弹位置
-            fireball.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
-            
-            // 设置火焰弹不会与同一批次的其他火球碰撞
-            fireball.setInvulnerable(true);
-            
-            // 添加火焰弹到世界
-            level.addFreshEntity(fireball);
-            
-            // 添加原版粒子效果
-            addFireballParticles(level, spawnPos, new Vec3(motionX, motionY, motionZ));
-        }
+        // 播放火焰弹发射音效
+        level.playSound(null, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F + random.nextFloat() * 0.2F);
+        
+        // 计算基础速度向量
+        double speedMultiplier = 0.8 + random.nextDouble() * 0.4;
+        double motionX = lookVec.x * speedMultiplier;
+        double motionY = lookVec.y * speedMultiplier;
+        double motionZ = lookVec.z * speedMultiplier;
+        
+        // 计算火焰弹的生成位置（向前移动1.0格，远离玩家）
+        Vec3 spawnPos = eyePos.add(lookVec.x * 1.0, lookVec.y * 1.0, lookVec.z * 1.0);
+        
+        // 发射自定义火球（使用自定义伤害类型和伤害值）
+        DragonFireball fireball = new DragonFireball(
+            level,
+            player,
+            motionX,
+            motionY,
+            motionZ
+        );
+        
+        // 设置火焰弹位置
+        fireball.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
+        
+        // 设置火焰弹不会与同一批次的其他火球碰撞（虽然现在只有1个）
+        fireball.setInvulnerable(true);
+        
+        // 添加火焰弹到世界
+        level.addFreshEntity(fireball);
+        
+        // 添加原版粒子效果
+        addFireballParticles(level, spawnPos, new Vec3(motionX, motionY, motionZ));
         
         // 添加Twelve Render API粒子效果
         addTrapiParticles(level, player, eyePos, lookVec);
