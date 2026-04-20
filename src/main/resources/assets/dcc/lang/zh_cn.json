@@ -11,6 +11,12 @@
   "item.dcc.chicken_talisman": "鸡符咒",
   "item.dcc.dog_talisman": "狗符咒",
   "item.dcc.pig_talisman": "猪符咒",
+  "item.dcc.uncles_dried_puffer_fish": "老爹的河豚干",
+  "item.dcc.talisman_base": "符咒基",
+  "item.dcc.talisman_box": "符咒盒(WIP)",
+  "item.dcc.cube_of_tang_shan": "唐扇魔方",
+  "item.dcc.talisman_power_extractor": "符咒之力提取器",
+
   "effect.dcc.cow_power": "牛之力",
   "effect.dcc.tiger_power": "虎之力",
   "effect.dcc.rabbit_power": "兔之力",
@@ -18,15 +24,13 @@
   "effect.dcc.horse_power": "马之力",
   "effect.dcc.chicken_power": "鸡之力",
   "effect.dcc.dog_power": "狗之力",
-  "item.dcc.uncles_dried_puffer_fish": "老爹的河豚干",
-  "item.dcc.talisman_base": "符咒基",
-  "item.dcc.talisman_box": "符咒盒(WIP)",
-  "item.dcc.cube_of_tang_shan": "唐扇魔方",
-  "item.dcc.talisman_power_extractor": "符咒之力提取器",
+
   "casting.dcc.casting": "施法中...",
   "casting.dcc.cancelled": "您已取消施法",
+
   "death.attack.origin_end": "%1$s 被始源终末之力抹杀了",
   "death.attack.origin_end.player": "%1$s 被 %2$s 用始源终末之力抹杀了",
+
   "subtitles.dcc.madgaq": "老爹: 妖魔鬼怪快离开",
   "subtitles.dcc.laser": "激光发射",
 
@@ -41,11 +45,11 @@
   "enchantment.level.8": "VIII",
   "enchantment.level.9": "IX",
   "enchantment.level.10": "X",
-  
+
   "itemGroup.dcc.dragon_curse_chronicles_items": "龙咒异闻录物品",
   "itemGroup.dcc.dragon_curse_chronicles_enchantments": "龙咒异闻录附魔",
   "itemGroup.dcc.dragon_curse_chronicles_materials": "龙咒异闻录材料",
-  
+
   "dcc.mod_prefix": "[龙咒异闻录] ",
   "dcc.levitation_power": "漂浮之力",
   "dcc.slow_falling_power": "缓降之力",
@@ -54,5 +58,30 @@
   "dcc.slow_falling_activated": "已激活缓降之力",
   "dcc.chicken_talisman_deactivated": "已取消鸡符咒效果",
   "dcc.chicken_rabbit_power_activated": "已激活鸡兔之力，获得创造飞行能力！",
-  "dcc.chicken_rabbit_power_deactivated": "已取消鸡兔之力"
+  "dcc.chicken_rabbit_power_deactivated": "已取消鸡兔之力",
+
+  "dcc.message.extraction_disabled": "符咒之力提取已被游戏规则禁用",
+  "dcc.message.need_talisman_base": "请在副手持有符咒基",
+  "dcc.message.on_cooldown": "符咒之力提取器正在冷却中",
+  "dcc.message.no_mapping": "无法从该生物提取符咒之力（配置文件中未找到对应映射）",
+  "dcc.message.extraction_progress": "提取进度: %1$d / %2$d 次",
+  "dcc.message.extraction_failed": "提取失败！概率未通过（失败率%1$d%%），进度已重置",
+  "dcc.message.extraction_success": "成功提取%1$s！",
+  "dcc.message.extraction_status": "%1$s - 当前进度: %2$d / %3$d 次（概率: %4$d%%）",
+  "dcc.message.no_cooldown": "符咒之力提取器没有冷却时间",
+  "dcc.message.cooldown_remaining": "符咒之力提取器冷却剩余: %1$d 分 %2$d 秒",
+
+  "dcc.log.reload_config": "重新加载了符咒之力提取器配置",
+  "gamerule.allowTalismanExtraction": "允许符咒之力提取",
+  
+  "dcc.message.cube_of_tang_shan.extraction_disabled": "唐扇魔方已被游戏规则禁用",
+  "dcc.message.cube_of_tang_shan.need_talisman_base": "需要在副手持有符咒基才能使用唐扇魔方",
+  "dcc.message.cube_of_tang_shan.on_cooldown": "唐扇魔方正在冷却中",
+  "dcc.message.cube_of_tang_shan.no_mapping": "此生物无法用于唐扇魔方提取",
+  "dcc.message.cube_of_tang_shan.extraction_progress": "提取进度: %1$d / %2$d 次",
+  "dcc.message.cube_of_tang_shan.extraction_failed": "提取失败！概率未通过（失败率%1$d%%），进度已重置",
+  "dcc.message.cube_of_tang_shan.extraction_success": "成功提取%1$s！",
+  "dcc.message.cube_of_tang_shan.no_cooldown": "唐扇魔方没有冷却时间",
+  "dcc.message.cube_of_tang_shan.cooldown_remaining": "唐扇魔方冷却剩余: %1$d 分 %2$d 秒",
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 当前进度: %2$d / %3$d 次（概率: %4$d%%）"
 }

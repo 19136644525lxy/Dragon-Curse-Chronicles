@@ -11,6 +11,12 @@
   "item.dcc.chicken_talisman": "Rooster Talisman",
   "item.dcc.dog_talisman": "Dog Talisman",
   "item.dcc.pig_talisman": "Pig Talisman",
+  "item.dcc.uncles_dried_puffer_fish": "Uncle's Dried Puffer Fish",
+  "item.dcc.talisman_base": "Talisman Base",
+  "item.dcc.talisman_box": "Talisman Box (WIP)",
+  "item.dcc.cube_of_tang_shan": "Cube of Tang Shan",
+  "item.dcc.talisman_power_extractor": "Talisman Power Extractor",
+
   "effect.dcc.cow_power": "Cow Power",
   "effect.dcc.tiger_power": "Tiger Power",
   "effect.dcc.rabbit_power": "Rabbit Power",
@@ -18,18 +24,16 @@
   "effect.dcc.horse_power": "Horse Power",
   "effect.dcc.chicken_power": "Chicken Power",
   "effect.dcc.dog_power": "Dog Power",
-  "item.dcc.uncles_dried_puffer_fish": "Uncle's Dried Puffer Fish",
-  "item.dcc.talisman_base": "Talisman Base",
-  "item.dcc.talisman_box": "Talisman Box (WIP)",
-  "item.dcc.cube_of_tang_shan": "Cube of Tang Shan",
-  "item.dcc.talisman_power_extractor": "Talisman Power Extractor",
+
   "casting.dcc.casting": "Casting...",
   "casting.dcc.cancelled": "You have cancelled casting",
+
   "death.attack.origin_end": "%1$s was erased by Origin End power",
   "death.attack.origin_end.player": "%1$s was erased by %2$s using Origin End power",
+
   "subtitles.dcc.madgaq": "Uncle: Demons and monsters, leave quickly",
   "subtitles.dcc.laser": "Laser firing",
-  
+
   "enchantment.dcc.origin_power": "Origin Power",
   "enchantment.level.1": "I",
   "enchantment.level.2": "II",
@@ -41,11 +45,11 @@
   "enchantment.level.8": "VIII",
   "enchantment.level.9": "IX",
   "enchantment.level.10": "X",
-  
+
   "itemGroup.dcc.dragon_curse_chronicles_items": "Dragon Curse Chronicles Items",
   "itemGroup.dcc.dragon_curse_chronicles_enchantments": "Dragon Curse Chronicles Enchantments",
   "itemGroup.dcc.dragon_curse_chronicles_materials": "Dragon Curse Chronicles Materials",
-  
+
   "dcc.mod_prefix": "[Dragon Curse Chronicles] ",
   "dcc.levitation_power": "Levitation Power",
   "dcc.slow_falling_power": "Slow Falling Power",
@@ -54,5 +58,30 @@
   "dcc.slow_falling_activated": "Slow Falling Power activated",
   "dcc.chicken_talisman_deactivated": "Chicken Talisman effects deactivated",
   "dcc.chicken_rabbit_power_activated": "Chicken-Rabbit Power activated! Gained creative flight ability!",
-  "dcc.chicken_rabbit_power_deactivated": "Chicken-Rabbit Power deactivated"
+  "dcc.chicken_rabbit_power_deactivated": "Chicken-Rabbit Power deactivated",
+
+  "dcc.message.extraction_disabled": "Talisman extraction has been disabled by game rules",
+  "dcc.message.need_talisman_base": "Please hold Talisman Base in offhand",
+  "dcc.message.on_cooldown": "Talisman Power Extractor is on cooldown",
+  "dcc.message.no_mapping": "Cannot extract talisman power from this entity (no mapping found in config)",
+  "dcc.message.extraction_progress": "Extraction Progress: %1$d / %2$d times",
+  "dcc.message.extraction_failed": "Extraction failed! Probability check failed (failure rate %1$d%%), progress reset",
+  "dcc.message.extraction_success": "Successfully extracted %1$s!",
+  "dcc.message.extraction_status": "%1$s - Current Progress: %2$d / %3$d times (Probability: %4$d%%)",
+  "dcc.message.no_cooldown": "Talisman Power Extractor has no cooldown",
+  "dcc.message.cooldown_remaining": "Talisman Power Extractor cooldown remaining: %1$d min %2$d sec",
+
+  "dcc.log.reload_config": "Reloaded Talisman Power Extractor configuration",
+  "gamerule.allowTalismanExtraction": "Allow Talisman Extraction",
+  
+  "dcc.message.cube_of_tang_shan.extraction_disabled": "Cube of Tang Shan has been disabled by game rules",
+  "dcc.message.cube_of_tang_shan.need_talisman_base": "You need to hold a Talisman Base in your offhand to use Cube of Tang Shan",
+  "dcc.message.cube_of_tang_shan.on_cooldown": "Cube of Tang Shan is on cooldown",
+  "dcc.message.cube_of_tang_shan.no_mapping": "This creature cannot be used for Cube of Tang Shan extraction",
+  "dcc.message.cube_of_tang_shan.extraction_progress": "Extraction progress: %1$d / %2$d times",
+  "dcc.message.cube_of_tang_shan.extraction_failed": "Extraction failed! Probability check failed (failure rate %1$d%%), progress reset",
+  "dcc.message.cube_of_tang_shan.extraction_success": "Successfully extracted %1$s!",
+  "dcc.message.cube_of_tang_shan.no_cooldown": "Cube of Tang Shan has no cooldown",
+  "dcc.message.cube_of_tang_shan.cooldown_remaining": "Cube of Tang Shan cooldown remaining: %1$d min %2$d sec",
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - Current Progress: %2$d / %3$d times (Probability: %4$d%%)"
 }
