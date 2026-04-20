@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dcc:item/cube_of_tang_shan"
+  }
+}

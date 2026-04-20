@@ -33,6 +33,8 @@ public class TalismanCreativeTab {
                 output.accept(TalismanItems.PIG_TALISMAN.get());
                 output.accept(TalismanItems.UNCLES_DRIED_PUFFER_FISH.get());
                 output.accept(TalismanItems.TALISMAN_BOX.get());
+                output.accept(TalismanItems.CUBE_OF_TANG_SHAN.get());
+                output.accept(TalismanItems.TALISMAN_POWER_EXTRACTOR.get());
             })
             .build());
     

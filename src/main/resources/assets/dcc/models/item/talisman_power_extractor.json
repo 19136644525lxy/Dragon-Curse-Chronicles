@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "dcc:item/talisman_power_extractor"
+    }
+}

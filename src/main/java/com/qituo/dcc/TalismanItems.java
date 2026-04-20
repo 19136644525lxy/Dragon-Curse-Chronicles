@@ -52,6 +52,10 @@ public class TalismanItems {
     
     public static final RegistryObject<Item> TALISMAN_BOX = ITEMS.register("talisman_box", () -> new Item(new Item.Properties().stacksTo(64)));
     
+    public static final RegistryObject<Item> CUBE_OF_TANG_SHAN = ITEMS.register("cube_of_tang_shan", () -> new Item(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> TALISMAN_POWER_EXTRACTOR = ITEMS.register("talisman_power_extractor", () -> new Item(new Item.Properties().stacksTo(1)));
+    
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
