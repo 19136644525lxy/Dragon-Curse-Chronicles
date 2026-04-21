@@ -70,6 +70,25 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 #### Sheep Talisman
 - **Planned Function**: Out-of-Body Power (allow the soul to leave the body)
 
+## Item Introduction
+
+### Talisman Power Extractor
+
+- **Ability**: Extract power from animals to craft talismans
+- **Usage**: Hold the extractor in the main hand and a Talisman Base in the offhand, then right-click on animals to extract power and craft talismans. There are usage limits and probability restrictions. The probability can be adjusted in the configuration file, with a default probability of 10%. Except for Chicken, Dragon, and Pig, other animals require 10 extraction attempts, while these three require 100 attempts (the attempt limit is hard-coded and cannot be changed).
+- **Obtainment**: Craftable
+
+### Cube of Tang Shan
+
+- **Ability**: Extract Sheep Talisman, following the same steps as the Talisman Power Extractor
+- **Usage**: Hold the Cube of Tang Shan in the main hand and a Talisman Base in the offhand, then right-click on sheep to extract the Sheep Talisman. The probability is 10% and requires 100 attempts (hard-coded, cannot be changed).
+- **Obtainment**: No obtainment method yet, will be added in version 0.2.0
+
+### Talisman Box
+
+- **Ability**: Store and manage talismans
+- **Usage**: No use yet, not implemented.
+
 ## Installation
 
 1. Ensure Minecraft Forge 1.20.1 is installed
