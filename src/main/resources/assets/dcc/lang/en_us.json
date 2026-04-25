@@ -72,16 +72,16 @@
   "dcc.message.cooldown_remaining": "Talisman Power Extractor cooldown remaining: %1$d min %2$d sec",
 
   "dcc.log.reload_config": "Reloaded Talisman Power Extractor configuration",
-  "gamerule.allowTalismanExtraction": "Allow Talisman Extraction",
+  "gamerule.allowTalismanExtraction": "Allow Talisman Power Extraction",
   
-  "dcc.message.cube_of_tang_shan.extraction_disabled": "Cube of Tang Shan has been disabled by game rules",
+  "dcc.message.cube_of_tang_shan.extraction_disabled": "Cube of Tang Shan has been disabled by game rule",
   "dcc.message.cube_of_tang_shan.need_talisman_base": "You need to hold a Talisman Base in your offhand to use Cube of Tang Shan",
   "dcc.message.cube_of_tang_shan.on_cooldown": "Cube of Tang Shan is on cooldown",
   "dcc.message.cube_of_tang_shan.no_mapping": "This creature cannot be used for Cube of Tang Shan extraction",
-  "dcc.message.cube_of_tang_shan.extraction_progress": "Extraction progress: %1$d / %2$d times",
+  "dcc.message.cube_of_tang_shan.extraction_progress": "Extraction progress: %1$d / %2$d attempts",
   "dcc.message.cube_of_tang_shan.extraction_failed": "Extraction failed! Probability check failed (failure rate %1$d%%), progress reset",
   "dcc.message.cube_of_tang_shan.extraction_success": "Successfully extracted %1$s!",
   "dcc.message.cube_of_tang_shan.no_cooldown": "Cube of Tang Shan has no cooldown",
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "Cube of Tang Shan cooldown remaining: %1$d min %2$d sec",
-  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - Current Progress: %2$d / %3$d times (Probability: %4$d%%)"
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - Current progress: %2$d / %3$d attempts (Probability: %4$d%%)"
 }
