@@ -6,7 +6,7 @@
   "item.dcc.dragon_talisman": "Dragon Talisman",
   "item.dcc.snake_talisman": "Snake Talisman",
   "item.dcc.horse_talisman": "Horse Talisman",
-  "item.dcc.sheep_talisman": "Sheep Talisman (WIP)",
+  "item.dcc.sheep_talisman": "Sheep Talisman",
   "item.dcc.monkey_talisman": "Monkey Talisman (WIP)",
   "item.dcc.chicken_talisman": "Rooster Talisman",
   "item.dcc.dog_talisman": "Dog Talisman",
@@ -24,6 +24,7 @@
   "effect.dcc.horse_power": "Horse Power",
   "effect.dcc.chicken_power": "Chicken Power",
   "effect.dcc.dog_power": "Dog Power",
+  "effect.dcc.sheep_power": "Sheep Power",
 
   "casting.dcc.casting": "Casting...",
   "casting.dcc.cancelled": "You have cancelled casting",
@@ -83,5 +84,12 @@
   "dcc.message.cube_of_tang_shan.extraction_success": "Successfully extracted %1$s!",
   "dcc.message.cube_of_tang_shan.no_cooldown": "Cube of Tang Shan has no cooldown",
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "Cube of Tang Shan cooldown remaining: %1$d min %2$d sec",
-  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - Current progress: %2$d / %3$d attempts (Probability: %4$d%%)"
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - Current progress: %2$d / %3$d attempts (Probability: %4$d%%)",
+  "dcc.message.sheep_talisman.enter": "Entered soul projection mode",
+  "dcc.message.sheep_talisman.exit": "Exited soul projection mode",
+  
+  "dcc.message.config.flyspeed.set": "Set sheep talisman fly speed to %1$s",
+  "dcc.message.config.flyspeed.get": "Current sheep talisman fly speed: %1$s",
+  "dcc.message.config.reloaded": "Talisman configuration reloaded",
+  "dcc.message.config.fails": "Failed to set configuration"
 }

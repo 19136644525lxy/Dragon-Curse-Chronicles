@@ -6,7 +6,7 @@
   "item.dcc.dragon_talisman": "竜のお守り",
   "item.dcc.snake_talisman": "ヘビのお守り",
   "item.dcc.horse_talisman": "馬のお守り",
-  "item.dcc.sheep_talisman": "羊のお守り（WIP）",
+  "item.dcc.sheep_talisman": "羊のお守り",
   "item.dcc.monkey_talisman": "猿のお守り（WIP）",
   "item.dcc.chicken_talisman": "鶏のお守り",
   "item.dcc.dog_talisman": "犬のお守り",
@@ -24,6 +24,7 @@
   "effect.dcc.horse_power": "馬の力",
   "effect.dcc.chicken_power": "鶏の力",
   "effect.dcc.dog_power": "犬の力",
+  "effect.dcc.sheep_power": "羊の力",
 
   "casting.dcc.casting": "魔法を唱えています...",
   "casting.dcc.cancelled": "魔法の唱えをキャンセルしました",
@@ -83,5 +84,7 @@
   "dcc.message.cube_of_tang_shan.extraction_success": "%1$sを抽出しました！",
   "dcc.message.cube_of_tang_shan.no_cooldown": "唐扇の立方体にクールダウンはありません",
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "唐扇の立方体のクールダウン残り: %1$d 分 %2$d 秒",
-  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 現在の進行状況: %2$d / %3$d 回（確率: %4$d%%）"
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 現在の進行状況: %2$d / %3$d 回（確率: %4$d%%）",
+  "dcc.message.sheep_talisman.enter": "霊魂投影モードに入りました",
+  "dcc.message.sheep_talisman.exit": "霊魂投影モードを終了しました"
 }

@@ -6,7 +6,7 @@
   "item.dcc.dragon_talisman": "용 부적",
   "item.dcc.snake_talisman": "뱀 부적",
   "item.dcc.horse_talisman": "말 부적",
-  "item.dcc.sheep_talisman": "양 부적（WIP）",
+  "item.dcc.sheep_talisman": "양 부적",
   "item.dcc.monkey_talisman": "원숭이 부적（WIP）",
   "item.dcc.chicken_talisman": "닭 부적",
   "item.dcc.dog_talisman": "개 부적",
@@ -24,6 +24,7 @@
   "effect.dcc.horse_power": "말의 힘",
   "effect.dcc.chicken_power": "닭의 힘",
   "effect.dcc.dog_power": "개의 힘",
+  "effect.dcc.sheep_power": "양의 힘",
 
   "casting.dcc.casting": "주문 시전 중...",
   "casting.dcc.cancelled": "주문 시전을 취소했습니다",
@@ -83,5 +84,7 @@
   "dcc.message.cube_of_tang_shan.extraction_success": "%1$s 을(를) 성공적으로 추출했습니다!",
   "dcc.message.cube_of_tang_shan.no_cooldown": "탕산 큐브에는 쿨다운이 없습니다",
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "탕산 큐브 쿨다운 남은 시간: %1$d 분 %2$d 초",
-  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 현재 진행 상황: %2$d / %3$d 회（확률: %4$d%%）"
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 현재 진행 상황: %2$d / %3$d 회（확률: %4$d%%）",
+  "dcc.message.sheep_talisman.enter": "영혼 투영 모드에 입장했습니다",
+  "dcc.message.sheep_talisman.exit": "영혼 투영 모드에서 나왔습니다"
 }

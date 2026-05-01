@@ -6,7 +6,7 @@
   "item.dcc.dragon_talisman": "تاليسمان التنين",
   "item.dcc.snake_talisman": "تاليسمان الثعبان",
   "item.dcc.horse_talisman": "تاليسمان الحصان",
-  "item.dcc.sheep_talisman": "تاليسمان الضأن（WIP）",
+  "item.dcc.sheep_talisman": "تاليسمان الضأن",
   "item.dcc.monkey_talisman": "تاليسمان القرد（WIP）",
   "item.dcc.chicken_talisman": "تاليسمان الدجاج",
   "item.dcc.dog_talisman": "تاليسمان الكلب",
@@ -24,6 +24,7 @@
   "effect.dcc.horse_power": "قوة الحصان",
   "effect.dcc.chicken_power": "قوة الدجاج",
   "effect.dcc.dog_power": "قوة الكلب",
+  "effect.dcc.sheep_power": "قوة الضأن",
 
   "casting.dcc.casting": "جاري التنفيذ...",
   "casting.dcc.cancelled": "لقد ألغيت التنفيذ",
@@ -83,5 +84,7 @@
   "dcc.message.cube_of_tang_shan.extraction_success": "استخرج %1$s بنجاح!",
   "dcc.message.cube_of_tang_shan.no_cooldown": "كوب تانغ شان ليس处于冷却状态",
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "تبقى للتبريد: %1$d دقيقة %2$d ثانية",
-  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - التقدم الحالي: %2$d / %3$d مرة（الاحتمال: %4$d%%）"
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - التقدم الحالي: %2$d / %3$d مرة（ 확률: %4$d%%）",
+  "dcc.message.sheep_talisman.enter": "دخلت وضع استعارة الروح",
+  "dcc.message.sheep_talisman.exit": "خرجت من وضع استعارة الروح"
 }

@@ -6,7 +6,7 @@
   "item.dcc.dragon_talisman": "龙符咒",
   "item.dcc.snake_talisman": "蛇符咒",
   "item.dcc.horse_talisman": "马符咒",
-  "item.dcc.sheep_talisman": "羊符咒（WIP）",
+  "item.dcc.sheep_talisman": "羊符咒",
   "item.dcc.monkey_talisman": "猴符咒（WIP）",
   "item.dcc.chicken_talisman": "鸡符咒",
   "item.dcc.dog_talisman": "狗符咒",
@@ -24,6 +24,7 @@
   "effect.dcc.horse_power": "马之力",
   "effect.dcc.chicken_power": "鸡之力",
   "effect.dcc.dog_power": "狗之力",
+  "effect.dcc.sheep_power": "羊之力",
 
   "casting.dcc.casting": "施法中...",
   "casting.dcc.cancelled": "您已取消施法",
@@ -83,5 +84,12 @@
   "dcc.message.cube_of_tang_shan.extraction_success": "成功提取%1$s！",
   "dcc.message.cube_of_tang_shan.no_cooldown": "唐扇魔方没有冷却时间",
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "唐扇魔方冷却剩余: %1$d 分 %2$d 秒",
-  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 当前进度: %2$d / %3$d 次（概率: %4$d%%）"
+  "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 当前进度: %2$d / %3$d 次（概率: %4$d%%）",
+  "dcc.message.sheep_talisman.enter": "已进入灵魂出窍模式",
+  "dcc.message.sheep_talisman.exit": "已退出灵魂出窍模式",
+  
+  "dcc.message.config.flyspeed.set": "已将羊符咒飞行速度设置为 %1$s",
+  "dcc.message.config.flyspeed.get": "当前羊符咒飞行速度: %1$s",
+  "dcc.message.config.reloaded": "已重新加载符咒配置",
+  "dcc.message.config.fails": "设置配置失败"
 }
