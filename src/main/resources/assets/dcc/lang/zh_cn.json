@@ -91,5 +91,15 @@
   "dcc.message.config.flyspeed.set": "已将羊符咒飞行速度设置为 %1$s",
   "dcc.message.config.flyspeed.get": "当前羊符咒飞行速度: %1$s",
   "dcc.message.config.reloaded": "已重新加载符咒配置",
-  "dcc.message.config.fails": "设置配置失败"
+  "dcc.message.config.fails": "设置配置失败",
+  
+  "dcc.message.meteor_shower.start": "[流星雨] 夜空开始闪烁，流星雨即将到来！",
+  "dcc.message.meteor_shower.end_with_chest": "[流星雨] 流星雨已结束！流星宝箱出现在 %1$d, %2$d, %3$d！",
+  "dcc.message.meteor_shower.end_no_chest": "[流星雨] 流星雨已结束！这次没有流星宝箱出现...",
+  "dcc.message.meteor_shower.command.started": "[流星雨] 流星雨事件已开始！",
+  "dcc.message.meteor_shower.command.already_active": "[流星雨] 流星雨事件正在进行中，无法再次触发！",
+  "dcc.message.meteor_shower.command.error": "[流星雨] 无法触发流星雨事件！",
+  "dcc.message.meteor_shower.command.status.active": "[流星雨] 流星雨事件状态：进行中",
+  "dcc.message.meteor_shower.command.status.inactive": "[流星雨] 流星雨事件状态：未进行",
+  "dcc.message.meteor_shower.command.dimension_blocked": "[流星雨] 该维度被远古之力影响，无法降下流星雨！"
 }

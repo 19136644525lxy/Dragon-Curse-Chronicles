@@ -22,7 +22,6 @@ public class DragonCurseChronicles {
     
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
 
-    // 游戏规则
     public static final GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_TALISMAN_EXTRACTION = GameRules.register("allowTalismanExtraction", GameRules.Category.SPAWNING, GameRules.BooleanValue.create(true));
 
     public static ResourceLocation id(String path) {
@@ -30,7 +29,6 @@ public class DragonCurseChronicles {
     }
     
     public DragonCurseChronicles() {
-        // 确保配置文件在游戏加载前就生成
         com.qituo.dcc.config.TalismanConfig.loadConfig();
         
         TalismanItems.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
@@ -41,15 +39,11 @@ public class DragonCurseChronicles {
         com.qituo.dcc.entity.EntityTypes.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         MENUS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         
-        // 注册热重载监听器
         MinecraftForge.EVENT_BUS.addListener(this::onReload);
-        
-        // 注册命令
         MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
     }
     
     private void onReload(AddReloadListenerEvent event) {
-        // 重新加载配置文件
         com.qituo.dcc.items.TalismanExtractorItem.reloadConfigs();
         com.qituo.dcc.config.TalismanConfig.reloadConfig();
         LOGGER.info("Reloaded Talisman Power Extractor configuration");
@@ -57,5 +51,6 @@ public class DragonCurseChronicles {
     
     private void onRegisterCommands(RegisterCommandsEvent event) {
         com.qituo.dcc.commands.TalismanConfigCommand.register(event.getDispatcher());
+        com.qituo.dcc.commands.MeteorShowerCommand.register(event.getDispatcher());
     }
 }

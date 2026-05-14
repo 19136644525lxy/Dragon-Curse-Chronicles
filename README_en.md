@@ -82,7 +82,7 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 
 - **Ability**: Extract Sheep Talisman, following the same steps as the Talisman Power Extractor
 - **Usage**: Hold the Cube of Tang Shan in the main hand and a Talisman Base in the offhand, then right-click on sheep to extract the Sheep Talisman. The probability is 10% and requires 100 attempts (hard-coded, cannot be changed).
-- **Obtainment**: No obtainment method yet, will be added in version 0.2.0
+- **Obtainment**: Obtained through the Meteor Shower event. There is a 35% chance to find it in the treasure chest that appears after the meteor shower ends. The meteor shower event randomly triggers at midnight (12:00 AM) in the Overworld (30% probability), or can be forced using the command `/meteorshower start` (requires OP permission). The chest spawns inside a meteor crater and needs to be dug out to find.
 
 ### Talisman Box
 

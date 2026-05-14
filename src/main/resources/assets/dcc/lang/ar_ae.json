@@ -86,5 +86,15 @@
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "تبقى للتبريد: %1$d دقيقة %2$d ثانية",
   "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - التقدم الحالي: %2$d / %3$d مرة（ 확률: %4$d%%）",
   "dcc.message.sheep_talisman.enter": "دخلت وضع استعارة الروح",
-  "dcc.message.sheep_talisman.exit": "خرجت من وضع استعارة الروح"
+  "dcc.message.sheep_talisman.exit": "خرجت من وضع استعارة الروح",
+  
+  "dcc.message.meteor_shower.start": "[مطر النجوم] السماء الليلية تبدأ بالومض، مطر النجوم قادم!",
+  "dcc.message.meteor_shower.end_with_chest": "[مطر النجوم] مطر النجوم انتهى! ظهرت صندوق كنز في %1$d, %2$d, %3$d!",
+  "dcc.message.meteor_shower.end_no_chest": "[مطر النجوم] مطر النجوم انتهى! لم يظهر أي صندوق كنز هذه المرة...",
+  "dcc.message.meteor_shower.command.started": "[مطر النجوم] حدث مطر النجوم قد بدأ!",
+  "dcc.message.meteor_shower.command.already_active": "[مطر النجوم] مطر النجوم نشط بالفعل، لا يمكن تشغيله مرة أخرى!",
+  "dcc.message.meteor_shower.command.error": "[مطر النجوم] لا يمكن تشغيل حدث مطر النجوم!",
+  "dcc.message.meteor_shower.command.status.active": "[مطر النجوم] الحالة: نشط",
+  "dcc.message.meteor_shower.command.status.inactive": "[مطر النجوم] الحالة: غير نشط",
+  "dcc.message.meteor_shower.command.dimension_blocked": "[مطر النجوم] هذا البُعد يتأثر بالقوة القديمة، لا يمكن أن يحدث مطر نجوم!"
 }

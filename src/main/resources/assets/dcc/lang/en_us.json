@@ -91,5 +91,15 @@
   "dcc.message.config.flyspeed.set": "Set sheep talisman fly speed to %1$s",
   "dcc.message.config.flyspeed.get": "Current sheep talisman fly speed: %1$s",
   "dcc.message.config.reloaded": "Talisman configuration reloaded",
-  "dcc.message.config.fails": "Failed to set configuration"
+  "dcc.message.config.fails": "Failed to set configuration",
+  
+  "dcc.message.meteor_shower.start": "[Meteor Shower] The night sky begins to flicker, a meteor shower is coming!",
+  "dcc.message.meteor_shower.end_with_chest": "[Meteor Shower] The meteor shower has ended! A treasure chest appeared at %1$d, %2$d, %3$d!",
+  "dcc.message.meteor_shower.end_no_chest": "[Meteor Shower] The meteor shower has ended! No treasure chest appeared this time...",
+  "dcc.message.meteor_shower.command.started": "[Meteor Shower] Meteor shower event has started!",
+  "dcc.message.meteor_shower.command.already_active": "[Meteor Shower] Meteor shower is already active, cannot trigger again!",
+  "dcc.message.meteor_shower.command.error": "[Meteor Shower] Cannot trigger meteor shower event!",
+  "dcc.message.meteor_shower.command.status.active": "[Meteor Shower] Status: Active",
+  "dcc.message.meteor_shower.command.status.inactive": "[Meteor Shower] Status: Inactive",
+  "dcc.message.meteor_shower.command.dimension_blocked": "[Meteor Shower] This dimension is affected by ancient power, cannot trigger meteor shower!"
 }

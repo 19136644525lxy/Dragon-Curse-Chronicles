@@ -86,5 +86,15 @@
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "唐扇の立方体のクールダウン残り: %1$d 分 %2$d 秒",
   "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 現在の進行状況: %2$d / %3$d 回（確率: %4$d%%）",
   "dcc.message.sheep_talisman.enter": "霊魂投影モードに入りました",
-  "dcc.message.sheep_talisman.exit": "霊魂投影モードを終了しました"
+  "dcc.message.sheep_talisman.exit": "霊魂投影モードを終了しました",
+  
+  "dcc.message.meteor_shower.start": "[流星群] 夜空がきらめき始め、流星群がやってきます！",
+  "dcc.message.meteor_shower.end_with_chest": "[流星群] 流星群が終わりました！宝箱が %1$d, %2$d, %3$d に現れました！",
+  "dcc.message.meteor_shower.end_no_chest": "[流星群] 流星群が終わりました！今回は宝箱が現れませんでした...",
+  "dcc.message.meteor_shower.command.started": "[流星群] 流星群イベントが開始されました！",
+  "dcc.message.meteor_shower.command.already_active": "[流星群] 流星群は既にアクティブです、もう一度トリガーできません！",
+  "dcc.message.meteor_shower.command.error": "[流星群] 流星群イベントをトリガーできません！",
+  "dcc.message.meteor_shower.command.status.active": "[流星群] ステータス: アクティブ",
+  "dcc.message.meteor_shower.command.status.inactive": "[流星群] ステータス: 非アクティブ",
+  "dcc.message.meteor_shower.command.dimension_blocked": "[流星群] この次元は古代の力に影響を受けており、流星群を起こすことはできません！"
 }

@@ -86,5 +86,15 @@
   "dcc.message.cube_of_tang_shan.cooldown_remaining": "탕산 큐브 쿨다운 남은 시간: %1$d 분 %2$d 초",
   "dcc.message.cube_of_tang_shan.extraction_status": "%1$s - 현재 진행 상황: %2$d / %3$d 회（확률: %4$d%%）",
   "dcc.message.sheep_talisman.enter": "영혼 투영 모드에 입장했습니다",
-  "dcc.message.sheep_talisman.exit": "영혼 투영 모드에서 나왔습니다"
+  "dcc.message.sheep_talisman.exit": "영혼 투영 모드에서 나왔습니다",
+  
+  "dcc.message.meteor_shower.start": "[운석비] 밤하늘이 반짝이기 시작하고, 운석비가 오고 있습니다!",
+  "dcc.message.meteor_shower.end_with_chest": "[운석비] 운석비가 끝났습니다! 보물 상자가 %1$d, %2$d, %3$d에 나타났습니다!",
+  "dcc.message.meteor_shower.end_no_chest": "[운석비] 운석비가 끝났습니다! 이번에는 보물 상자가 나타나지 않았습니다...",
+  "dcc.message.meteor_shower.command.started": "[운석비] 운석비 이벤트가 시작되었습니다!",
+  "dcc.message.meteor_shower.command.already_active": "[운석비] 운석비가 이미 활성화되어 있어 다시 트리거할 수 없습니다!",
+  "dcc.message.meteor_shower.command.error": "[운석비] 운석비 이벤트를 트리거할 수 없습니다!",
+  "dcc.message.meteor_shower.command.status.active": "[운석비] 상태: 활성화",
+  "dcc.message.meteor_shower.command.status.inactive": "[운석비] 상태: 비활성화",
+  "dcc.message.meteor_shower.command.dimension_blocked": "[운석비] 이 차원은 고대의 힘의 영향을 받아 운석비를 발생할 수 없습니다!"
 }
