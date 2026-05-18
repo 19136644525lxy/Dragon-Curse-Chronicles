@@ -96,5 +96,10 @@
   "dcc.message.meteor_shower.command.error": "[운석비] 운석비 이벤트를 트리거할 수 없습니다!",
   "dcc.message.meteor_shower.command.status.active": "[운석비] 상태: 활성화",
   "dcc.message.meteor_shower.command.status.inactive": "[운석비] 상태: 비활성화",
-  "dcc.message.meteor_shower.command.dimension_blocked": "[운석비] 이 차원은 고대의 힘의 영향을 받아 운석비를 발생할 수 없습니다!"
+  "dcc.message.meteor_shower.command.dimension_blocked": "[운석비] 이 차원은 고대의 힘의 영향을 받아 운석비를 발생할 수 없습니다!",
+  "dcc.message.meteor_shower.command.config.enabled": "[운석비] 운석비 이벤트가 활성화되었습니다",
+  "dcc.message.meteor_shower.command.config.disabled": "[운석비] 운석비 이벤트가 비활성화되었습니다",
+  "dcc.message.meteor_shower.command.config.status": "[운석비] 운석비 설정 상태: %s",
+  "dcc.message.meteor_shower.command.config.enabled_short": "활성화",
+  "dcc.message.meteor_shower.command.config.disabled_short": "비활성화"
 }

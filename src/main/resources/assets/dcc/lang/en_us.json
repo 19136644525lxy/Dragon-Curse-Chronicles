@@ -101,5 +101,10 @@
   "dcc.message.meteor_shower.command.error": "[Meteor Shower] Cannot trigger meteor shower event!",
   "dcc.message.meteor_shower.command.status.active": "[Meteor Shower] Status: Active",
   "dcc.message.meteor_shower.command.status.inactive": "[Meteor Shower] Status: Inactive",
-  "dcc.message.meteor_shower.command.dimension_blocked": "[Meteor Shower] This dimension is affected by ancient power, cannot trigger meteor shower!"
+  "dcc.message.meteor_shower.command.dimension_blocked": "[Meteor Shower] This dimension is affected by ancient power, cannot trigger meteor shower!",
+  "dcc.message.meteor_shower.command.config.enabled": "[Meteor Shower] Meteor shower event has been enabled",
+  "dcc.message.meteor_shower.command.config.disabled": "[Meteor Shower] Meteor shower event has been disabled",
+  "dcc.message.meteor_shower.command.config.status": "[Meteor Shower] Meteor shower config status: %s",
+  "dcc.message.meteor_shower.command.config.enabled_short": "Enabled",
+  "dcc.message.meteor_shower.command.config.disabled_short": "Disabled"
 }

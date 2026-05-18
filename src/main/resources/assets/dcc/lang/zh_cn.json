@@ -101,5 +101,10 @@
   "dcc.message.meteor_shower.command.error": "[流星雨] 无法触发流星雨事件！",
   "dcc.message.meteor_shower.command.status.active": "[流星雨] 流星雨事件状态：进行中",
   "dcc.message.meteor_shower.command.status.inactive": "[流星雨] 流星雨事件状态：未进行",
-  "dcc.message.meteor_shower.command.dimension_blocked": "[流星雨] 该维度被远古之力影响，无法降下流星雨！"
+  "dcc.message.meteor_shower.command.dimension_blocked": "[流星雨] 该维度被远古之力影响，无法降下流星雨！",
+  "dcc.message.meteor_shower.command.config.enabled": "[流星雨] 流星雨事件已启用",
+  "dcc.message.meteor_shower.command.config.disabled": "[流星雨] 流星雨事件已禁用",
+  "dcc.message.meteor_shower.command.config.status": "[流星雨] 流星雨配置状态：%s",
+  "dcc.message.meteor_shower.command.config.enabled_short": "已启用",
+  "dcc.message.meteor_shower.command.config.disabled_short": "已禁用"
 }

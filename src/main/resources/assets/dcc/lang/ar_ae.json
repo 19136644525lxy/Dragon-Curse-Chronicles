@@ -96,5 +96,10 @@
   "dcc.message.meteor_shower.command.error": "[مطر النجوم] لا يمكن تشغيل حدث مطر النجوم!",
   "dcc.message.meteor_shower.command.status.active": "[مطر النجوم] الحالة: نشط",
   "dcc.message.meteor_shower.command.status.inactive": "[مطر النجوم] الحالة: غير نشط",
-  "dcc.message.meteor_shower.command.dimension_blocked": "[مطر النجوم] هذا البُعد يتأثر بالقوة القديمة، لا يمكن أن يحدث مطر نجوم!"
+  "dcc.message.meteor_shower.command.dimension_blocked": "[مطر النجوم] هذا البُعد يتأثر بالقوة القديمة، لا يمكن أن يحدث مطر نجوم!",
+  "dcc.message.meteor_shower.command.config.enabled": "[مطر النجوم] حدث مطر النجوم تم تمكينه",
+  "dcc.message.meteor_shower.command.config.disabled": "[مطر النجوم] حدث مطر النجوم تم تعطيله",
+  "dcc.message.meteor_shower.command.config.status": "[مطر النجوم] حالة تكوين مطر النجوم: %s",
+  "dcc.message.meteor_shower.command.config.enabled_short": "ممكن",
+  "dcc.message.meteor_shower.command.config.disabled_short": "معطل"
 }

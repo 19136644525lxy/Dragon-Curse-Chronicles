@@ -6,6 +6,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import com.qituo.dcc.config.MeteorShowerConfig;
 import com.qituo.dcc.events.MeteorShowerEvent;
 
 public class MeteorShowerCommand {
@@ -19,6 +20,14 @@ public class MeteorShowerCommand {
         
         meteorShower.then(Commands.literal("status")
             .executes(MeteorShowerCommand::checkStatus));
+        
+        meteorShower.then(Commands.literal("config")
+            .then(Commands.literal("enable")
+                .executes(MeteorShowerCommand::enableMeteorShower))
+            .then(Commands.literal("disable")
+                .executes(MeteorShowerCommand::disableMeteorShower))
+            .then(Commands.literal("get")
+                .executes(MeteorShowerCommand::getConfigStatus)));
         
         dispatcher.register(meteorShower);
     }
@@ -56,6 +65,28 @@ public class MeteorShowerCommand {
         } else {
             context.getSource().sendSuccess(() -> Component.translatable("dcc.message.meteor_shower.command.status.inactive"), false);
         }
+        return 1;
+    }
+    
+    private static int enableMeteorShower(CommandContext<CommandSourceStack> context) {
+        MeteorShowerConfig.setMeteorShowerEnabled(true);
+        context.getSource().sendSuccess(() -> Component.translatable("dcc.message.meteor_shower.command.config.enabled"), true);
+        return 1;
+    }
+    
+    private static int disableMeteorShower(CommandContext<CommandSourceStack> context) {
+        MeteorShowerConfig.setMeteorShowerEnabled(false);
+        context.getSource().sendSuccess(() -> Component.translatable("dcc.message.meteor_shower.command.config.disabled"), true);
+        return 1;
+    }
+    
+    private static int getConfigStatus(CommandContext<CommandSourceStack> context) {
+        boolean enabled = MeteorShowerConfig.isMeteorShowerEnabled();
+        context.getSource().sendSuccess(() -> Component.translatable(
+            "dcc.message.meteor_shower.command.config.status", 
+            enabled ? Component.translatable("dcc.message.meteor_shower.command.config.enabled_short") 
+                    : Component.translatable("dcc.message.meteor_shower.command.config.disabled_short")
+        ), false);
         return 1;
     }
 }

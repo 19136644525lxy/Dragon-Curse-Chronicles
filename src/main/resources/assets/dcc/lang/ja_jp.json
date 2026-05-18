@@ -96,5 +96,10 @@
   "dcc.message.meteor_shower.command.error": "[流星群] 流星群イベントをトリガーできません！",
   "dcc.message.meteor_shower.command.status.active": "[流星群] ステータス: アクティブ",
   "dcc.message.meteor_shower.command.status.inactive": "[流星群] ステータス: 非アクティブ",
-  "dcc.message.meteor_shower.command.dimension_blocked": "[流星群] この次元は古代の力に影響を受けており、流星群を起こすことはできません！"
+  "dcc.message.meteor_shower.command.dimension_blocked": "[流星群] この次元は古代の力に影響を受けており、流星群を起こすことはできません！",
+  "dcc.message.meteor_shower.command.config.enabled": "[流星群] 流星群イベントが有効になりました",
+  "dcc.message.meteor_shower.command.config.disabled": "[流星群] 流星群イベントが無効になりました",
+  "dcc.message.meteor_shower.command.config.status": "[流星群] 流星群設定ステータス: %s",
+  "dcc.message.meteor_shower.command.config.enabled_short": "有効",
+  "dcc.message.meteor_shower.command.config.disabled_short": "無効"
 }

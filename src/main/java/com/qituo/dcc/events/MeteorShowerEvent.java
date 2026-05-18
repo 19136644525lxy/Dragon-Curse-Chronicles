@@ -74,7 +74,7 @@ public class MeteorShowerEvent {
             if (!hasCheckedForMeteorShower) {
                 hasCheckedForMeteorShower = true;
                 
-                if (!isMeteorShowerActive && RANDOM.nextDouble() < EVENT_TRIGGER_CHANCE) {
+                if (com.qituo.dcc.config.MeteorShowerConfig.isMeteorShowerEnabled() && !isMeteorShowerActive && RANDOM.nextDouble() < EVENT_TRIGGER_CHANCE) {
                     startMeteorShower(level);
                 }
             }

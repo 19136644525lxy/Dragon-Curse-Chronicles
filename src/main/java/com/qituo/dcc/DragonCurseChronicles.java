@@ -14,6 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.qituo.dcc.config.MeteorShowerConfig;
 
 @Mod(DragonCurseChronicles.MODID)
 public class DragonCurseChronicles {
@@ -29,6 +30,7 @@ public class DragonCurseChronicles {
     }
     
     public DragonCurseChronicles() {
+        com.qituo.dcc.config.MeteorShowerConfig.loadConfig();
         com.qituo.dcc.config.TalismanConfig.loadConfig();
         
         TalismanItems.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
