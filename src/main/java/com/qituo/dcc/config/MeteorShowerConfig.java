@@ -9,7 +9,7 @@ public class MeteorShowerConfig {
     private static final String CONFIG_FILE = "dcc/meteor_shower.properties";
     private static Properties properties = new Properties();
     
-    private static boolean enableMeteorShower = true;
+    private static boolean enableMeteorShower = false;
     
     public static void loadConfig() {
         File configFile = FMLPaths.CONFIGDIR.get().resolve(CONFIG_FILE).toFile();
@@ -20,7 +20,7 @@ public class MeteorShowerConfig {
         
         try (FileInputStream input = new FileInputStream(configFile)) {
             properties.load(input);
-            enableMeteorShower = Boolean.parseBoolean(properties.getProperty("enableMeteorShower", "true"));
+            enableMeteorShower = Boolean.parseBoolean(properties.getProperty("enableMeteorShower", "false"));
         } catch (IOException e) {
             com.qituo.dcc.DragonCurseChronicles.LOGGER.error("Failed to load meteor shower config", e);
         }
@@ -30,8 +30,8 @@ public class MeteorShowerConfig {
         try {
             configFile.getParentFile().mkdirs();
             try (FileOutputStream output = new FileOutputStream(configFile)) {
-                properties.setProperty("enableMeteorShower", "true");
-                properties.store(output, "Meteor Shower Configuration\n# Set to false to disable meteor shower events");
+                properties.setProperty("enableMeteorShower", "false");
+                properties.store(output, "Meteor Shower Configuration\n# Set to true to enable meteor shower random events at midnight");
             }
         } catch (IOException e) {
             com.qituo.dcc.DragonCurseChronicles.LOGGER.error("Failed to create meteor shower config", e);
@@ -49,10 +49,13 @@ public class MeteorShowerConfig {
     public static void setMeteorShowerEnabled(boolean enabled) {
         enableMeteorShower = enabled;
         properties.setProperty("enableMeteorShower", String.valueOf(enabled));
-        
+        saveConfig();
+    }
+    
+    private static void saveConfig() {
         File configFile = FMLPaths.CONFIGDIR.get().resolve(CONFIG_FILE).toFile();
         try (FileOutputStream output = new FileOutputStream(configFile)) {
-            properties.store(output, "Meteor Shower Configuration\n# Set to false to disable meteor shower events");
+            properties.store(output, "Meteor Shower Configuration\n# Set to true to enable meteor shower random events at midnight");
         } catch (IOException e) {
             com.qituo.dcc.DragonCurseChronicles.LOGGER.error("Failed to save meteor shower config", e);
         }

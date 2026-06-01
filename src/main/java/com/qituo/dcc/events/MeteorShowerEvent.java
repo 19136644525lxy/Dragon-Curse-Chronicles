@@ -2,6 +2,7 @@ package com.qituo.dcc.events;
 
 import com.qituo.dcc.DragonCurseChronicles;
 import com.qituo.dcc.TalismanItems;
+import com.qituo.dcc.config.MeteorShowerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +30,7 @@ public class MeteorShowerEvent {
     private static boolean isMeteorShowerActive = false;
     private static int meteorShowerTick = 0;
     private static final int METEOR_SHOWER_DURATION = 600;
-    private static final double EVENT_TRIGGER_CHANCE = 0.3;
+    private static final double EVENT_TRIGGER_CHANCE = 0.1;
     private static boolean hasCheckedForMeteorShower = false;
     private static BlockPos treasureChestPos = null;
     private static BlockPos showerCenterPos = null;
@@ -74,13 +75,29 @@ public class MeteorShowerEvent {
             if (!hasCheckedForMeteorShower) {
                 hasCheckedForMeteorShower = true;
                 
-                if (com.qituo.dcc.config.MeteorShowerConfig.isMeteorShowerEnabled() && !isMeteorShowerActive && RANDOM.nextDouble() < EVENT_TRIGGER_CHANCE) {
-                    startMeteorShower(level);
+                if (MeteorShowerConfig.isMeteorShowerEnabled() && !isMeteorShowerActive && RANDOM.nextDouble() < EVENT_TRIGGER_CHANCE) {
+                    if (areAllPlayersInOverworld(level)) {
+                        startMeteorShower(level);
+                    }
                 }
             }
         } else {
             hasCheckedForMeteorShower = false;
         }
+    }
+    
+    private static boolean areAllPlayersInOverworld(ServerLevel level) {
+        List<ServerPlayer> players = level.getPlayers(p -> true);
+        if (players.isEmpty()) {
+            return false;
+        }
+        
+        for (ServerPlayer player : players) {
+            if (!player.level().dimension().equals(Level.OVERWORLD)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     private static void startMeteorShower(ServerLevel level) {
@@ -141,13 +158,23 @@ public class MeteorShowerEvent {
     }
     
     private static void spawnRandomMeteor(ServerLevel level) {
-        if (showerCenterPos == null) {
+        List<ServerPlayer> players = level.getPlayers(p -> true);
+        if (players.isEmpty()) {
             return;
         }
         
-        double offsetX = (RANDOM.nextDouble() - 0.5) * 600;
-        double offsetZ = (RANDOM.nextDouble() - 0.5) * 600;
-        BlockPos groundPos = findGroundPosition(level, showerCenterPos.getX() + offsetX, showerCenterPos.getZ() + offsetZ);
+        ServerPlayer targetPlayer = players.get(RANDOM.nextInt(players.size()));
+        BlockPos playerPos = targetPlayer.blockPosition();
+        
+        int centerX = playerPos.getX();
+        int centerZ = playerPos.getZ();
+        int radius = 250;
+        
+        // 在玩家周围250格范围内随机生成
+        double offsetX = (RANDOM.nextDouble() - 0.5) * radius * 2;
+        double offsetZ = (RANDOM.nextDouble() - 0.5) * radius * 2;
+        
+        BlockPos groundPos = findGroundPosition(level, centerX + offsetX, centerZ + offsetZ);
         
         Vec3 targetPos = new Vec3(groundPos.getX() + 0.5, groundPos.getY() + 1, groundPos.getZ() + 0.5);
         
@@ -264,7 +291,6 @@ public class MeteorShowerEvent {
             level.setBlock(new BlockPos(px, py, pz), Blocks.FIRE.defaultBlockState(), 3);
         }
         
-        // 如果这是第一个要生成宝箱的陨石，在陨石坑中心下方创建宝箱
         if (treasureChestPos == null && RANDOM.nextDouble() < 0.15) {
             placeTreasureChestInCrater(level, center);
         }
@@ -294,16 +320,13 @@ public class MeteorShowerEvent {
     }
     
     private static void placeTreasureChestInCrater(ServerLevel level, BlockPos craterCenter) {
-        // 陨石坑底部位置（向下3格）
         BlockPos chestPos = craterCenter.below(3);
         
-        // 清理出3x3x3的空间
         for (int dx = -1; dx <= 1; dx++) {
             for (int dz = -1; dz <= 1; dz++) {
                 for (int dy = -1; dy <= 1; dy++) {
                     BlockPos clearPos = chestPos.offset(dx, dy, dz);
                     if (dy == 0 && dx == 0 && dz == 0) {
-                        // 中心位置不清理，放宝箱
                         continue;
                     }
                     level.setBlock(clearPos, Blocks.AIR.defaultBlockState(), 3);
@@ -311,29 +334,22 @@ public class MeteorShowerEvent {
             }
         }
         
-        // 四周用黑曜石围起来
         for (int dx = -2; dx <= 2; dx++) {
             for (int dz = -2; dz <= 2; dz++) {
                 for (int dy = -2; dy <= 2; dy++) {
                     BlockPos pos = chestPos.offset(dx, dy, dz);
-                    // 边缘和底部放黑曜石
                     if (Math.abs(dx) == 2 || Math.abs(dz) == 2 || dy == -2) {
                         level.setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
                     } else if (dy == 2 && Math.abs(dx) <= 1 && Math.abs(dz) <= 1) {
-                        // 顶部用圆石盖住
                         level.setBlock(pos, Blocks.COBBLESTONE.defaultBlockState(), 3);
                     }
                 }
             }
         }
         
-        // 在宝箱位置下方放黑曜石
         level.setBlock(chestPos.below(), Blocks.OBSIDIAN.defaultBlockState(), 3);
-        
-        // 放置宝箱
         level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
         
-        // 填充宝箱内容
         BlockEntity blockEntity = level.getBlockEntity(chestPos);
         if (blockEntity instanceof ChestBlockEntity chest) {
             int slotIndex = 0;
@@ -376,7 +392,6 @@ public class MeteorShowerEvent {
             return;
         }
         
-        // 如果没有在陨石坑生成宝箱，就在中心生成一个备用的
         BlockPos centerGroundPos = findGroundPosition(level, showerCenterPos.getX(), showerCenterPos.getZ());
         BlockPos chestPos = new BlockPos(centerGroundPos.getX(), centerGroundPos.getY() + 1, centerGroundPos.getZ());
         
