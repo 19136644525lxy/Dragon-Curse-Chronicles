@@ -1,6 +1,5 @@
 package com.qituo.dcc.talismans;
 
-import com.qituo.dcc.ai.EvilCloneAI;
 import com.qituo.dcc.util.MojangSkinAPI;
 import com.qituo.dcc.util.NetHandlerPlayServerFake;
 import com.qituo.dcc.util.ReflectionCache;

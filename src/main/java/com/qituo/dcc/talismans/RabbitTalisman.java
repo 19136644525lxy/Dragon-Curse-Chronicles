@@ -4,75 +4,85 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.nbt.CompoundTag;
 
 public class RabbitTalisman extends TalismanBase {
+    
+    private static final String CHICKEN_RABBIT_POWER_KEY = "dcc_chicken_rabbit_power_active";
+    private static final String CHICKEN_RABBIT_POWER_LEVEL = "dcc_chicken_rabbit_power_level";
+    
     public RabbitTalisman(Item.Properties properties) {
         super(properties);
     }
     
     @Override
     protected void useTalisman(ServerLevel level, Player player, InteractionHand hand) {
-        // 检查是否有鸡兔之力（创造飞行）
-        if (player.getAbilities().mayfly && player.hasEffect(com.qituo.dcc.effects.TalismanEffects.CHICKEN_POWER.get())) {
-            // 取消鸡兔之力
+        if (isChickenRabbitPowerActive(player)) {
             deactivateChickenRabbitPower(player);
         } else if (player.hasEffect(net.minecraft.world.effect.MobEffects.LEVITATION)) {
-            // 激活鸡兔之力（创造飞行）
             activateChickenRabbitPower(player);
         } else {
-            // 普通兔之力效果：增加移动速度
             activateRabbitPower(player);
         }
+    }
+    
+    /**
+     * 检查玩家是否激活了鸡兔之力
+     */
+    public static boolean isChickenRabbitPowerActive(Player player) {
+        CompoundTag persistentData = player.getPersistentData();
+        return persistentData.getBoolean(CHICKEN_RABBIT_POWER_KEY);
+    }
+    
+    /**
+     * 获取鸡兔之力等级
+     */
+    public static int getChickenRabbitPowerLevel(Player player) {
+        CompoundTag persistentData = player.getPersistentData();
+        return persistentData.getInt(CHICKEN_RABBIT_POWER_LEVEL);
     }
     
     /**
      * 取消鸡兔之力
      */
     private void deactivateChickenRabbitPower(Player player) {
-        // 关闭飞行
+        CompoundTag persistentData = player.getPersistentData();
+        persistentData.putBoolean(CHICKEN_RABBIT_POWER_KEY, false);
+        
         player.getAbilities().mayfly = false;
         player.getAbilities().flying = false;
-        // 移除鸡之力效果图标
         player.removeEffect(com.qituo.dcc.effects.TalismanEffects.CHICKEN_POWER.get());
-        // 同步能力变更
         player.onUpdateAbilities();
         
-        net.minecraft.network.chat.Component message = net.minecraft.network.chat.Component.translatable("dcc.chicken_rabbit_power_deactivated");
-        net.minecraft.network.chat.Component prefix = net.minecraft.network.chat.Component.translatable("dcc.mod_prefix");
-        player.sendSystemMessage(net.minecraft.network.chat.Component.literal("").append(prefix).append(message));
-
+        sendMessage(player, "dcc.chicken_rabbit_power_deactivated");
     }
     
     /**
      * 激活普通兔之力
      */
     private void activateRabbitPower(Player player) {
-        // 兔之力效果：增加移动速度
         player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
             com.qituo.dcc.effects.TalismanEffects.RABBIT_POWER.get(),
-            2 * 60 * 20, // 2分钟
-            0, // 等级I
-            false, // ambient
-            false, // 不显示粒子
-            true // 显示图标
+            2 * 60 * 20,
+            0,
+            false,
+            false,
+            true
         ));
         
-        // 增加移动速度
         player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
             net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED,
-            2 * 60 * 20, // 2分钟
-            3, // 等级IV
-            false, // ambient
-            false, // 不显示粒子
-            false // 不显示图标
+            2 * 60 * 20,
+            3,
+            false,
+            false,
+            false
         ));
         
-        // 瞬间移动：向前移动5格
         net.minecraft.core.Direction direction = player.getDirection();
         net.minecraft.core.BlockPos currentPos = player.blockPosition();
         net.minecraft.core.BlockPos newPos = currentPos.relative(direction, 5);
         
-        // 检查目标位置是否安全
         if (player.level().getBlockState(newPos).isAir() && player.level().getBlockState(newPos.above()).isAir()) {
             player.teleportTo(newPos.getX() + 0.5, newPos.getY(), newPos.getZ() + 0.5);
         }
@@ -82,29 +92,53 @@ public class RabbitTalisman extends TalismanBase {
      * 激活鸡兔之力（创造飞行）
      */
     private void activateChickenRabbitPower(Player player) {
-        // 移除漂浮效果
+        CompoundTag persistentData = player.getPersistentData();
+        persistentData.putBoolean(CHICKEN_RABBIT_POWER_KEY, true);
+        persistentData.putInt(CHICKEN_RABBIT_POWER_LEVEL, 1);
+        
         player.removeEffect(net.minecraft.world.effect.MobEffects.LEVITATION);
         
-        // 开启飞行
         player.getAbilities().mayfly = true;
         player.getAbilities().flying = true;
         
-        // 添加鸡兔之力效果图标
         player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
             com.qituo.dcc.effects.TalismanEffects.CHICKEN_POWER.get(),
-            Integer.MAX_VALUE, // 无限时间
-            1, // 等级II（区分普通鸡之力）
-            false, // ambient
-            false, // 不显示粒子
-            true // 显示图标
+            20 * 60 * 20,
+            1,
+            false,
+            false,
+            true
         ));
         
-        // 同步能力变更
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+            net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED,
+            20 * 60 * 20,
+            1,
+            false,
+            false,
+            false
+        ));
+        
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+            net.minecraft.world.effect.MobEffects.JUMP,
+            20 * 60 * 20,
+            2,
+            false,
+            false,
+            false
+        ));
+        
         player.onUpdateAbilities();
         
-        net.minecraft.network.chat.Component message = net.minecraft.network.chat.Component.translatable("dcc.chicken_rabbit_power_activated");
+        sendMessage(player, "dcc.chicken_rabbit_power_activated");
+    }
+    
+    /**
+     * 发送消息给玩家
+     */
+    protected void sendMessage(Player player, String key) {
+        net.minecraft.network.chat.Component message = net.minecraft.network.chat.Component.translatable(key);
         net.minecraft.network.chat.Component prefix = net.minecraft.network.chat.Component.translatable("dcc.mod_prefix");
         player.sendSystemMessage(net.minecraft.network.chat.Component.literal("").append(prefix).append(message));
-
     }
 }
