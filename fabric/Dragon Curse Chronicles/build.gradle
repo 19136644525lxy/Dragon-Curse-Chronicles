@@ -13,7 +13,7 @@ repositories {
         url = 'https://maven.fabricmc.net/'
     }
     flatDir {
-        dirs '../DC Render API/build/libs'
+        dirs '../../DC Render API/fabric/DC Render API/build/libs'
     }
 }
 
@@ -28,9 +28,9 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     // DC Render API 前置模组（使用 files() 直接引用 jar，避免 POM 解析问题）
-    modImplementation files("../DC Render API/build/libs/dcrapi-0.1.0-1.20.1Fabric.jar")
+    modImplementation files("../../DC Render API/fabric/DC Render API/build/libs/dcrapi-0.1.0-1.20.1Fabric.jar")
     // 同时包含 sources jar 以便调试
-    modCompileOnly files("../DC Render API/build/libs/dcrapi-0.1.0-1.20.1Fabric-sources.jar")
+    modCompileOnly files("../../DC Render API/fabric/DC Render API/build/libs/dcrapi-0.1.0-1.20.1Fabric-sources.jar")
 }
 
 processResources {
