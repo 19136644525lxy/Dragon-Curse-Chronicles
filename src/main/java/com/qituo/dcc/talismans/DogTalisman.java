@@ -46,13 +46,14 @@ public class DogTalisman extends TalismanBase {
             }
         }
         
-        // 获得短暂无敌时间（2秒）
+        // 狗之力效果：持续伤害吸收（30秒）
         player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
-            net.minecraft.world.effect.MobEffects.ABSORPTION,
-            2 * 20, // 2秒
-            4, // 等级V
-            false, // 不显示粒子
-            false // 不显示图标
+            com.qituo.dcc.effects.TalismanEffects.DOG_POWER.get(),
+            30 * 20, // 30秒
+            0,
+            false,
+            false,
+            true
         ));
     }
 }

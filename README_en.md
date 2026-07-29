@@ -36,7 +36,7 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 - **Usage**: Hold the Chicken Talisman and right-click to release, Shift+right-click to switch between Slow Falling Power and Levitation Power
 
 #### Dog Talisman
-- **Ability**: Provides life recovery, clears negative effects, and grants temporary invulnerability
+- **Ability**: Provides life recovery, clears negative effects, and grants sustained absorption
 - **Usage**: Hold the Dog Talisman and right-click to release
 
 #### Horse Talisman
@@ -59,6 +59,10 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 - **Ability**: Transforms specific blocks into corresponding creatures
 - **Usage**: Hold the Mouse Talisman and right-click on target blocks
 
+#### Sheep Talisman
+- **Ability**: Out-of-Body Power (invisibility, night vision, flight, wall-clipping, invulnerability)
+- **Usage**: Hold the Sheep Talisman and right-click to release
+
 ### Unimplemented Talismans
 
 #### Monkey Talisman
@@ -66,9 +70,6 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 
 #### Tiger Talisman
 - **Planned Function**: Good and Evil Separation (create good and evil clones of the player)
-
-#### Sheep Talisman
-- **Planned Function**: Out-of-Body Power (allow the soul to leave the body)
 
 ## Item Introduction
 

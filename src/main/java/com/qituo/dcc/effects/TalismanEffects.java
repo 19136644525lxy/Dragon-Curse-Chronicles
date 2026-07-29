@@ -93,11 +93,21 @@ public class TalismanEffects {
         }
     });
     
-    // 狗之力
+    // 狗之力 - 持续伤害吸收
     public static final RegistryObject<MobEffect> DOG_POWER = EFFECTS.register("dog_power", () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xFF0000) {
         @Override
         public void applyEffectTick(LivingEntity entity, int amplifier) {
-            // 永生效果
+            // 持续给予伤害吸收效果（等级V，持续2秒，刷新持续时间）
+            if (entity instanceof Player player && !player.level().isClientSide) {
+                player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                    net.minecraft.world.effect.MobEffects.ABSORPTION,
+                    2 * 20,
+                    4,
+                    false,
+                    false,
+                    true
+                ));
+            }
         }
         
         @Override
