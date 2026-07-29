@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "dcc:talisman_power_extractor",
+    "count": 1
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "b": {
+      "item": "minecraft:dragon_egg"
+    },
+    "c": {
+      "item": "dcc:talisman_base"
+    }
+  }
+}

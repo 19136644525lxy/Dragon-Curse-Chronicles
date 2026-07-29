@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "result": {
+    "item": "dcc:uncles_dried_puffer_fish",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "dcc:rabbit_talisman"
+    },
+    {
+      "item": "dcc:chicken_talisman"
+    },
+    {
+      "item": "dcc:dog_talisman"
+    },
+    {
+      "item": "dcc:pig_talisman"
+    },
+    {
+      "item": "dcc:dragon_talisman"
+    },
+    {
+      "item": "dcc:horse_talisman"
+    },
+    {
+      "item": "dcc:snake_talisman"
+    },
+    {
+      "item": "dcc:cow_talisman"
+    },
+    {
+      "item": "dcc:mouse_talisman"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "dcc:talisman_base",
+    "count": 1
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:bedrock"
+    },
+    "b": {
+      "item": "minecraft:dragon_breath"
+    }
+  }
+}

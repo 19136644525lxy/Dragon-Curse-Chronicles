@@ -1,0 +1,13 @@
+{
+  "message_id": "origin_end",
+  "scaling": "never",
+  "exhaustion": 0.0,
+  "effects": [],
+  "death_message_type": "player",
+  "bypasses_armor": true,
+  "bypasses_magic": true,
+  "bypasses_enchantments": true,
+  "bypasses_invulnerability": true,
+  "bypasses_shield": true,
+  "bypasses_effects": true
+}

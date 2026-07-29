@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "dcc:rabbit_talisman",
+    "count": 1
+  },
+  "pattern": [
+    "abc",
+    "bdb",
+    "cba"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:rabbit_foot"
+    },
+    "b": {
+      "item": "minecraft:sugar"
+    },
+    "c": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "d": {
+      "item": "dcc:talisman_base"
+    }
+  }
+}

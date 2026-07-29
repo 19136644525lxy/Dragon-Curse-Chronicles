@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "dcc:cow_talisman",
+    "count": 1
+  },
+  "pattern": [
+    "abc",
+    "def",
+    "ghi"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:golden_carrot"
+    },
+    "b": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "c": {
+      "item": "minecraft:cooked_porkchop"
+    },
+    "d": {
+      "item": "minecraft:milk_bucket"
+    },
+    "e": {
+      "item": "dcc:talisman_base"
+    },
+    "f": {
+      "item": "minecraft:egg"
+    },
+    "g": {
+      "item": "minecraft:cooked_mutton"
+    },
+    "h": {
+      "item": "minecraft:cooked_beef"
+    },
+    "i": {
+      "item": "minecraft:cooked_chicken"
+    }
+  }
+}
