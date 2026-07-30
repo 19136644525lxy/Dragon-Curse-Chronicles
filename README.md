@@ -2,15 +2,16 @@
 
 ## 模组概述
 
-Dragon Curse Chronicles是一个基于Minecraft Forge的模组，灵感来源于动画《成龙历险记》，为玩家提供了各种强大的符咒能力。该模组不仅实现了符咒的部分功能，还开发了自定义的粒子渲染API（DC Render API），用于创建各种华丽的粒子效果。
+Dragon Curse Chronicles 是一个灵感来源于动画《成龙历险记》的 Minecraft 模组，为玩家提供了各种强大的符咒能力。该模组同时支持 Forge 和 Fabric 两个模组加载器（1.20.1），并开发了自定义的粒子渲染 API（DC Render API），用于创建各种华丽的粒子效果。
 
-Jump to the English introduction:[README_en.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/6389b5969bf56083bc95ec9ec892a4a5c7c0cf46/README_en.md)
+Jump to the English introduction: [README_en.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/main/README_en.md)
 
 ## 功能特性
 
 - **十二符咒系统**：实现了多种符咒能力，包括龙符咒（火焰弹）、猪符咒（激光）等
-- **自定义粒子API**：开发了DC Render API，支持创建复杂的粒子动画效果
-- **Java与Kotlin混合开发**：核心功能使用Java实现，动画系统使用Kotlin实现
+- **双加载器支持**：同时支持 Forge 和 Fabric（1.20.1），功能对等
+- **自定义粒子 API**：开发了 DC Render API，支持创建复杂的粒子动画效果
+- **Java 与 Kotlin 混合开发**：核心功能使用 Java 实现，动画系统使用 Kotlin 实现
 - **网络同步**：实现了服务器与客户端之间的粒子效果同步
 - **性能优化**：采用高效的粒子管理和渲染机制
 - **始源之力附魔**：强大的附魔系统，提供无视防御的伤害能力
@@ -92,32 +93,60 @@ Jump to the English introduction:[README_en.md](https://github.com/19136644525lx
 
 ## 安装方法
 
-1. 确保已安装Minecraft Forge 1.20.1
-2. 下载Dragon Curse Chronicles模组的jar文件
-3. 将jar文件放入mods文件夹
+### Forge 版
+1. 确保已安装 Minecraft Forge 1.20.1（47.x 或更高版本）
+2. 下载 Dragon Curse Chronicles 与 DC Render API 的 Forge 版 jar 文件
+3. 将两个 jar 文件放入 mods 文件夹
+4. 启动游戏
+
+### Fabric 版
+1. 确保已安装 Fabric Loader 0.16.13 或更高版本，Fabric API 0.92.11+
+2. 下载 Dragon Curse Chronicles 与 DC Render API 的 Fabric 版 jar 文件
+3. 将两个 jar 文件放入 mods 文件夹
 4. 启动游戏，享受符咒的力量
 
 ## 开发说明
 
 ### 项目结构
 
-- `src/main/java/com/qituo/dcc/`：主要模组代码
-- `DC Render API/src/main/java/com/qituo/dcrapi/`：粒子API代码
-- `DC Render API/src/main/kotlin/com/qituo/dcrapi/`：Kotlin实现的动画系统
+主仓库（Dragon Curse Chronicles 主模组）：
+- `src/main/java/com/qituo/dcc/`：Forge 版主要模组代码
+- `fabric/Dragon Curse Chronicles/src/`：Fabric 版主要模组代码
+- `fabric/sources/`：Fabric 1.20.1 Yarn 映射源码（参考用）
+
+前置仓库（DC Render API）：
+- `src/main/java/com/qituo/dcrapi/`：Forge 版粒子 API 代码
+- `src/main/kotlin/com/qituo/dcrapi/`：Kotlin 实现的动画系统
+- `fabric/DC Render API/src/`：Fabric 版粒子 API 代码
 
 ### 构建项目
 
-1. 克隆项目到本地
-2. 使用Gradle构建项目：
+#### Forge 版
+1. 进入项目根目录
+2. 使用 Gradle 构建：
    ```bash
    ./gradlew build
    ```
-3. 构建产物将在`build/libs`目录中生成
+3. 构建产物在 `build/libs/` 目录中生成
+
+#### Fabric 版
+1. 进入 `fabric/Dragon Curse Chronicles/` 目录
+2. 使用 JDK 17+ 和 Gradle 构建：
+   ```bash
+   ./gradlew build
+   ```
+3. 构建产物在 `fabric/Dragon Curse Chronicles/build/libs/` 目录中生成
 
 ### 依赖
 
+#### Forge 版
 - Minecraft Forge 1.20.1-47.4.17
-- DC Render API 0.1.0+
+- DC Render API（Forge）0.1.0+
+
+#### Fabric 版
+- Fabric Loader 0.16.13+
+- Fabric API 0.92.11+1.20.1
+- DC Render API（Fabric）0.1.0+
 
 ## 未来计划
 
@@ -126,8 +155,8 @@ Jump to the English introduction:[README_en.md](https://github.com/19136644525lx
 
 ## 贡献
 
-欢迎对项目提出建议和贡献！如果您有任何问题或想法，请在GitHub上提交issue或pull request。
+欢迎对项目提出建议和贡献！如果您有任何问题或想法，请在 GitHub 上提交 issue 或 pull request。
 
 ## 许可证
 
-本项目采用QSUP许可证。详见LICENSE文件。
+本项目采用 MIT 许可证。详见 LICENSE 文件。

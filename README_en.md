@@ -2,13 +2,14 @@
 
 ## Mod Overview
 
-Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series "Jackie Chan Adventures", providing players with various powerful talisman abilities. The mod not only implements some of the talisman functions but also develops a custom particle rendering API (DC Render API) for creating various magnificent particle effects.
+Dragon Curse Chronicles is a Minecraft mod inspired by the animated series "Jackie Chan Adventures", providing players with various powerful talisman abilities. The mod supports both Forge and Fabric mod loaders (1.20.1), and develops a custom particle rendering API (DC Render API) for creating various magnificent particle effects.
 
-跳转至中文介绍： [README.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/6389b5969bf56083bc95ec9ec892a4a5c7c0cf46/README.md)
+跳转至中文介绍: [README.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/main/README.md)
 
 ## Features
 
 - **Twelve Talismans System**: Implements multiple talisman abilities, including the Dragon Talisman (fireball) and Pig Talisman (laser)
+- **Dual Loader Support**: Supports both Forge and Fabric (1.20.1) with feature parity
 - **Custom Particle API**: Developed DC Render API, supporting complex particle animation effects
 - **Java and Kotlin Hybrid Development**: Core functionality implemented in Java, animation system implemented in Kotlin
 - **Network Synchronization**: Achieves particle effect synchronization between server and client
@@ -92,32 +93,60 @@ Dragon Curse Chronicles is a Minecraft Forge mod inspired by the animated series
 
 ## Installation
 
-1. Ensure Minecraft Forge 1.20.1 is installed
-2. Download the Dragon Curse Chronicles mod jar file
-3. Place the jar file into the mods folder
+### Forge Version
+1. Ensure Minecraft Forge 1.20.1 (47.x or higher) is installed
+2. Download the Forge version jar files of Dragon Curse Chronicles and DC Render API
+3. Place both jar files into the mods folder
+4. Start the game
+
+### Fabric Version
+1. Ensure Fabric Loader 0.16.13 or higher, and Fabric API 0.92.11+ are installed
+2. Download the Fabric version jar files of Dragon Curse Chronicles and DC Render API
+3. Place both jar files into the mods folder
 4. Start the game and enjoy the power of the talismans
 
 ## Development Notes
 
 ### Project Structure
 
-- `src/main/java/com/qituo/dcc/`: Main mod code
-- `DC Render API/src/main/java/com/qituo/dcrapi/`: Particle API code
-- `DC Render API/src/main/kotlin/com/qituo/dcrapi/`: Kotlin-implemented animation system
+Main repository (Dragon Curse Chronicles main mod):
+- `src/main/java/com/qituo/dcc/`: Forge main mod code
+- `fabric/Dragon Curse Chronicles/src/`: Fabric main mod code
+- `fabric/sources/`: Fabric 1.20.1 Yarn mapping sources (for reference)
+
+Dependency repository (DC Render API):
+- `src/main/java/com/qituo/dcrapi/`: Forge particle API code
+- `src/main/kotlin/com/qituo/dcrapi/`: Kotlin-implemented animation system
+- `fabric/DC Render API/src/`: Fabric particle API code
 
 ### Building the Project
 
-1. Clone the project to your local machine
-2. Build the project using Gradle:
+#### Forge Version
+1. Enter the project root directory
+2. Build using Gradle:
    ```bash
    ./gradlew build
    ```
-3. The build product will be generated in the `build/libs` directory
+3. The build product will be generated in the `build/libs/` directory
+
+#### Fabric Version
+1. Enter the `fabric/Dragon Curse Chronicles/` directory
+2. Build using JDK 17+ and Gradle:
+   ```bash
+   ./gradlew build
+   ```
+3. The build product will be generated in `fabric/Dragon Curse Chronicles/build/libs/`
 
 ### Dependencies
 
+#### Forge Version
 - Minecraft Forge 1.20.1-47.4.17
-- DC Render API 0.1.0+
+- DC Render API (Forge) 0.1.0+
+
+#### Fabric Version
+- Fabric Loader 0.16.13+
+- Fabric API 0.92.11+1.20.1
+- DC Render API (Fabric) 0.1.0+
 
 ## Future Plans
 
@@ -130,4 +159,4 @@ Welcome to submit suggestions and contributions to the project! If you have any 
 
 ## License
 
-This project is licensed under the QSUP License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the LICENSE file for details.
