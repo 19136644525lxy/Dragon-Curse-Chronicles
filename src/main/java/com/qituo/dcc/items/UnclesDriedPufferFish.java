@@ -113,7 +113,7 @@ public class UnclesDriedPufferFish extends Item {
         LOGGER.info("[Uncle's Puffer Fish] Releasing laser");
         Vec3 lookVec = player.getLookAngle();
         Vec3 start = player.getEyePosition();
-        Vec3 end = start.add(lookVec.scale(20));
+        Vec3 end = start.add(lookVec.scale(50));
         
         LOGGER.info("[Uncle's Puffer Fish] Laser details - lookVec: {}, start: {}, end: {}", lookVec, start, end);
         
@@ -122,7 +122,7 @@ public class UnclesDriedPufferFish extends Item {
             LOGGER.info("[Uncle's Puffer Fish] Server side: processing laser damage");
             
             // 检测并伤害路径上的实体 - 增大AABB范围，确保能检测到更多实体
-            AABB laserAABB = new AABB(start, end).inflate(5.0); // 增大到5.0，确保能检测到更多实体
+            AABB laserAABB = new AABB(start, end).inflate(15.0); // 半径15格，扩大检测范围
             List<Entity> entities = level.getEntities(player, laserAABB);
             LOGGER.info("[Uncle's Puffer Fish] Found {} entities in laser path", entities.size());
             
@@ -191,8 +191,8 @@ public class UnclesDriedPufferFish extends Item {
         LOGGER.info("[Uncle's Puffer Fish] Generating laser particles, isClientSide: {}", level.isClientSide);
         
         // 生成更多粒子，使激光更明显
-        for (int i = 0; i < 2000; i++) { // 增加粒子数量到2000
-            double distance = i * 0.02; // 更密集的粒子
+        for (int i = 0; i < 2500; i++) { // 粒子数量增加到2500，覆盖50格
+            double distance = i * 0.02; // 每0.02格一个粒子，总长50格
             Vec3 pos = start.add(lookVec.scale(distance));
             
             // 添加火焰粒子

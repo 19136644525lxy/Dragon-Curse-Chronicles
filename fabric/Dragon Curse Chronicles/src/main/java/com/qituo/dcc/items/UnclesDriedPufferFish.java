@@ -96,14 +96,14 @@ public class UnclesDriedPufferFish extends Item {
         LOGGER.info("[Uncle's Puffer Fish] Releasing laser");
         Vec3d lookVec = player.getRotationVec(1.0F);
         Vec3d start = player.getEyePos();
-        Vec3d end = start.add(lookVec.multiply(20.0));
+        Vec3d end = start.add(lookVec.multiply(50.0));
 
         LOGGER.info("[Uncle's Puffer Fish] Laser details - lookVec: {}, start: {}, end: {}", lookVec, start, end);
 
         if (!world.isClient) {
             LOGGER.info("[Uncle's Puffer Fish] Server side: processing laser damage");
 
-            Box laserBox = new Box(start, end).expand(5.0);
+            Box laserBox = new Box(start, end).expand(15.0); // 半径15格，扩大检测范围
             List<Entity> entities = world.getOtherEntities(player, laserBox);
             LOGGER.info("[Uncle's Puffer Fish] Found {} entities in laser path", entities.size());
 
@@ -159,8 +159,8 @@ public class UnclesDriedPufferFish extends Item {
 
         LOGGER.info("[Uncle's Puffer Fish] Generating laser particles, isClient: {}", world.isClient);
 
-        for (int i = 0; i < 2000; i++) {
-            double distance = i * 0.02;
+        for (int i = 0; i < 2500; i++) { // 粒子数量增加到2500，覆盖50格
+            double distance = i * 0.02; // 每0.02格一个粒子，总长50格
             Vec3d pos = start.add(lookVec.multiply(distance));
 
             world.addParticle(ParticleTypes.FLAME, pos.x, pos.y, pos.z, 0, 0, 0);
