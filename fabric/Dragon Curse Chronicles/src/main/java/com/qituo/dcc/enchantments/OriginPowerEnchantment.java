@@ -1,5 +1,6 @@
 package com.qituo.dcc.enchantments;
 
+import com.qituo.dcc.damage.EntityBypassHelper;
 import com.qituo.dcc.damage.ModDamageSources;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -120,7 +121,13 @@ public class OriginPowerEnchantment extends Enchantment {
             try {
                 float damage = amount;
                 var damageSource = ModDamageSources.causeOriginEndDamage(player);
-                sourceEntity.damage(damageSource, damage);
+                
+                // 使用EntityBypassHelper确保伤害生效
+                if (sourceEntity instanceof LivingEntity livingSource) {
+                    EntityBypassHelper.killEntity(livingSource, damageSource, damage);
+                } else {
+                    sourceEntity.damage(damageSource, damage);
+                }
             } catch (Throwable e) {
                 e.printStackTrace();
             } finally {
@@ -144,12 +151,15 @@ public class OriginPowerEnchantment extends Enchantment {
                         if (trueDamage > 0) {
                             totalDamage += trueDamage;
                         }
+                        // 应用强化效果
+                        totalDamage = originEndDamageSource.applyEnhancements(target, totalDamage);
                     } catch (Throwable e) {
                         e.printStackTrace();
                     }
                 }
 
-                target.damage(damageSource, totalDamage);
+                // 使用EntityBypassHelper确保伤害生效并掉落物品
+                EntityBypassHelper.killEntity(target, damageSource, totalDamage);
 
                 try {
                     if (target.isUsingItem() && target.getActiveItem().getItem() instanceof net.minecraft.item.ShieldItem) {
@@ -159,15 +169,6 @@ public class OriginPowerEnchantment extends Enchantment {
                     }
                 } catch (Throwable e) {
                     e.printStackTrace();
-                }
-
-                // 1.20.1中invulnerableTime字段名为hurtTime，通过反射重置无敌帧
-                try {
-                    java.lang.reflect.Field field = LivingEntity.class.getDeclaredField("hurtTime");
-                    field.setAccessible(true);
-                    field.setInt(target, 0);
-                } catch (Throwable e) {
-                    // 反射失败则跳过，不影响核心逻辑
                 }
             }
         } catch (Throwable e) {

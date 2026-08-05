@@ -2,6 +2,7 @@ package com.qituo.dcc.items;
 
 import com.qituo.dcc.DragonCurseChronicles;
 import com.qituo.dcc.damage.DamagePresets;
+import com.qituo.dcc.damage.EntityBypassHelper;
 import com.qituo.dcc.damage.ModDamageSources;
 import com.qituo.dcc.enchantments.ModEnchantments;
 import com.qituo.dcc.sounds.ModSounds;
@@ -112,45 +113,52 @@ public class UnclesDriedPufferFish extends Item {
             for (Entity target : entities) {
                 if (target != player) {
                     LOGGER.info("[Uncle's Puffer Fish] Damaging entity: {} at position {} with high damage", target.getName().getString(), target.getPos());
-
+                    
                     if (target instanceof LivingEntity livingEntity) {
                         LOGGER.info("[Uncle's Puffer Fish] Entity health before: {}", livingEntity.getHealth());
                         var damageSource = ModDamageSources.causeOriginEndDamage(player, 10);
-
+                        
+                        // 针对Draconic Guardian的特殊处理
                         if (target.getClass().getName().equals("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianEntity")) {
                             LOGGER.info("[Uncle's Puffer Fish] Special handling for Draconic Guardian");
                             try {
                                 LOGGER.info("[Uncle's Puffer Fish] Setting Draconic Guardian shield to 0");
                                 java.lang.reflect.Method setShieldPowerMethod = target.getClass().getMethod("setShieldPower", float.class);
                                 setShieldPowerMethod.invoke(target, 0.0F);
-
+                                
                                 LOGGER.info("[Uncle's Puffer Fish] Getting Draconic Guardian head part");
                                 java.lang.reflect.Method getDragonPartsMethod = target.getClass().getMethod("getDragonParts");
                                 Object[] parts = (Object[]) getDragonPartsMethod.invoke(target);
-
+                                
                                 if (parts != null && parts.length > 0) {
                                     Object headPart = parts[0];
                                     LOGGER.info("[Uncle's Puffer Fish] Attacking Draconic Guardian head");
-
+                                    
                                     for (int i = 0; i < 5; i++) {
-                                        java.lang.reflect.Method attackEntityPartFromMethod = target.getClass().getMethod("attackEntityPartFrom", Class.forName("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianPartEntity"), Class.forName("net.minecraft.world.damagesource.DamageSource"), float.class);
+                                        java.lang.reflect.Method attackEntityPartFromMethod = target.getClass().getMethod("attackEntityPartFrom", Class.forName("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianPartEntity"), Class.forName("net.minecraft.entity.damage.DamageSource"), float.class);
                                         attackEntityPartFromMethod.invoke(target, headPart, player.getDamageSources().playerAttack(player), 1000.0F);
                                         LOGGER.info("[Uncle's Puffer Fish] Attack {} completed", i+1);
-
+                                        
                                         if (livingEntity.isDead()) {
                                             LOGGER.info("[Uncle's Puffer Fish] Draconic Guardian killed");
                                             break;
                                         }
                                     }
                                 }
+                                
+                                // 使用EntityBypassHelper确保击杀
+                                if (!livingEntity.isDead()) {
+                                    EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
+                                }
                             } catch (Exception e) {
                                 LOGGER.error("[Uncle's Puffer Fish] Failed to handle Draconic Guardian: {}", e.getMessage());
-                                livingEntity.damage(damageSource, damage);
+                                EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
                             }
                         } else {
-                            livingEntity.damage(damageSource, damage);
+                            // 对其他实体使用EntityBypassHelper确保击杀并掉落物品
+                            EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
                         }
-
+                        
                         LOGGER.info("[Uncle's Puffer Fish] Entity health after: {}", livingEntity.getHealth());
                     }
                 }

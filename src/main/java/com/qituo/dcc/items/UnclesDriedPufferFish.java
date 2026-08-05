@@ -2,6 +2,7 @@ package com.qituo.dcc.items;
 
 import com.qituo.dcc.DragonCurseChronicles;
 import com.qituo.dcc.damage.DamagePresets;
+import com.qituo.dcc.damage.EntityBypassHelper;
 import com.qituo.dcc.damage.ModDamageSources;
 import com.qituo.dcc.enchantments.ModEnchantments;
 import com.qituo.dcc.sounds.ModSounds;
@@ -171,14 +172,19 @@ public class UnclesDriedPufferFish extends Item {
                                         }
                                     }
                                 }
+                                
+                                // 使用EntityBypassHelper确保击杀
+                                if (!livingEntity.isDeadOrDying()) {
+                                    EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
+                                }
                             } catch (Exception e) {
                                 LOGGER.error("[Uncle's Puffer Fish] Failed to handle Draconic Guardian: {}", e.getMessage());
-                                // 失败时使用正常伤害方法
-                                livingEntity.hurt(damageSource, damage);
+                                // 失败时使用EntityBypassHelper
+                                EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
                             }
                         } else {
-                            // 对其他实体使用正常伤害方法
-                            livingEntity.hurt(damageSource, damage);
+                            // 对其他实体使用EntityBypassHelper确保击杀并掉落物品
+                            EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
                         }
                         
                         LOGGER.info("[Uncle's Puffer Fish] Entity health after: {}", livingEntity.getHealth());

@@ -1,5 +1,6 @@
 package com.qituo.dcc.enchantments;
 
+import com.qituo.dcc.damage.EntityBypassHelper;
 import com.qituo.dcc.damage.ModDamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -122,10 +123,15 @@ public class OriginPowerEnchantment extends Enchantment {
             player.addTag(TAG_ANTI_LOOP);
             
             try {
-                // 反弹伤害
+                // 反弹伤害 - 使用EntityBypassHelper确保伤害生效
                 float damage = event.getAmount();
                 var damageSource = ModDamageSources.causeOriginEndDamage(player);
-                source.hurt(damageSource, damage);
+                
+                if (source instanceof LivingEntity livingSource) {
+                    EntityBypassHelper.killEntity(livingSource, damageSource, damage);
+                } else {
+                    source.hurt(damageSource, damage);
+                }
                 
                 // 抵消部分伤害
                 event.setAmount(event.getAmount() * 0.75F);
@@ -155,14 +161,17 @@ public class OriginPowerEnchantment extends Enchantment {
                         if (trueDamage > 0) {
                             totalDamage += trueDamage;
                         }
+                        
+                        // 应用强化效果
+                        totalDamage = originEndDamageSource.applyEnhancements(target, totalDamage);
                     } catch (Throwable e) {
                         // 忽略异常
                         e.printStackTrace();
                     }
                 }
                 
-                // 一次性造成所有伤害
-                target.hurt(damageSource, totalDamage);
+                // 使用EntityBypassHelper确保伤害生效并掉落物品
+                EntityBypassHelper.killEntity(target, damageSource, totalDamage);
                 
                 // 破盾能力
                 try {
@@ -171,14 +180,6 @@ public class OriginPowerEnchantment extends Enchantment {
                             targetPlayer.disableShield(true);
                         }
                     }
-                } catch (Throwable e) {
-                    // 忽略异常
-                    e.printStackTrace();
-                }
-                
-                // 重置无敌时间，确保伤害能够完全生效
-                try {
-                    target.invulnerableTime = 0;
                 } catch (Throwable e) {
                     // 忽略异常
                     e.printStackTrace();

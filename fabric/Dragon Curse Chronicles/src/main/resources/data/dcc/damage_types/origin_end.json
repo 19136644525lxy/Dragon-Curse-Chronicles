@@ -9,5 +9,11 @@
   "bypasses_enchantments": true,
   "bypasses_invulnerability": true,
   "bypasses_shield": true,
-  "bypasses_effects": true
+  "bypasses_effects": true,
+  "tags": [
+    "dcc:is_absolute",
+    "dcc:origin_weakness",
+    "minecraft:bypasses_invulnerability",
+    "minecraft:bypasses_effects"
+  ]
 }

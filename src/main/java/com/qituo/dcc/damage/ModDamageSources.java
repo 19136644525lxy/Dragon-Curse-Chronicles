@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class ModDamageSources {
     public static final ResourceKey<DamageType> ORIGIN_END_SOURCE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(DragonCurseChronicles.MODID, "origin_end"));
     public static final TagKey<DamageType> ORIGIN_WEAKNESS = TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(DragonCurseChronicles.MODID, "origin_weakness"));
+    public static final TagKey<DamageType> IS_ABSOLUTE = TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(DragonCurseChronicles.MODID, "is_absolute"));
     
     public static DamageSource causeOriginEndDamage(Entity attacker) {
         return new OriginEndDamageSource(attacker);
@@ -25,8 +26,41 @@ public class ModDamageSources {
         return new OriginEndDamageSource(attacker).setLevel(level);
     }
     
+    /**
+     * 检查伤害类型是否为绝对伤害
+     * 绝对伤害会无视所有防御和免疫效果
+     */
+    public static boolean isAbsolute(net.minecraft.world.damagesource.DamageSource damageSource) {
+        if (damageSource == null) {
+            return false;
+        }
+        return damageSource.typeHolder().is(IS_ABSOLUTE);
+    }
+    
+    /**
+     * 检查伤害类型是否具有始源弱点效果
+     * 始源弱点效果会对特定实体造成额外伤害
+     */
+    public static boolean isOriginWeakness(net.minecraft.world.damagesource.DamageSource damageSource) {
+        if (damageSource == null) {
+            return false;
+        }
+        return damageSource.typeHolder().is(ORIGIN_WEAKNESS);
+    }
+    
+    /**
+     * 检查伤害类型是否为始源终结伤害
+     */
+    public static boolean isOriginEndDamage(net.minecraft.world.damagesource.DamageSource damageSource) {
+        if (damageSource == null) {
+            return false;
+        }
+        return damageSource.typeHolder().is(ORIGIN_END_SOURCE);
+    }
+    
     public static class OriginEndDamageSource extends DamageSource {
         private int level = 1;
+        private boolean absoluteDamage = true;
         
         public OriginEndDamageSource(Entity source) {
             super(getDamageTypeHolder(source), source);
@@ -49,6 +83,36 @@ public class ModDamageSources {
             return this;
         }
         
+        /**
+         * 设置是否为绝对伤害
+         * 绝对伤害会无视所有防御和免疫效果
+         */
+        public OriginEndDamageSource setAbsolute(boolean absolute) {
+            this.absoluteDamage = absolute;
+            return this;
+        }
+        
+        /**
+         * 检查是否为绝对伤害
+         */
+        public boolean isAbsolute() {
+            return absoluteDamage;
+        }
+        
+        /**
+         * 检查是否具有始源弱点效果
+         */
+        public boolean isOriginWeakness() {
+            return this.typeHolder().is(ORIGIN_WEAKNESS);
+        }
+        
+        /**
+         * 获取伤害等级
+         */
+        public int getLevel() {
+            return level;
+        }
+        
         @Override
         public Component getLocalizedDeathMessage(LivingEntity entity) {
             Entity sourceEntity = this.getDirectEntity();
@@ -66,39 +130,41 @@ public class ModDamageSources {
             return false;
         }
         
-        public boolean isBypassArmor() {
-            return true; // 无视护甲
-        }
-        
-        public boolean isBypassMagic() {
-            return true; // 无视魔法抗性
-        }
-        
-        public boolean isBypassInvulnerable() {
-            return true; // 无视无敌状态
-        }
-        
-        public boolean isBypassShield() {
-            return true; // 无视护盾
-        }
-        
         @Override
         public float getFoodExhaustion() {
             return 0.0F; // 不消耗饱食度
         }
         
-        public boolean isFire() {
-            return false; // 不是火焰伤害
-        }
-        
-        public boolean isExplosion() {
-            return false; // 不是爆炸伤害
-        }
-        
-        // 额外的伤害效果
+        /**
+         * 获取真伤部分
+         * @param baseDamage 基础伤害
+         * @return 真伤部分
+         */
         public float getTrueDamage(float baseDamage) {
-            // 50%的伤害作为绝对真伤
-            return baseDamage * 0.5F;
+            // 100%的伤害作为绝对真伤
+            return baseDamage;
+        }
+        
+        /**
+         * 应用强化效果
+         * @param entity 目标实体
+         * @param damage 伤害值
+         * @return 实际造成的伤害
+         */
+        public float applyEnhancements(LivingEntity entity, float damage) {
+            float finalDamage = damage;
+            
+            // 如果目标对始源伤害有弱点，增加伤害
+            if (isOriginWeakness()) {
+                finalDamage *= 1.5f; // 弱点加成50%
+            }
+            
+            // 根据等级增加额外伤害
+            if (level > 1) {
+                finalDamage *= (1.0f + (level - 1) * 0.1f); // 每级增加10%伤害
+            }
+            
+            return finalDamage;
         }
     }
 }
