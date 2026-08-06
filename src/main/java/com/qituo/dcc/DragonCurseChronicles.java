@@ -32,6 +32,9 @@ public class DragonCurseChronicles {
     public DragonCurseChronicles() {
         com.qituo.dcc.config.MeteorShowerConfig.loadConfig();
         com.qituo.dcc.config.TalismanConfig.loadConfig();
+
+        // 注册网络通道（始源光环开关切换等）
+        com.qituo.dcc.network.ModNetwork.register();
         
         TalismanItems.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         TalismanCreativeTab.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
@@ -40,6 +43,8 @@ public class DragonCurseChronicles {
         com.qituo.dcc.enchantments.ModEnchantments.ENCHANTMENTS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         com.qituo.dcc.entity.EntityTypes.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         MENUS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
+        // 注册自定义配方序列化器（始源之力附魔书升级合成等）
+        com.qituo.dcc.recipes.ModRecipeSerializers.RECIPE_SERIALIZERS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         
         MinecraftForge.EVENT_BUS.addListener(this::onReload);
         MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);

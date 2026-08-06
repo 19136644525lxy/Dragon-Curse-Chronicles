@@ -18,13 +18,36 @@ import net.minecraft.world.World;
 
 public class OriginPowerEnchantment extends Enchantment {
 
+    /** 附魔台/村民交易可获取的最大等级，超过此等级只能通过合成获得 */
+    public static final int MAX_TABLE_LEVEL = 5;
+
     public OriginPowerEnchantment(Rarity rarity, EnchantmentTarget target, EquipmentSlot... slots) {
         super(rarity, target, slots);
     }
 
+    /**
+     * 附魔台最低消耗
+     * 1级=10（约30级玩家可触发），每级递增 15，让5级需55级玩家
+     * 6级及以上使用消耗远超附魔台上限（200+），确保无法在附魔台刷出
+     */
     @Override
-    public int getMinLevel() {
-        return 20;
+    public int getMinPower(int level) {
+        if (level <= MAX_TABLE_LEVEL) {
+            return 10 + (level - 1) * 15;
+        }
+        return 200 + (level - MAX_TABLE_LEVEL) * 30;
+    }
+
+    /**
+     * 附魔台最高消耗
+     * 拉开等级差距，让高等级在附魔台几乎不可能刷出
+     */
+    @Override
+    public int getMaxPower(int level) {
+        if (level <= MAX_TABLE_LEVEL) {
+            return getMinPower(level) + 10;
+        }
+        return getMinPower(level) + 50;
     }
 
     @Override
@@ -32,14 +55,21 @@ public class OriginPowerEnchantment extends Enchantment {
         return 10;
     }
 
+    /**
+     * 不再是宝藏附魔 → 让附魔台能刷出
+     * 注意：isTreasure=true 会阻止附魔台刷出
+     */
     @Override
     public boolean isTreasure() {
-        return true;
+        return false;
     }
 
+    /**
+     * 允许村民交易刷出1-5级附魔书
+     */
     @Override
     public boolean isAvailableForEnchantedBookOffer() {
-        return false;
+        return true;
     }
 
     private static final String TAG_ANTI_LOOP = "temp$OriginPowerEnchantTag";

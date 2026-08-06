@@ -106,5 +106,10 @@
   "dcc.message.meteor_shower.command.config.disabled": "[流星雨] 流星雨事件已禁用",
   "dcc.message.meteor_shower.command.config.status": "[流星雨] 流星雨配置状态：%s",
   "dcc.message.meteor_shower.command.config.enabled_short": "已启用",
-  "dcc.message.meteor_shower.command.config.disabled_short": "已禁用"
+  "dcc.message.meteor_shower.command.config.disabled_short": "已禁用",
+
+  "key.categories.dcc": "龙咒异闻录",
+  "key.dcc.toggle_aura": "切换始源光环",
+  "dcc.message.aura.enabled": "始源光环已启用",
+  "dcc.message.aura.disabled": "始源光环已禁用"
 }

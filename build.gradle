@@ -72,11 +72,17 @@ repositories {
         dirs 'libs'
     }
     mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation project(':DC Render API')
+    // Kotlin stdlib（DC Render API的Kotlin代码运行时需要）
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.9.22"
+    // KotlinForForge打包库（DC Render API运行时依赖）
+    implementation files("DC Render API/libs/kotlinforforge-4.12.0-all.jar")
 }
 
 minecraft {

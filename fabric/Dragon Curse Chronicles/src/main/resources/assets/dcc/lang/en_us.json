@@ -110,5 +110,10 @@
   "dcc.message.meteor_shower.command.config.disabled": "[Meteor Shower] Meteor shower event has been disabled",
   "dcc.message.meteor_shower.command.config.status": "[Meteor Shower] Meteor shower config status: %s",
   "dcc.message.meteor_shower.command.config.enabled_short": "Enabled",
-  "dcc.message.meteor_shower.command.config.disabled_short": "Disabled"
+  "dcc.message.meteor_shower.command.config.disabled_short": "Disabled",
+
+  "key.categories.dcc": "Dragon Curse Chronicles",
+  "key.dcc.toggle_aura": "Toggle Origin Aura",
+  "dcc.message.aura.enabled": "Origin Aura enabled",
+  "dcc.message.aura.disabled": "Origin Aura disabled"
 }

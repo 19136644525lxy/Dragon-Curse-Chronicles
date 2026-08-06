@@ -23,5 +23,11 @@ public class ClientInit implements ClientModInitializer {
     public void onInitializeClient() {
         // 注册自定义实体渲染器
         EntityRendererRegistry.register(EntityTypes.DRAGON_FIREBALL, DragonFireballRenderer::new);
+
+        // 注册按键绑定（切换始源光环开关等）
+        ModKeyBindings.register();
+
+        // 注册客户端按键事件处理（检测按键按下并发包）
+        ClientKeyEventHandler.register();
     }
 }

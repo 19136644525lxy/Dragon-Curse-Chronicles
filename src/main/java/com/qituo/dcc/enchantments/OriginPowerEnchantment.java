@@ -6,30 +6,61 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * 始源之力附魔
+ *
+ * 攻击效果（本类）：
+ * - 攻击时触发始源终结伤害（无视护甲/护盾/无敌帧/附魔保护）
+ * - 伤害值随附魔等级递增（1级66 → 10级5201314）
+ * - 破盾能力
+ *
+ * 盔甲效果（OriginPowerArmorHandler）：
+ * - 多件叠加，总等级驱动
+ * - 反弹/减伤/护盾/再生/免疫击退/光环，阶梯式解锁
+ */
 @Mod.EventBusSubscriber
 public class OriginPowerEnchantment extends Enchantment {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OriginPowerEnchantment.class);
+
+    /** 附魔台/村民交易可获取的最大等级，超过此等级只能通过合成获得 */
+    public static final int MAX_TABLE_LEVEL = 5;
 
     public OriginPowerEnchantment(Rarity p_44676_, EquipmentSlot... p_44678_) {
         super(p_44676_, EnchantmentCategory.ARMOR, p_44678_);
     }
 
+    /**
+     * 附魔台最低消耗
+     * 1级=10（约30级玩家可触发），每级递增 15，让5级需55级玩家
+     * 6级及以上使用消耗远超附魔台上限（200+），确保无法在附魔台刷出
+     */
     @Override
     public int getMinCost(int level) {
-        return 20 * level;
+        if (level <= MAX_TABLE_LEVEL) {
+            return 10 + (level - 1) * 15;
+        }
+        return 200 + (level - MAX_TABLE_LEVEL) * 30;
     }
 
+    /**
+     * 附魔台最高消耗
+     * 拉开等级差距，让高等级在附魔台几乎不可能刷出
+     */
     @Override
     public int getMaxCost(int level) {
-        return super.getMinCost(level) + 50;
+        if (level <= MAX_TABLE_LEVEL) {
+            return getMinCost(level) + 10;
+        }
+        return getMinCost(level) + 50;
     }
 
     @Override
@@ -37,18 +68,27 @@ public class OriginPowerEnchantment extends Enchantment {
         return 10;
     }
 
+    /**
+     * 不再是宝藏附魔 → 让附魔台能刷出
+     * 注意：Forge 的 isTreasureOnly=true 会阻止附魔台刷出
+     */
     @Override
     public boolean isTreasureOnly() {
-        return true;
-    }
-
-    @Override
-    public boolean isTradeable() {
         return false;
     }
 
-    private static final String TAG_ANTI_LOOP = "temp$OriginPowerEnchantTag";
+    /**
+     * 允许村民交易
+     * 村民交易等级由 VillagerTradesEvent 控制（见 ModVillagerTrades）
+     */
+    @Override
+    public boolean isTradeable() {
+        return true;
+    }
+
     private static final String TAG_TARGET_PROCESSED = "temp$OriginPowerTargetProcessed";
+
+    // ==================== 攻击效果 ====================
 
     @SubscribeEvent
     public static void onLivingAttack(LivingAttackEvent event) {
@@ -57,103 +97,44 @@ public class OriginPowerEnchantment extends Enchantment {
             if (event.getSource() instanceof ModDamageSources.OriginEndDamageSource) {
                 return;
             }
-            
+
             if (event.getSource().getEntity() instanceof Player player && event.getEntity() instanceof LivingEntity) {
                 LivingEntity target = (LivingEntity) event.getEntity();
-                
+
                 // 避免同一目标在同一帧内被多次处理
                 if (target.getTags().contains(TAG_TARGET_PROCESSED)) {
                     return;
                 }
-                
-                // 检查主手
+
+                // 取主手/副手中附魔等级最高的一把武器
                 int mainHandLevel = player.getMainHandItem().getEnchantmentLevel(ModEnchantments.ORIGIN_POWER.get());
                 int offHandLevel = player.getOffhandItem().getEnchantmentLevel(ModEnchantments.ORIGIN_POWER.get());
-                
-                // 取最高等级的附魔
                 int maxLevel = Math.max(mainHandLevel, offHandLevel);
+
                 if (maxLevel > 0) {
-                    // 添加处理标签
                     target.addTag(TAG_TARGET_PROCESSED);
                     try {
                         applyOriginDamage(player, target, maxLevel);
                     } finally {
-                        // 移除处理标签
                         target.removeTag(TAG_TARGET_PROCESSED);
                     }
                 }
             }
         } catch (Throwable e) {
-            // 忽略所有异常，防止与其他模组冲突导致崩溃
-            e.printStackTrace();
+            LOGGER.error("OriginPower attack failed: {}", e.getMessage());
         }
     }
 
-    // 伤害反弹效果
-    @SubscribeEvent
-    public static void onLivingHurt(LivingHurtEvent event) {
-        try {
-            if (event.getEntity() instanceof Player player && !player.level().isClientSide) {
-                // 检查是否穿戴了带有始源之力附魔的护甲
-                for (EquipmentSlot slot : EquipmentSlot.values()) {
-                    if (slot.getType() == EquipmentSlot.Type.ARMOR) {
-                        ItemStack stack = player.getItemBySlot(slot);
-                        int level = stack.getEnchantmentLevel(ModEnchantments.ORIGIN_POWER.get());
-                        if (level > 0) {
-                            applyDamageReflection(player, event, level);
-                            break;
-                        }
-                    }
-                }
-            }
-        } catch (Throwable e) {
-            // 忽略所有异常，防止与其他模组冲突导致崩溃
-            e.printStackTrace();
-        }
-    }
-
-    // 应用伤害反弹
-    private static void applyDamageReflection(Player player, LivingHurtEvent event, int level) {
-        try {
-            if (Math.random() >= level / 100.0F) return; // 概率：等级/100
-            
-            Entity source = event.getSource().getEntity();
-            if (source == null || source == player || player.getTags().contains(TAG_ANTI_LOOP)) return;
-            
-            player.addTag(TAG_ANTI_LOOP);
-            
-            try {
-                // 反弹伤害 - 使用EntityBypassHelper确保伤害生效
-                float damage = event.getAmount();
-                var damageSource = ModDamageSources.causeOriginEndDamage(player);
-                
-                if (source instanceof LivingEntity livingSource) {
-                    EntityBypassHelper.killEntity(livingSource, damageSource, damage);
-                } else {
-                    source.hurt(damageSource, damage);
-                }
-                
-                // 抵消部分伤害
-                event.setAmount(event.getAmount() * 0.75F);
-            } catch (Throwable e) {
-                // 忽略异常
-                e.printStackTrace();
-            } finally {
-                player.removeTag(TAG_ANTI_LOOP);
-            }
-        } catch (Throwable e) {
-            // 忽略所有异常，防止与其他模组冲突导致崩溃
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * 应用始源终结伤害
+     * 基础伤害 + 100%真伤 + 强化加成 + 五重击杀链保障死亡
+     */
     private static void applyOriginDamage(Player player, LivingEntity target, int level) {
         try {
             if (level > 0 && level <= 10) {
                 float damage = com.qituo.dcc.damage.DamagePresets.getDamage(level);
                 var damageSource = ModDamageSources.causeOriginEndDamage(player, level);
-                
-                // 计算总伤害（包含真伤）
+
                 float totalDamage = damage;
                 if (damageSource instanceof ModDamageSources.OriginEndDamageSource originEndDamageSource) {
                     try {
@@ -161,19 +142,16 @@ public class OriginPowerEnchantment extends Enchantment {
                         if (trueDamage > 0) {
                             totalDamage += trueDamage;
                         }
-                        
-                        // 应用强化效果
                         totalDamage = originEndDamageSource.applyEnhancements(target, totalDamage);
                     } catch (Throwable e) {
-                        // 忽略异常
-                        e.printStackTrace();
+                        LOGGER.debug("Enhancement failed: {}", e.getMessage());
                     }
                 }
-                
-                // 使用EntityBypassHelper确保伤害生效并掉落物品
+
+                // 五重击杀链确保伤害生效并掉落物品
                 EntityBypassHelper.killEntity(target, damageSource, totalDamage);
-                
-                // 破盾能力
+
+                // 破盾
                 try {
                     if (target.isUsingItem() && target.getUseItem().getItem() instanceof net.minecraft.world.item.ShieldItem) {
                         if (target instanceof Player targetPlayer) {
@@ -181,19 +159,16 @@ public class OriginPowerEnchantment extends Enchantment {
                         }
                     }
                 } catch (Throwable e) {
-                    // 忽略异常
-                    e.printStackTrace();
+                    LOGGER.debug("Shield disable failed: {}", e.getMessage());
                 }
             }
         } catch (Throwable e) {
-            // 忽略所有异常，防止与其他模组冲突导致崩溃
-            e.printStackTrace();
+            LOGGER.error("applyOriginDamage failed: {}", e.getMessage());
         }
     }
 
     @Override
-    public boolean canEnchant(ItemStack stack) {
-        // 允许附魔在任何武器、弓弩和护甲上
+    public boolean canEnchant(net.minecraft.world.item.ItemStack stack) {
         return stack.getItem() instanceof net.minecraft.world.item.SwordItem ||
                stack.getItem() instanceof net.minecraft.world.item.AxeItem ||
                stack.getItem() instanceof net.minecraft.world.item.BowItem ||

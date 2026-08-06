@@ -5,7 +5,9 @@ import com.qituo.dcc.damage.DamagePresets;
 import com.qituo.dcc.damage.EntityBypassHelper;
 import com.qituo.dcc.damage.ModDamageSources;
 import com.qituo.dcc.enchantments.ModEnchantments;
+import com.qituo.dcc.particles.SmartParticleDispatcher;
 import com.qituo.dcc.sounds.ModSounds;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
+import org.joml.Vector3f;
 import java.util.List;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
@@ -193,28 +197,80 @@ public class UnclesDriedPufferFish extends Item {
             }
         }
         
-        // 生成粒子效果 - 客户端和服务器端都生成
-        LOGGER.info("[Uncle's Puffer Fish] Generating laser particles, isClientSide: {}", level.isClientSide);
-        
-        // 生成更多粒子，使激光更明显
-        for (int i = 0; i < 2500; i++) { // 粒子数量增加到2500，覆盖50格
-            double distance = i * 0.02; // 每0.02格一个粒子，总长50格
-            Vec3 pos = start.add(lookVec.scale(distance));
-            
-            // 添加火焰粒子
-            level.addParticle(ParticleTypes.FLAME, pos.x, pos.y, pos.z, 0, 0, 0);
-            
-            // 添加绿色粒子效果
-            level.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.x, pos.y, pos.z, 0, 0, 0);
-            
-            // 添加更多绿色粒子
-            level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, pos.x, pos.y, pos.z, 0, 0, 0);
-            
-            // 添加白色粒子，使激光更明亮
-            level.addParticle(ParticleTypes.WHITE_ASH, pos.x, pos.y, pos.z, 0, 0, 0);
-            
-            // 添加火花粒子
-            level.addParticle(ParticleTypes.SPIT, pos.x, pos.y, pos.z, 0, 0, 0);
+        // === 粒子生成：通过 SmartParticleDispatcher（自研智能调度器）===
+        // 优化点：
+        // 1. 服务端发包，绕过客户端粒子模组的 Mixin 拦截（同原方案）
+        // 2. 智能分帧：每帧120个包，避免单帧爆卡
+        // 3. LOD 距离衰减：0-10格全密度 / 10-30格半密度 / 30格+ 1/3密度
+        // 4. 渐进式动画：粒子从玩家向远处逐帧延伸，形成"激光射出"效果
+        // 5. 颜色对象池：复用 DustParticleOptions，减少 GC
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+            LOGGER.info("[Uncle's Puffer Fish] === PARTICLE SMART DISPATCH START === player: {}", player.getName().getString());
+
+            // 计算激光方向的垂直平面（用于螺旋环绕）
+            Vec3 up = new Vec3(0, 1, 0);
+            if (Math.abs(lookVec.dot(up)) > 0.99) {
+                up = new Vec3(1, 0, 0);
+            }
+            Vec3 normal = lookVec.cross(up).normalize();
+            Vec3 binormal = lookVec.cross(normal).normalize();
+
+            double spiralRadius = 0.35;
+            double spiralFrequency = 0.8;
+            // 50格激光分400段（原200段的2倍），每段0.125格更细腻；经LOD后约699粒子（实际入队数）
+            int segments = 400;
+            float particleSize = 1.5F;
+            double stepLen = 50.0 / segments; // 动态步长
+
+            // 渐变色：分段插值
+            Vector3f mainStart = new Vector3f(0.2F, 0.8F, 0.2F);
+            Vector3f mainEnd = new Vector3f(0.3F, 1.0F, 0.4F);
+            Vector3f spiralAStart = new Vector3f(0.2F, 1.0F, 0.3F);
+            Vector3f spiralAEnd = new Vector3f(0.0F, 1.0F, 1.0F);
+            Vector3f spiralBStart = new Vector3f(0.8F, 0.2F, 1.0F);
+            Vector3f spiralBEnd = new Vector3f(1.0F, 0.4F, 0.8F);
+
+            // 预构建 candidate 列表（按距离从近到远，同index对应三段粒子的距离相同）
+            java.util.ArrayList<SmartParticleDispatcher.LaserParticleCandidate> candidates =
+                    new java.util.ArrayList<>(segments * 3);
+            int candidateIndex = 0;
+
+            for (int i = 0; i < segments; i++) {
+                double distance = i * stepLen;
+                Vec3 centerPos = start.add(lookVec.scale(distance));
+                float ratio = (float) i / (segments - 1);
+
+                // === 主激光：直线，分段渐变 ===
+                Vector3f mainColor = new Vector3f(mainStart).lerp(mainEnd, ratio);
+                candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
+                        candidateIndex++, distance, mainColor, particleSize,
+                        centerPos.x, centerPos.y, centerPos.z));
+
+                // === 环绕束A：顺时针螺旋 ===
+                double angleA = distance * spiralFrequency;
+                Vec3 offsetA = normal.scale(Math.cos(angleA) * spiralRadius)
+                        .add(binormal.scale(Math.sin(angleA) * spiralRadius));
+                Vector3f colorA = new Vector3f(spiralAStart).lerp(spiralAEnd, ratio);
+                candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
+                        candidateIndex++, distance, colorA, particleSize,
+                        centerPos.x + offsetA.x, centerPos.y + offsetA.y, centerPos.z + offsetA.z));
+
+                // === 环绕束B：逆时针螺旋（相位差180°） ===
+                double angleB = distance * spiralFrequency + Math.PI;
+                Vec3 offsetB = normal.scale(Math.cos(angleB) * spiralRadius)
+                        .add(binormal.scale(Math.sin(angleB) * spiralRadius));
+                Vector3f colorB = new Vector3f(spiralBStart).lerp(spiralBEnd, ratio);
+                candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
+                        candidateIndex++, distance, colorB, particleSize,
+                        centerPos.x + offsetB.x, centerPos.y + offsetB.y, centerPos.z + offsetB.z));
+            }
+
+            // progressive=true：启用渐进式（近→远逐帧延伸，"激光射出"动画）
+            SmartParticleDispatcher.submitLaserParticles(serverLevel, candidates, true);
+            LOGGER.info("[Uncle's Puffer Fish] === PARTICLE SMART DISPATCH END === candidates submitted: {}, pending: {}",
+                    candidates.size(), SmartParticleDispatcher.pendingSize());
+        } else {
+            LOGGER.warn("[Uncle's Puffer Fish] Particle generation skipped - not server side or not ServerLevel");
         }
         
         // 播放额外的音效，使激光更有冲击力
@@ -226,17 +282,17 @@ public class UnclesDriedPufferFish extends Item {
         // 添加使用冷却，5秒（100刻）
         player.getCooldowns().addCooldown(this, 100);
     }
-    
+
     private boolean isPointInLine(Vec3 start, Vec3 end, Vec3 point, double radius) {
         // 计算点到线段的距离
         Vec3 lineVec = end.subtract(start);
         Vec3 pointVec = point.subtract(start);
         double lineLengthSqr = lineVec.lengthSqr();
-        
+
         if (lineLengthSqr == 0) {
             return point.distanceToSqr(start) <= radius * radius;
         }
-        
+
         double t = Math.max(0, Math.min(1, pointVec.dot(lineVec) / lineLengthSqr));
         Vec3 closestPoint = start.add(lineVec.scale(t));
         return point.distanceToSqr(closestPoint) <= radius * radius;

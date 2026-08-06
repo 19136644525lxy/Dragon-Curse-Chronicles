@@ -66,6 +66,12 @@ public class DragonCurseChronicles implements ModInitializer {
         EntityTypes.initialize();
         ModSounds.initialize();
 
+        // 注册自定义配方序列化器（始源之力附魔书升级合成等）
+        com.qituo.dcc.recipes.ModRecipeSerializers.initialize();
+
+        // 注册网络通道（始源光环开关切换等）
+        com.qituo.dcc.network.ModNetwork.register();
+
         // 注册命令
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             com.qituo.dcc.commands.TalismanConfigCommand.register(dispatcher);
@@ -79,6 +85,8 @@ public class DragonCurseChronicles implements ModInitializer {
             if (overworld != null) {
                 com.qituo.dcc.events.MeteorShowerEvent.onServerTick(overworld);
                 com.qituo.dcc.events.TalismanEffectsEvent.onServerTick(overworld);
+                // 始源之力盔甲效果（护盾/再生/光环等周期性效果）
+                com.qituo.dcc.enchantments.OriginPowerArmorHandler.onServerTick(overworld);
             }
         });
 
