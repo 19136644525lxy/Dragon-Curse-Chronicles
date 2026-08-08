@@ -1,0 +1,44 @@
+{
+    "mouse_talisman":[
+        "adorablehamsterpets:hamster",
+        "hamsters:hamster",
+        "spawn:hamster"
+    ],
+    "cow_talisman":[
+        "minecraft:cow"
+    ],
+    "tiger_talisman":[
+        "alexsmobs:tiger"
+    ],
+    "rabbit_talisman":[
+        "minecraft:rabbit"
+    ],
+    "dragon_talisman":[
+        "minecraft:end_dragon"
+    ],
+    "snake_talisman":[
+        "twilightforest:naga" ,
+        "naturalist:coral_snake" ,
+        "kimetsunoyaiba:sneak"
+    ],
+    "horse_talisman":[
+        "minecraft:horse",
+        "minecraft:skeleton_horse",
+        "minecraft:zombie_horse"
+    ],
+    "sheep_talisman":[
+        "minecraft:sheep"
+    ],
+    "monkey_talisman":[
+        "chang_sheng_jue:monkey"
+    ],
+    "chicken_talisman":[
+        "minecraft:chicken"
+    ],
+    "dog_talisman":[
+        "minecraft:wolf"
+    ],
+    "pig_talisman":[
+        "minecraft:pig"
+    ]
+}

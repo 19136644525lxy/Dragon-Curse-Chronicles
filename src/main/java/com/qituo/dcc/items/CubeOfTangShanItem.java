@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import com.qituo.dcc.DragonCurseChronicles;
 import com.qituo.dcc.TalismanItems;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -162,7 +164,7 @@ public class CubeOfTangShanItem extends Item {
         offhandStack.shrink(1);
         
         // 生成符咒
-        ItemStack talismanStack = new ItemStack(ForgeRegistries.ITEMS.getValue(talismanRL));
+        ItemStack talismanStack = new ItemStack(BuiltInRegistries.ITEM.get(talismanRL));
         if (!player.getInventory().add(talismanStack)) {
             player.drop(talismanStack, false);
         }

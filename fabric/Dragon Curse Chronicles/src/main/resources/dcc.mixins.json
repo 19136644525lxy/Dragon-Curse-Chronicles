@@ -2,6 +2,7 @@
     "required": true,
     "package": "com.qituo.dcc.mixin",
     "compatibilityLevel": "JAVA_17",
+    "refmap": "dcc.refmap.json",
     "mixins": [
         "PlayerPersistentDataMixin",
         "LivingEntityMixin",

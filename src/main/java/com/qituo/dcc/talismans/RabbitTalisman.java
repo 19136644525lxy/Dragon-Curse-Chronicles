@@ -49,8 +49,9 @@ public class RabbitTalisman extends TalismanBase {
         CompoundTag persistentData = player.getPersistentData();
         persistentData.putBoolean(CHICKEN_RABBIT_POWER_KEY, false);
         
-        player.getAbilities().mayfly = false;
-        player.getAbilities().flying = false;
+        // 恢复创造/旁观模式的飞行权限，非创造模式才关闭
+        player.getAbilities().mayfly = player.isCreative() || player.isSpectator();
+        player.getAbilities().flying = player.getAbilities().mayfly && player.getAbilities().flying;
         player.removeEffect(com.qituo.dcc.effects.TalismanEffects.CHICKEN_POWER.get());
         player.onUpdateAbilities();
         

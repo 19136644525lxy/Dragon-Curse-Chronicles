@@ -54,8 +54,9 @@ public class RabbitTalisman extends TalismanBase {
         PersistentDataHelper.putBoolean(player, CHICKEN_RABBIT_POWER_KEY, false);
         
         PlayerAbilities abilities = player.getAbilities();
-        abilities.allowFlying = false;
-        abilities.flying = false;
+        // 恢复创造/旁观模式的飞行权限，非创造模式才关闭
+        abilities.allowFlying = player.isCreative() || player.isSpectator();
+        abilities.flying = abilities.allowFlying && abilities.flying;
         player.removeStatusEffect(TalismanEffects.CHICKEN_POWER);
         if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
             serverPlayer.sendAbilitiesUpdate();

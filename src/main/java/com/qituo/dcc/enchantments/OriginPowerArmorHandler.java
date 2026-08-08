@@ -131,7 +131,8 @@ public class OriginPowerArmorHandler {
 
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
-        if (!(event.getEntity() instanceof Player player) || player.level().isClientSide) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        if (player.level().isClientSide) {
             return;
         }
 

@@ -4,6 +4,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
 import java.util.List;
 
 public class HorseTalisman extends TalismanBase {
@@ -27,7 +28,7 @@ public class HorseTalisman extends TalismanBase {
         player.setHealth(player.getMaxHealth());
         
         // 只清除负面效果，保留正面效果
-        List<net.minecraft.world.effect.MobEffect> harmfulEffects = List.of(
+        List<MobEffect> harmfulEffects = List.of(
             net.minecraft.world.effect.MobEffects.POISON,
             net.minecraft.world.effect.MobEffects.WITHER,
             net.minecraft.world.effect.MobEffects.WEAKNESS,
@@ -40,7 +41,7 @@ public class HorseTalisman extends TalismanBase {
             net.minecraft.world.effect.MobEffects.DARKNESS
         );
         
-        for (net.minecraft.world.effect.MobEffect effect : harmfulEffects) {
+        for (MobEffect effect : harmfulEffects) {
             if (player.hasEffect(effect)) {
                 player.removeEffect(effect);
             }

@@ -33,12 +33,16 @@ Apotheosis-1.20/
 L2Hostility-main/
 main.py
 dcc-template-1.20.4.zip
-neoforge/
+neoforge/build/
+neoforge/run/
+neoforge/logs/
+neoforge/.gradle/
 Ice_and_Fire-1.20/
 .feisuan/
 fabric/logs/
 fabric/sources/
 temp/
+neoforge/temp/
 
 # Files from Forge MDK
 forge*changelog.txt
