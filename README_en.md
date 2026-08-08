@@ -1,162 +1,204 @@
 # Dragon Curse Chronicles
 
-## Mod Overview
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/main/LICENSE.md)
+[![GitHub](https://img.shields.io/badge/GitHub-Source-blue)](https://github.com/19136644525lxy/Dragon-Curse-Chronicles)
+[![CurseForge](https://img.shields.io/badge/CurseForge-Download-orange)](https://www.curseforge.com/minecraft/mc-mods/dragon-curse-chronicles)
+[![Modrinth](https://img.shields.io/badge/Modrinth-Download-blue)](https://modrinth.com/mod/dragon-curse-chronicles)
+[![Platform](https://img.shields.io/badge/Platform-Forge%20%7C%20Fabric%20%7C%20NeoForge-darkgreen)](#platform-support)
+[![Version](https://img.shields.io/badge/Minecraft-1.20.1%20%7C%201.21.1-blue)](#platform-support)
 
-Dragon Curse Chronicles is a Minecraft mod inspired by the animated series "Jackie Chan Adventures", providing players with various powerful talisman abilities. The mod supports both Forge and Fabric mod loaders (1.20.1), and develops a custom particle rendering API (DC Render API) for creating various magnificent particle effects.
+> A Minecraft mod inspired by the classic animated series *Jackie Chan Adventures*, recreating the powers of the Twelve Chinese Zodiac Talismans. Expanded gameplay includes the Origin Power enchantment, Uncle's Dried Puffer Fish, and a custom particle rendering API.
 
 跳转至中文介绍: [README.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/main/README.md)
 
+---
+
+## Platform Support
+
+| Loader | Minecraft Version | Mod Version | Status |
+|---|---|---|---|
+| **Minecraft Forge** | 1.20.1 | `0.2.4-rc-9` | ✅ Released, feature-complete |
+| **Fabric** | 1.20.1 | `1.0.6-1.20.1Fabric` | ✅ Released, feature-complete |
+| **NeoForge** | 1.21.1 | `0.1.0-1.21.1NeoForge` | ✅ Released, feature-complete |
+
+> All three loaders ship with feature parity. **Each platform requires three jars to be installed together**: the main mod + DC Render API dependency + a Kotlin language adapter (see *Installation* below).
+
+---
+
 ## Features
 
-- **Twelve Talismans System**: Implements multiple talisman abilities, including the Dragon Talisman (fireball) and Pig Talisman (laser)
-- **Dual Loader Support**: Supports both Forge and Fabric (1.20.1) with feature parity
-- **Custom Particle API**: Developed DC Render API, supporting complex particle animation effects
-- **Java and Kotlin Hybrid Development**: Core functionality implemented in Java, animation system implemented in Kotlin
-- **Network Synchronization**: Achieves particle effect synchronization between server and client
-- **Performance Optimization**: Adopts efficient particle management and rendering mechanisms
-- **Origin Power Enchantment**: Powerful enchantment system providing defense-ignoring damage capabilities
-- **Uncle's Dried Puffer Fish**: Special in-game item
-- **Talisman Base**: Basic material for crafting talismans
+- **Twelve Talismans System**: Re-creates the powers of the Rat, Ox, Tiger (WIP), Rabbit, Dragon, Snake, Horse, Sheep, Monkey (WIP), Rooster, Dog, and Pig. Each talisman has dedicated particles and sound effects.
+- **Origin Power Enchantment**: 10-level progressive enchantment. Levels 1–5 are obtainable from the enchanting table and villager trades; levels 6–10 are crafted by combining 4 books of level N → 1 book of level N+1. Full armor unlocks 6 layered effects: reflection, damage reduction, energy shield, health regeneration, knockback immunity, and Origin Aura.
+- **Origin Aura**: 10-block radius effect, toggleable via custom keybind (unbound by default). Applies continuous Origin End damage to nearby entities.
+- **Uncle's Dried Puffer Fish**: Right-click fires a green laser (no charge-up) with two counter-rotating spiral particle bands and gradient colors, then enters a 5-second cooldown. Includes a specialized "five-kill-chain" bypass for bosses such as the Draconic Guardian.
+- **Custom Particle API (DC Render API)**: Home-grown particle dispatcher featuring color/particle object pooling, frame-aware batching, LOD distance falloff, and progressive emission — bypassing aggressive culling performed by client-side particle optimization mods.
+- **Talisman Power Extractor & Cube of Tang Shan**: Extract talismanic essence from animals. The Cube of Tang Shan drops from Meteor Shower loot chests at 35% chance.
+- **Meteor Shower Event**: 30% chance to trigger every Overworld midnight. Chests spawn inside impact craters with Cube of Tang Shan, Talisman Base, and other rare items. Trigger manually with `/meteorshower start` (OP only).
+- **Sheep Talisman — Soul Out-of-Body**: Invisibility + Night Vision + Flight + No-Clip + Invulnerability. Returns the player to their recorded body position when deactivated.
+- **Data-driven recipes**: Datapack recipes are provided for all talismans, Talisman Base, and Origin Power book upgrades.
 
-## Talisman Introduction
+---
 
-### Implemented Talismans
+## Talisman Reference
 
-#### Dragon Talisman
-- **Ability**: Fires Ghast-style fireballs, causing large-scale explosion damage
-- **Particle Effects**: Circular orbit fire particles, spiral particles, and wave particles
-- **Usage**: Hold the Dragon Talisman and right-click to release
+### ✅ Implemented
 
-#### Pig Talisman
-- **Ability**: Fires lasers, causing damage and igniting targets in a straight line
-- **Particle Effects**: Circular orbit particles at the laser origin, spiral particles at the end, and wave particles along the path
-- **Usage**: Hold the Pig Talisman and right-click to release
+| Talisman | Ability | Usage |
+|---|---|---|
+| 🐭 **Rat** | Transform specific blocks into the matching creatures | Hold and right-click the target block |
+| 🐮 **Ox** | Strength III + Resistance III + Speed II | Hold and right-click — 3-minute duration |
+| 🐇 **Rabbit** | Speed boost + 5-block teleport. **Chicken + Rabbit combo** (flight) is unlocked if the Rooster's Levitation is active first | Hold and right-click |
+| 🐉 **Dragon** | Fires a ghast-style fireball with a flaming particle trail, dealing AoE explosion damage | Hold and right-click — 1-second cooldown |
+| 🐍 **Snake** | Enhanced Invisibility II + custom Snake Power icon | Hold and right-click — 5-minute duration |
+| 🐎 **Horse** | Fully heals the player and clears 10 negative effects (Poison, Wither, Weakness, Slowness, Blindness, Hunger, Levitation, Glowing, Bad Omen, Darkness) | Hold and right-click — 1-minute Horse Power |
+| 🐑 **Sheep** | Soul Out-of-Body: Invisibility + Night Vision + Flight + No-Clip + Invulnerability. Body position is saved and restored on exit | Hold and right-click to toggle |
+| 🐔 **Rooster** | Slow Falling / Levitation modes. When Levitation is active, right-click Rabbit Talisman to trigger Chicken-Rabbit Flight. | Right-click fires mode. **Shift + right-click** switches mode |
+| 🐶 **Dog** | Health regen + clears 10 debuffs + sustained damage absorption (renewing every 30s) | Hold and right-click |
+| 🐷 **Pig** | Fires a high-energy laser dealing 99 damage + ignites targets along the line. Custom particle track | Hold and right-click — 2-second cooldown |
 
-#### Chicken Talisman
-- **Ability**: Gain Slow Falling Power or Levitation Power
-- **Usage**: Hold the Chicken Talisman and right-click to release, Shift+right-click to switch between Slow Falling Power and Levitation Power
+### 🔧 Work In Progress (WIP)
 
-#### Dog Talisman
-- **Ability**: Provides life recovery, clears negative effects, and grants sustained absorption
-- **Usage**: Hold the Dog Talisman and right-click to release
+- 🐯 **Tiger**: Good/Evil Separation — spawns a benevolent and a malicious clone of the player
+- 🐒 **Monkey**: Polymorph Power — randomly transforms target mobs into other creatures
 
-#### Horse Talisman
-- **Ability**: Completely restores health and clears all negative effects
-- **Usage**: Hold the Horse Talisman and right-click to release
+---
 
-#### Snake Talisman
-- **Ability**: Provides enhanced invisibility effect
-- **Usage**: Hold the Snake Talisman and right-click to release
+## Origin Power Enchantment
 
-#### Rabbit Talisman
-- **Ability**: Increases movement speed and enables short-range teleportation, when the Chicken Talisman's Levitation Power is active, right-clicking this talisman will grant Chicken-Rabbit Power (flight ability)
-- **Usage**: Hold the Rabbit Talisman and right-click to release
+| Item | Details |
+|---|---|
+| **Acquisition** | Levels 1–5: Enchanting Table / Villager Trades (higher level = lower probability). Levels 6–10: Combine 4 × Level N books in a crafting table → 1 × Level N+1 book. |
+| **Max Level** | 10 |
+| **Valid Equipment** | Any armor piece (helmet, chestplate, leggings, boots). Enchanting non-armor has no effect. |
+| **Origin End Damage** | Triggered by Uncle's Dried Puffer Fish via the custom `origin_end` damage type, bypassing most defenses, effects, and invulnerability. |
 
-#### Cow Talisman
-- **Ability**: Increases attack power, defense, and movement speed
-- **Usage**: Hold the Cow Talisman and right-click to release
+### Armor Effect Ladder (unlocked by total level across 4 armor slots)
 
-#### Mouse Talisman
-- **Ability**: Transforms specific blocks into corresponding creatures
-- **Usage**: Hold the Mouse Talisman and right-click on target blocks
+| Total Level Tier | Unlocked Effect |
+|---|---|
+| 1+ | **Damage Reflection** — reflects a portion of damage back to the attacker (scales with level) |
+| 5+ | **Damage Reduction** — tiered DR, strongest at the highest bracket |
+| 10+ | **Energy Shield** — periodic damage absorption |
+| 15+ | **Regeneration** — periodic healing ticks |
+| 20+ | **Knockback Immunity** — no longer knocked back |
+| 25+ | **Origin Aura** — continuous Origin End damage to all entities within a 10-block radius. Toggle via keybind. |
 
-#### Sheep Talisman
-- **Ability**: Out-of-Body Power (invisibility, night vision, flight, wall-clipping, invulnerability)
-- **Usage**: Hold the Sheep Talisman and right-click to release
+> Aura keybind is unbound by default; set it in *Controls → Key Binds*. Toggle state is network-synced and persisted per player.
 
-### Unimplemented Talismans
+---
 
-#### Monkey Talisman
-- **Planned Function**: Transformation Power (transform targets into other creatures)
+## Uncle's Dried Puffer Fish
 
-#### Tiger Talisman
-- **Planned Function**: Good and Evil Separation (create good and evil clones of the player)
+- **Trigger**: Right-click fires a green laser immediately (no charge-up), then enters a **5-second cooldown**.
+- **Damage Pipeline**: Origin End damage type; uses a specialized kill-chain for bosses like the Draconic Guardian (break shield → attack head → execute).
+- **Visual Pipeline**: Green central beam + 2 counter-rotating helical bands (green→cyan gradient and purple→pink gradient). ~1200 particle candidates are enqueued per shot and emitted progressively near→far via SmartParticleDispatcher (pooled + LOD).
+- **Audio**: Uncle's "Madgaq" voice line on cast, followed by a firework blast + ambient fire sound on impact.
 
-## Item Introduction
+---
+
+## Items & Events
 
 ### Talisman Power Extractor
-
-- **Ability**: Extract power from animals to craft talismans
-- **Usage**: Hold the extractor in the main hand and a Talisman Base in the offhand, then right-click on animals to extract power and craft talismans. There are usage limits and probability restrictions. The probability can be adjusted in the configuration file, with a default probability of 10%. Except for Chicken, Dragon, and Pig, other animals require 10 extraction attempts, while these three require 100 attempts (the attempt limit is hard-coded and cannot be changed).
-- **Obtainment**: Craftable
+- **Usage**: Main hand = Extractor, offhand = Talisman Base → right-click an animal to extract.
+- **Probability**: 10% by default, configurable via config file.
+- **Use limits**: Rooster/Dragon/Pig = 100 attempts each; all others = 10 attempts each (hardcoded).
+- **Obtainment**: Crafting recipe.
 
 ### Cube of Tang Shan
+- **Usage**: Same flow as the Extractor, but only works on sheep — yields Sheep Talisman.
+- **Obtainment**: Meteor Shower loot chest (35% chance).
 
-- **Ability**: Extract Sheep Talisman, following the same steps as the Talisman Power Extractor
-- **Usage**: Hold the Cube of Tang Shan in the main hand and a Talisman Base in the offhand, then right-click on sheep to extract the Sheep Talisman. The probability is 10% and requires 100 attempts (hard-coded, cannot be changed).
-- **Obtainment**: Obtained through the Meteor Shower event. There is a 35% chance to find it in the treasure chest that appears after the meteor shower ends. The meteor shower event randomly triggers at midnight (12:00 AM) in the Overworld (30% probability), or can be forced using the command `/meteorshower start` (requires OP permission). The chest spawns inside a meteor crater and needs to be dug out to find.
+### Meteor Shower Event
+- **Trigger time**: Overworld midnight 00:00, 30% chance per night.
+- **Manual trigger**: OP players run `/meteorshower start`.
+- **Rewards**: Chest(s) spawn inside meteor craters with the Cube of Tang Shan, Talisman Bases, and other rare loot.
 
-### Talisman Box
-
-- **Ability**: Store and manage talismans
-- **Usage**: No use yet, not implemented.
+---
 
 ## Installation
 
-### Forge Version
-1. Ensure Minecraft Forge 1.20.1 (47.x or higher) is installed
-2. Download the Forge version jar files of Dragon Curse Chronicles and DC Render API
-3. Place both jar files into the mods folder
-4. Start the game
+> ⚠ All three loaders require the **three-jar setup**: Main Mod + DC Render API + Kotlin Language Adapter. Missing any of the three will crash during load.
 
-### Fabric Version
-1. Ensure Fabric Loader 0.16.13 or higher, and Fabric API 0.92.11+ are installed
-2. Download the Fabric version jar files of Dragon Curse Chronicles and DC Render API
-3. Place both jar files into the mods folder
-4. Start the game and enjoy the power of the talismans
+### Forge 1.20.1
+1. Install Minecraft Forge 1.20.1 (47.x or newer).
+2. Download these three **Forge** jars:
+   - **Kotlin Adapter**: `Kotlin-for-Forge-*-1.20.1.jar` (by thedarkcolour, available on CurseForge and Modrinth)
+   - **DC Render API (required dependency)**: `dcrapi-X.X.X-1.20.1Forge.jar`
+   - **Main Mod**: `dcc-0.2.4-rc-9.jar`
+3. Drop all three jars into your `mods/` folder.
+4. Launch the game.
 
-## Development Notes
+### Fabric 1.20.1
+1. Install Fabric Loader 0.16.13+ and Fabric API 0.92.11+1.20.1.
+2. Download these three **Fabric** jars:
+   - **Kotlin Adapter**: `fabric-language-kotlin-*` (available on CurseForge and Modrinth)
+   - **DC Render API (required dependency)**: `dcrapi-X.X.X-1.20.1Fabric.jar`
+   - **Main Mod**: `dcc-1.0.6-1.20.1Fabric.jar`
+3. Drop all three jars into your `mods/` folder.
+4. Launch the game.
+
+### NeoForge 1.21.1
+1. Install NeoForge 21.1.248+ for Minecraft 1.21.1.
+2. Download these three **NeoForge** jars:
+   - **Kotlin Adapter**: `Kotlin-for-Forge-*-1.21.1-NeoForge.jar` (by thedarkcolour, available on CurseForge and Modrinth)
+   - **DC Render API (required dependency)**: `dcrapi-*-1.21.1NeoForge.jar`
+   - **Main Mod**: `dcc-0.1.0-1.21.1NeoForge.jar`
+3. Drop all three jars into your `mods/` folder.
+4. Launch the game.
+
+---
+
+## Building & Developing
 
 ### Project Structure
 
-Main repository (Dragon Curse Chronicles main mod):
-- `src/main/java/com/qituo/dcc/`: Forge main mod code
-- `fabric/Dragon Curse Chronicles/src/`: Fabric main mod code
-- `fabric/sources/`: Fabric 1.20.1 Yarn mapping sources (for reference)
+```
+Twelve Talismans/                           # Monorepo root
+├── src/main/java/com/qituo/dcc/            # Forge 1.20.1 main mod sources
+├── fabric/Dragon Curse Chronicles/src/     # Fabric 1.20.1 main mod sources
+├── neoforge/src/main/java/com/qituo/dcc/   # NeoForge 1.21.1 main mod sources
+├── DC Render API/                          # Particle API dependency subdirectory
+│   ├── src/                                # Forge API
+│   ├── fabric/DC Render API/               # Fabric API
+│   └── neoforge/                           # NeoForge API
+├── gradle.properties                       # Forge version numbering
+├── README.md / README_en.md                # Chinese / English documentation
+```
 
-Dependency repository (DC Render API):
-- `src/main/java/com/qituo/dcrapi/`: Forge particle API code
-- `src/main/kotlin/com/qituo/dcrapi/`: Kotlin-implemented animation system
-- `fabric/DC Render API/src/`: Fabric particle API code
+### Build Commands
 
-### Building the Project
+```bash
+# Forge 1.20.1 (repo root)
+./gradlew build            # artifact → build/libs/dcc-0.2.4-rc-9.jar
 
-#### Forge Version
-1. Enter the project root directory
-2. Build using Gradle:
-   ```bash
-   ./gradlew build
-   ```
-3. The build product will be generated in the `build/libs/` directory
+# Fabric 1.20.1
+cd fabric/Dragon\ Curse\ Chronicles
+./gradlew build            # artifact → build/libs/dcc-1.0.6-1.20.1Fabric.jar
 
-#### Fabric Version
-1. Enter the `fabric/Dragon Curse Chronicles/` directory
-2. Build using JDK 17+ and Gradle:
-   ```bash
-   ./gradlew build
-   ```
-3. The build product will be generated in `fabric/Dragon Curse Chronicles/build/libs/`
+# NeoForge 1.21.1
+cd neoforge
+./gradlew build            # artifact → build/libs/dcc-0.1.0-1.21.1NeoForge.jar
+```
 
-### Dependencies
+A `-sources.jar` is generated automatically for every build.
 
-#### Forge Version
-- Minecraft Forge 1.20.1-47.4.17
-- DC Render API (Forge) 0.1.0+
+---
 
-#### Fabric Version
-- Fabric Loader 0.16.13+
-- Fabric API 0.92.11+1.20.1
-- DC Render API (Fabric) 0.1.0+
+## Roadmap
 
-## Future Plans
+- Full implementations of Monkey (Polymorph) and Tiger (Good/Evil Split) Talismans.
+- Polish and expand remaining feature details on the NeoForge 1.21.1 side.
+- Talisman Box GUI & hotbar quick-switch.
+- Replace the current Origin Power NBT-stub approach with a true datapack-driven enchantment registration.
 
-- Implement more talisman abilities
-- Optimize performance and compatibility
+---
 
 ## Contributing
 
-Welcome to submit suggestions and contributions to the project! If you have any questions or ideas, please submit an issue or pull request on GitHub.
+Issues, feature requests, and pull requests are always welcome!
+
+---
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is released under the **MIT License** — see [LICENSE.md](https://github.com/19136644525lxy/Dragon-Curse-Chronicles/blob/main/LICENSE.md).
