@@ -1,0 +1,23 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "result":  {
+                   "count":  1,
+                   "id":  "dcc:horse_talisman"
+               },
+    "pattern":  [
+                    "aba",
+                    "bcb",
+                    "aba"
+                ],
+    "key":  {
+                "a":  {
+                          "item":  "minecraft:golden_carrot"
+                      },
+                "b":  {
+                          "item":  "minecraft:enchanted_golden_apple"
+                      },
+                "c":  {
+                          "item":  "dcc:talisman_base"
+                      }
+            }
+}

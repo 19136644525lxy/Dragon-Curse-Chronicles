@@ -1,0 +1,29 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "result":  {
+                   "count":  1,
+                   "id":  "dcc:dragon_talisman"
+               },
+    "pattern":  [
+                    "abc",
+                    "bdb",
+                    "ebe"
+                ],
+    "key":  {
+                "a":  {
+                          "item":  "minecraft:magma_cream"
+                      },
+                "b":  {
+                          "item":  "minecraft:dragon_egg"
+                      },
+                "c":  {
+                          "item":  "minecraft:blaze_powder"
+                      },
+                "d":  {
+                          "item":  "dcc:talisman_base"
+                      },
+                "e":  {
+                          "item":  "minecraft:fire_charge"
+                      }
+            }
+}

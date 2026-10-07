@@ -1,0 +1,24 @@
+{
+    "type":  "dcc:origin_power_book_upgrade",
+    "input_level":  8,
+    "output_level":  9,
+    "category":  "misc",
+    "ingredients":  [
+                        {
+                            "item":  "minecraft:enchanted_book"
+                        },
+                        {
+                            "item":  "minecraft:enchanted_book"
+                        },
+                        {
+                            "item":  "minecraft:enchanted_book"
+                        },
+                        {
+                            "item":  "minecraft:enchanted_book"
+                        }
+                    ],
+    "result":  {
+                   "count":  1,
+                   "id":  "minecraft:enchanted_book"
+               }
+}

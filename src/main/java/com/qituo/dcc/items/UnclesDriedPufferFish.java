@@ -1,15 +1,11 @@
 package com.qituo.dcc.items;
 
-import com.qituo.dcc.DragonCurseChronicles;
 import com.qituo.dcc.damage.DamagePresets;
 import com.qituo.dcc.damage.EntityBypassHelper;
 import com.qituo.dcc.damage.ModDamageSources;
 import com.qituo.dcc.enchantments.ModEnchantments;
 import com.qituo.dcc.particles.SmartParticleDispatcher;
 import com.qituo.dcc.sounds.ModSounds;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -23,278 +19,238 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
 import org.joml.Vector3f;
-import java.util.List;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 老爹的河豚干（Forge 1.20.1）
+ *
+ * 行为规格（与 Fabric / NeoForge 对齐）：
+ * - 右键立即发射绿色激光，无需蓄力；发射后 5 秒冷却
+ * - 命中判定：光束轴线 15 格半径内的全部实体，不做遮挡判定
+ * - 伤害走自定义 origin_end 伤害类型 + EntityBypassHelper 五重击杀链
+ * - 粒子走 SmartParticleDispatcher：1200 候选 → LOD 衰减 → 近到远渐进射出
+ */
 public class UnclesDriedPufferFish extends Item {
     private static final Logger LOGGER = LoggerFactory.getLogger(UnclesDriedPufferFish.class);
-    private static final int CASTING_TIME = 100; // 5秒，20刻/秒
-    
+
+    /** 冷却时间（5 秒） */
+    private static final int COOLDOWN_TICKS = 100;
+    /** 激光最大长度（格） */
+    private static final double LASER_MAX_DISTANCE = 50.0;
+    /** 命中半径（格）：光束周围该半径内全部命中，无遮挡判定 */
+    private static final double HIT_RADIUS = 15.0;
+
     public UnclesDriedPufferFish(Properties properties) {
         super(properties);
     }
-    
+
     @Override
     public ItemStack getDefaultInstance() {
         ItemStack stack = super.getDefaultInstance();
-        // 为默认物品添加始源之力10级附魔
-        EnchantmentHelper.setEnchantments(
-            java.util.Map.of(ModEnchantments.ORIGIN_POWER.get(), 10),
-            stack
-        );
+        // 仅对可附魔物品写入附魔，否则 EnchantmentHelper.setEnchantments 会直接抛异常
+        if (stack.isEnchantable()) {
+            EnchantmentHelper.setEnchantments(
+                    java.util.Map.of(ModEnchantments.ORIGIN_POWER.get(), 10),
+                    stack);
+        } else {
+            LOGGER.warn("老爹的河豚干不可附魔，跳过默认始源之力附魔写入");
+        }
         return stack;
     }
-    
+
+    // ================================================
+    // 核心入口：右键立即触发（不蓄力）
+    // ================================================
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        LOGGER.info("[Uncle's Puffer Fish] Use method called, level.isClientSide: {}", level.isClientSide);
-        
-        // 开始施法
-        player.startUsingItem(hand);
-        LOGGER.info("[Uncle's Puffer Fish] Started using item, casting time: {}", CASTING_TIME);
-        
-        // 检查声音事件是否注册成功
-        LOGGER.info("[Uncle's Puffer Fish] Checking sound event registration status");
-        LOGGER.info("[Uncle's Puffer Fish] MADGAQ sound event: {}", ModSounds.MADGAQ);
-        LOGGER.info("[Uncle's Puffer Fish] MADGAQ sound event get(): {}", ModSounds.MADGAQ.get());
-        LOGGER.info("[Uncle's Puffer Fish] MADGAQ sound event location: {}", ModSounds.MADGAQ.getId());
-        
-        // 播放施法音频 - 客户端和服务器端都播放
-        LOGGER.info("[Uncle's Puffer Fish] Playing spell sound");
-        
-        // 尝试不同的音量和音高
-        float volume = 2.0F; // 增加音量
-        float pitch = 1.0F;
-        
+
+        // 1) 冷却判断 + 立即加冷却
+        if (player.getCooldowns().isOnCooldown(this)) {
+            return InteractionResultHolder.fail(stack);
+        }
+        player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
+
+        // 2) 施法音效：客户端本机播，服务端广播给其他人
+        final float volume = 2.0F;
+        final float pitch = 1.0F;
         if (level.isClientSide) {
-            // 客户端播放声音
-            LOGGER.info("[Uncle's Puffer Fish] Client side: playing sound with volume={}, pitch={}", volume, pitch);
             player.playSound(ModSounds.MADGAQ.get(), volume, pitch);
         } else {
-            // 服务器端播放声音（会同步到客户端）
-            LOGGER.info("[Uncle's Puffer Fish] Server side: playing sound with volume={}, pitch={}", volume, pitch);
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.MADGAQ.get(), SoundSource.PLAYERS, volume, pitch);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    ModSounds.MADGAQ.get(), SoundSource.PLAYERS, volume, pitch);
         }
-        
-        LOGGER.info("[Uncle's Puffer Fish] Sound played successfully");
-        LOGGER.info("[Uncle's Puffer Fish] Player position: x={}, y={}, z={}", player.getX(), player.getY(), player.getZ());
-        LOGGER.info("[Uncle's Puffer Fish] Level: {}, dimension: {}", level, level.dimension());
 
-        
-        return InteractionResultHolder.consume(stack); // 使用consume而不是success，确保物品被正确使用
-    }
-    
-    @Override
-    public int getUseDuration(ItemStack stack) {
-        LOGGER.info("[Uncle's Puffer Fish] getUseDuration called, returning: {}", CASTING_TIME);
-        return CASTING_TIME;
-    }
-    
-    @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-        LOGGER.info("[Uncle's Puffer Fish] getUseAnimation called");
-        return UseAnim.BLOCK; // 使用BLOCK动画，更符合施法的动作
-    }
-    
-    @Override
-    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-        LOGGER.info("[Uncle's Puffer Fish] releaseUsing method called");
-        if (!(entity instanceof Player player)) {
-            LOGGER.info("[Uncle's Puffer Fish] Entity is not a player, returning");
-            return;
-        }
-        
-        int timeUsed = getUseDuration(stack) - timeLeft;
-        LOGGER.info("[Uncle's Puffer Fish] Time used: {}, time left: {}, casting time: {}", timeUsed, timeLeft, CASTING_TIME);
-        
-        // 施法完成，释放绿色激光
-        LOGGER.info("[Uncle's Puffer Fish] Releasing laser");
         Vec3 lookVec = player.getLookAngle();
         Vec3 start = player.getEyePosition();
-        Vec3 end = start.add(lookVec.scale(50));
-        
-        LOGGER.info("[Uncle's Puffer Fish] Laser details - lookVec: {}, start: {}, end: {}", lookVec, start, end);
-        
-        // 服务器端处理伤害
-        if (!level.isClientSide) {
-            LOGGER.info("[Uncle's Puffer Fish] Server side: processing laser damage");
-            
-            // 检测并伤害路径上的实体 - 增大AABB范围，确保能检测到更多实体
-            AABB laserAABB = new AABB(start, end).inflate(15.0); // 半径15格，扩大检测范围
-            List<Entity> entities = level.getEntities(player, laserAABB);
-            LOGGER.info("[Uncle's Puffer Fish] Found {} entities in laser path", entities.size());
-            
-            // 使用预设的抹杀伤害值 - 对应始源之力10级
-            float damage = DamagePresets.getDamage(10); // 使用5201314伤害值
-            
-            for (Entity target : entities) {
-                if (target != player) {
-                    LOGGER.info("[Uncle's Puffer Fish] Damaging entity: {} at position {} with high damage", target.getName().getString(), target.position());
-                    
-                    // 使用正确的伤害方法，确保实体正常死亡并掉落物品
-                    if (target instanceof LivingEntity livingEntity) {
-                        LOGGER.info("[Uncle's Puffer Fish] Entity health before: {}", livingEntity.getHealth());
-                        // 创建伤害源并造成伤害
-                        var damageSource = ModDamageSources.causeOriginEndDamage(player, 10);
-                        
-                        // 针对Draconic Guardian的特殊处理
-                        if (target.getClass().getName().equals("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianEntity")) {
-                            LOGGER.info("[Uncle's Puffer Fish] Special handling for Draconic Guardian");
-                            try {
-                                // 先设置护盾为0
-                                LOGGER.info("[Uncle's Puffer Fish] Setting Draconic Guardian shield to 0");
-                                java.lang.reflect.Method setShieldPowerMethod = target.getClass().getMethod("setShieldPower", float.class);
-                                setShieldPowerMethod.invoke(target, 0.0F);
-                                
-                                // 获取头部部分
-                                LOGGER.info("[Uncle's Puffer Fish] Getting Draconic Guardian head part");
-                                java.lang.reflect.Method getDragonPartsMethod = target.getClass().getMethod("getDragonParts");
-                                Object[] parts = (Object[]) getDragonPartsMethod.invoke(target);
-                                
-                                if (parts != null && parts.length > 0) {
-                                    Object headPart = parts[0]; // 头部是第一个部分
-                                    LOGGER.info("[Uncle's Puffer Fish] Attacking Draconic Guardian head");
-                                    
-                                    // 多次攻击头部，确保击杀
-                                    for (int i = 0; i < 5; i++) {
-                                        // 调用attackEntityPartFrom方法攻击头部
-                                        java.lang.reflect.Method attackEntityPartFromMethod = target.getClass().getMethod("attackEntityPartFrom", Class.forName("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianPartEntity"), Class.forName("net.minecraft.world.damagesource.DamageSource"), float.class);
-                                        attackEntityPartFromMethod.invoke(target, headPart, player.damageSources().playerAttack(player), 1000.0F);
-                                        LOGGER.info("[Uncle's Puffer Fish] Attack {} completed", i+1);
-                                        
-                                        // 检查是否已死亡
-                                        if (livingEntity.isDeadOrDying()) {
-                                            LOGGER.info("[Uncle's Puffer Fish] Draconic Guardian killed");
-                                            break;
-                                        }
-                                    }
-                                }
-                                
-                                // 使用EntityBypassHelper确保击杀
-                                if (!livingEntity.isDeadOrDying()) {
-                                    EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
-                                }
-                            } catch (Exception e) {
-                                LOGGER.error("[Uncle's Puffer Fish] Failed to handle Draconic Guardian: {}", e.getMessage());
-                                // 失败时使用EntityBypassHelper
-                                EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
-                            }
-                        } else {
-                            // 对其他实体使用EntityBypassHelper确保击杀并掉落物品
-                            EntityBypassHelper.killEntity(livingEntity, damageSource, damage);
-                        }
-                        
-                        LOGGER.info("[Uncle's Puffer Fish] Entity health after: {}", livingEntity.getHealth());
-                    }
-                }
-            }
-        }
-        
-        // === 粒子生成：通过 SmartParticleDispatcher（自研智能调度器）===
-        // 优化点：
-        // 1. 服务端发包，绕过客户端粒子模组的 Mixin 拦截（同原方案）
-        // 2. 智能分帧：每帧120个包，避免单帧爆卡
-        // 3. LOD 距离衰减：0-10格全密度 / 10-30格半密度 / 30格+ 1/3密度
-        // 4. 渐进式动画：粒子从玩家向远处逐帧延伸，形成"激光射出"效果
-        // 5. 颜色对象池：复用 DustParticleOptions，减少 GC
+        Vec3 end = start.add(lookVec.scale(LASER_MAX_DISTANCE));
+
+        // 3) 仅服务端：伤害结算 + 粒子入队 + 冲击音效
         if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
-            LOGGER.info("[Uncle's Puffer Fish] === PARTICLE SMART DISPATCH START === player: {}", player.getName().getString());
+            applyLaserDamage(serverLevel, player, start, end);
+            submitLaserParticles(serverLevel, start, lookVec);
 
-            // 计算激光方向的垂直平面（用于螺旋环绕）
-            Vec3 up = new Vec3(0, 1, 0);
-            if (Math.abs(lookVec.dot(up)) > 0.99) {
-                up = new Vec3(1, 0, 0);
-            }
-            Vec3 normal = lookVec.cross(up).normalize();
-            Vec3 binormal = lookVec.cross(normal).normalize();
-
-            double spiralRadius = 0.35;
-            double spiralFrequency = 0.8;
-            // 50格激光分400段（原200段的2倍），每段0.125格更细腻；经LOD后约699粒子（实际入队数）
-            int segments = 400;
-            float particleSize = 1.5F;
-            double stepLen = 50.0 / segments; // 动态步长
-
-            // 渐变色：分段插值
-            Vector3f mainStart = new Vector3f(0.2F, 0.8F, 0.2F);
-            Vector3f mainEnd = new Vector3f(0.3F, 1.0F, 0.4F);
-            Vector3f spiralAStart = new Vector3f(0.2F, 1.0F, 0.3F);
-            Vector3f spiralAEnd = new Vector3f(0.0F, 1.0F, 1.0F);
-            Vector3f spiralBStart = new Vector3f(0.8F, 0.2F, 1.0F);
-            Vector3f spiralBEnd = new Vector3f(1.0F, 0.4F, 0.8F);
-
-            // 预构建 candidate 列表（按距离从近到远，同index对应三段粒子的距离相同）
-            java.util.ArrayList<SmartParticleDispatcher.LaserParticleCandidate> candidates =
-                    new java.util.ArrayList<>(segments * 3);
-            int candidateIndex = 0;
-
-            for (int i = 0; i < segments; i++) {
-                double distance = i * stepLen;
-                Vec3 centerPos = start.add(lookVec.scale(distance));
-                float ratio = (float) i / (segments - 1);
-
-                // === 主激光：直线，分段渐变 ===
-                Vector3f mainColor = new Vector3f(mainStart).lerp(mainEnd, ratio);
-                candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
-                        candidateIndex++, distance, mainColor, particleSize,
-                        centerPos.x, centerPos.y, centerPos.z));
-
-                // === 环绕束A：顺时针螺旋 ===
-                double angleA = distance * spiralFrequency;
-                Vec3 offsetA = normal.scale(Math.cos(angleA) * spiralRadius)
-                        .add(binormal.scale(Math.sin(angleA) * spiralRadius));
-                Vector3f colorA = new Vector3f(spiralAStart).lerp(spiralAEnd, ratio);
-                candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
-                        candidateIndex++, distance, colorA, particleSize,
-                        centerPos.x + offsetA.x, centerPos.y + offsetA.y, centerPos.z + offsetA.z));
-
-                // === 环绕束B：逆时针螺旋（相位差180°） ===
-                double angleB = distance * spiralFrequency + Math.PI;
-                Vec3 offsetB = normal.scale(Math.cos(angleB) * spiralRadius)
-                        .add(binormal.scale(Math.sin(angleB) * spiralRadius));
-                Vector3f colorB = new Vector3f(spiralBStart).lerp(spiralBEnd, ratio);
-                candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
-                        candidateIndex++, distance, colorB, particleSize,
-                        centerPos.x + offsetB.x, centerPos.y + offsetB.y, centerPos.z + offsetB.z));
-            }
-
-            // progressive=true：启用渐进式（近→远逐帧延伸，"激光射出"动画）
-            SmartParticleDispatcher.submitLaserParticles(serverLevel, candidates, true);
-            LOGGER.info("[Uncle's Puffer Fish] === PARTICLE SMART DISPATCH END === candidates submitted: {}, pending: {}",
-                    candidates.size(), SmartParticleDispatcher.pendingSize());
-        } else {
-            LOGGER.warn("[Uncle's Puffer Fish] Particle generation skipped - not server side or not ServerLevel");
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS, 1.0F, 1.0F);
         }
-        
-        // 播放额外的音效，使激光更有冲击力
-        level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.0F, 1.0F);
-        
-        // 播放火焰音效
-        level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS, 1.0F, 1.0F);
-        
-        // 添加使用冷却，5秒（100刻）
-        player.getCooldowns().addCooldown(this, 100);
+
+        return InteractionResultHolder.consume(stack);
     }
 
-    private boolean isPointInLine(Vec3 start, Vec3 end, Vec3 point, double radius) {
-        // 计算点到线段的距离
-        Vec3 lineVec = end.subtract(start);
-        Vec3 pointVec = point.subtract(start);
-        double lineLengthSqr = lineVec.lengthSqr();
+    /**
+     * 激光伤害：光束轴线 HIT_RADIUS 半径内的全部实体命中（无遮挡判定）
+     */
+    private void applyLaserDamage(ServerLevel level, Player player, Vec3 start, Vec3 end) {
+        AABB searchBox = new AABB(start, end).inflate(HIT_RADIUS);
+        List<Entity> entities = level.getEntities(player, searchBox);
+        float damage = DamagePresets.getDamage(10);
 
-        if (lineLengthSqr == 0) {
-            return point.distanceToSqr(start) <= radius * radius;
+        for (Entity target : entities) {
+            if (target == player) continue;
+            Vec3 targetCenter = target.position().add(0, target.getBbHeight() * 0.5, 0);
+            if (!isPointNearSegment(start, end, targetCenter, HIT_RADIUS)) continue;
+            if (!(target instanceof LivingEntity living)) continue;
+
+            var damageSource = ModDamageSources.causeOriginEndDamage(player, 10);
+
+            // Draconic Guardian 专用处理（反射调用，避免直接引用类加载）
+            if (target.getClass().getName()
+                    .equals("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianEntity")) {
+                try {
+                    java.lang.reflect.Method setShield = target.getClass()
+                            .getMethod("setShieldPower", float.class);
+                    setShield.invoke(target, 0.0F);
+                    java.lang.reflect.Method getParts = target.getClass().getMethod("getDragonParts");
+                    Object[] parts = (Object[]) getParts.invoke(target);
+                    if (parts != null && parts.length > 0) {
+                        Object head = parts[0];
+                        for (int i = 0; i < 5 && !living.isDeadOrDying(); i++) {
+                            java.lang.reflect.Method attack = target.getClass()
+                                    .getMethod("attackEntityPartFrom",
+                                            Class.forName("com.brandon3055.draconicevolution.entity.guardian.DraconicGuardianPartEntity"),
+                                            Class.forName("net.minecraft.world.damagesource.DamageSource"),
+                                            float.class);
+                            attack.invoke(target, head,
+                                    player.damageSources().playerAttack(player), 1000.0F);
+                        }
+                    }
+                    if (!living.isDeadOrDying()) {
+                        EntityBypassHelper.killEntity(living, damageSource, damage);
+                    }
+                } catch (Exception e) {
+                    LOGGER.error("[PufferFish] DraconicGuardian special handle err: {}", e.getMessage());
+                    EntityBypassHelper.killEntity(living, damageSource, damage);
+                }
+            } else {
+                // 普通实体：走通用五重击杀链，确保死亡且掉落
+                EntityBypassHelper.killEntity(living, damageSource, damage);
+            }
+        }
+    }
+
+    /**
+     * 激光粒子：1200 候选（主束 + 双反向螺旋）交给调度器做 LOD 与渐进射出
+     */
+    private void submitLaserParticles(ServerLevel level, Vec3 start, Vec3 lookVec) {
+        Vec3 up = Math.abs(lookVec.dot(new Vec3(0, 1, 0))) > 0.99 ? new Vec3(1, 0, 0) : new Vec3(0, 1, 0);
+        Vec3 normal = lookVec.cross(up).normalize();
+        Vec3 binormal = lookVec.cross(normal).normalize();
+
+        final double spiralRadius = 0.35;
+        final double spiralFrequency = 0.8;
+        final int segments = 400;
+        final float particleSize = 1.5F;
+        final double stepLen = LASER_MAX_DISTANCE / segments;
+
+        Vector3f mainStart = new Vector3f(0.2F, 0.8F, 0.2F);
+        Vector3f mainEnd = new Vector3f(0.3F, 1.0F, 0.4F);
+        Vector3f spiralAStart = new Vector3f(0.2F, 1.0F, 0.3F);
+        Vector3f spiralAEnd = new Vector3f(0.0F, 1.0F, 1.0F);
+        Vector3f spiralBStart = new Vector3f(0.8F, 0.2F, 1.0F);
+        Vector3f spiralBEnd = new Vector3f(1.0F, 0.4F, 0.8F);
+
+        ArrayList<SmartParticleDispatcher.LaserParticleCandidate> candidates =
+                new ArrayList<>(segments * 3);
+        int candidateIndex = 0;
+
+        for (int i = 0; i < segments; i++) {
+            double distance = i * stepLen;
+            Vec3 centerPos = start.add(lookVec.scale(distance));
+            float ratio = (float) i / (segments - 1);
+
+            // 主激光：直线，分段渐变
+            Vector3f mainColor = new Vector3f(mainStart).lerp(mainEnd, ratio);
+            candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
+                    candidateIndex++, distance, mainColor, particleSize,
+                    centerPos.x, centerPos.y, centerPos.z));
+
+            // 环绕束A：顺时针螺旋
+            double angleA = distance * spiralFrequency;
+            Vec3 offsetA = normal.scale(Math.cos(angleA) * spiralRadius)
+                    .add(binormal.scale(Math.sin(angleA) * spiralRadius));
+            Vector3f colorA = new Vector3f(spiralAStart).lerp(spiralAEnd, ratio);
+            candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
+                    candidateIndex++, distance, colorA, particleSize,
+                    centerPos.x + offsetA.x, centerPos.y + offsetA.y, centerPos.z + offsetA.z));
+
+            // 环绕束B：逆时针螺旋（相位差180°）
+            double angleB = distance * spiralFrequency + Math.PI;
+            Vec3 offsetB = normal.scale(Math.cos(angleB) * spiralRadius)
+                    .add(binormal.scale(Math.sin(angleB) * spiralRadius));
+            Vector3f colorB = new Vector3f(spiralBStart).lerp(spiralBEnd, ratio);
+            candidates.add(new SmartParticleDispatcher.LaserParticleCandidate(
+                    candidateIndex++, distance, colorB, particleSize,
+                    centerPos.x + offsetB.x, centerPos.y + offsetB.y, centerPos.z + offsetB.z));
         }
 
+        // progressive=true：近→远逐帧延伸，形成"激光射出"动画
+        SmartParticleDispatcher.submitLaserParticles(level, candidates, true);
+    }
+
+    // ================================================
+    // 蓄力系统彻底停用：以下方法仅留空实现兼容
+    // ================================================
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        return 0;
+    }
+
+    @Override
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.NONE;
+    }
+
+    @Override
+    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
+        // no-op：发射已改由 use() 完成
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        return stack;
+    }
+
+    // ================================================
+    // 辅助：点到线段最近距离 ≤ radius
+    // ================================================
+    private static boolean isPointNearSegment(Vec3 segStart, Vec3 segEnd, Vec3 point, double radius) {
+        Vec3 lineVec = segEnd.subtract(segStart);
+        Vec3 pointVec = point.subtract(segStart);
+        double lineLengthSqr = lineVec.lengthSqr();
+        if (lineLengthSqr == 0) {
+            return point.distanceToSqr(segStart) <= radius * radius;
+        }
         double t = Math.max(0, Math.min(1, pointVec.dot(lineVec) / lineLengthSqr));
-        Vec3 closestPoint = start.add(lineVec.scale(t));
+        Vec3 closestPoint = segStart.add(lineVec.scale(t));
         return point.distanceToSqr(closestPoint) <= radius * radius;
     }
 }

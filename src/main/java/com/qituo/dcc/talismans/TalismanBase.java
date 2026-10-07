@@ -61,12 +61,7 @@ public abstract class TalismanBase extends Item {
         return "textures/item/glow/" + getZodiacName() + "_glow.png";
     }
 
-    /**
-     * 客户端初始化：注册自定义 BEWLR 渲染器
-     * Forge 在物品初始化时调用此方法，传入 consumer 接受 IClientItemExtensions
-     */
-    @Override
-    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
-        consumer.accept(com.qituo.dcc.client.TalismanClientExtensions.INSTANCE);
-    }
+    // 生肖边缘光效的渲染实现（BEWLR / IClientItemExtensions）已按需求移除。
+    // 13 张 glow 纹理与 getZodiacName() / getZodiacColor() / getGlowTexturePath() 保留，
+    // 供后续重新实现光效时复用。
 }

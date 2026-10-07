@@ -73,41 +73,56 @@ public class OriginPowerArmorHandler {
     // ==================== 周期事件：护盾 + 再生 + 光环 ====================
 
     /**
-     * 服务器 tick 回调（由主类通过 ServerTickEvents 注册）
-     * 遍历所有玩家，应用周期性盔甲效果
+     * 服务器 tick 回调（遍历全服所有玩家，跨维度生效）
+     * 由主类通过 ServerTickEvents.END_SERVER_TICK 注册。
+     *
+     * 注意：此前只对主世界遍历（world.getPlayers()），导致玩家在下界/末地时
+     * 护盾、再生、光环全部停止；Forge/NeoForge 是逐实体事件，天然跨维度。
+     */
+    public static void onServerTick(net.minecraft.server.MinecraftServer server) {
+        for (net.minecraft.server.network.ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+            tickPlayer(player);
+        }
+    }
+
+    /**
+     * 单世界 tick 回调（保留兼容旧调用方）
      */
     public static void onServerTick(World world) {
         if (world.isClient) return;
-
         for (PlayerEntity player : world.getPlayers()) {
-            int totalLevel = getTotalArmorLevel(player);
-            if (totalLevel <= 0) {
-                tickCounters.remove(player.getUuid());
-                continue;
-            }
+            tickPlayer(player);
+        }
+    }
 
-            int tick = tickCounters.getOrDefault(player.getUuid(), 0) + 1;
-            tickCounters.put(player.getUuid(), tick);
+    private static void tickPlayer(PlayerEntity player) {
+        int totalLevel = getTotalArmorLevel(player);
+        if (totalLevel <= 0) {
+            tickCounters.remove(player.getUuid());
+            return;
+        }
 
-            // 始源护盾（总等级≥6）
-            if (totalLevel >= 6) {
-                applyOriginShield(player, totalLevel, tick);
-            }
+        int tick = tickCounters.getOrDefault(player.getUuid(), 0) + 1;
+        tickCounters.put(player.getUuid(), tick);
 
-            // 始源再生（总等级≥11）
-            if (totalLevel >= 11) {
-                applyOriginRegeneration(player, totalLevel, tick);
-            }
+        // 始源护盾（总等级≥6）
+        if (totalLevel >= 6) {
+            applyOriginShield(player, totalLevel, tick);
+        }
 
-            // 始源光环（总等级≥31）
-            if (totalLevel >= 31) {
-                applyOriginAura(player, totalLevel, tick);
-            }
+        // 始源再生（总等级≥11）
+        if (totalLevel >= 11) {
+            applyOriginRegeneration(player, totalLevel, tick);
+        }
 
-            // 清理过期计数器防止内存泄漏
-            if (tick > 10000) {
-                tickCounters.put(player.getUuid(), 1);
-            }
+        // 始源光环（总等级≥31）
+        if (totalLevel >= 31) {
+            applyOriginAura(player, totalLevel, tick);
+        }
+
+        // 清理过期计数器防止内存泄漏
+        if (tick > 10000) {
+            tickCounters.put(player.getUuid(), 1);
         }
     }
 

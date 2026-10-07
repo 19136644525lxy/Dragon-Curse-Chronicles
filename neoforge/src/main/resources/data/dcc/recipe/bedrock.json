@@ -1,0 +1,20 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "result":  {
+                   "count":  1,
+                   "id":  "minecraft:bedrock"
+               },
+    "pattern":  [
+                    "aaa",
+                    "aba",
+                    "aaa"
+                ],
+    "key":  {
+                "a":  {
+                          "item":  "minecraft:obsidian"
+                      },
+                "b":  {
+                          "item":  "minecraft:cobbled_deepslate"
+                      }
+            }
+}

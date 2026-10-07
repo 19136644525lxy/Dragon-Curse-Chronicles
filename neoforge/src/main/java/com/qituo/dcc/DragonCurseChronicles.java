@@ -51,6 +51,15 @@ public class DragonCurseChronicles {
         // 全局事件总线订阅
         NeoForge.EVENT_BUS.addListener(this::onReload);
         NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
+        // 服务端启动后解析数据包附魔（1.21 附魔由 JSON 驱动，需数据包加载完成才能取回 Holder）
+        NeoForge.EVENT_BUS.addListener(this::onServerStarted);
+    }
+
+    /**
+     * 服务端启动完成后同步附魔 Holder 等依赖数据包的内容
+     */
+    private void onServerStarted(net.neoforged.neoforge.event.server.ServerStartedEvent event) {
+        com.qituo.dcc.enchantments.ModEnchantments.syncHolder(event.getServer());
     }
 
     private void onReload(AddReloadListenerEvent event) {

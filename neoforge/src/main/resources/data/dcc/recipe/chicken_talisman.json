@@ -1,0 +1,26 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "result":  {
+                   "count":  1,
+                   "id":  "dcc:chicken_talisman"
+               },
+    "pattern":  [
+                    "aba",
+                    "bcb",
+                    "dbd"
+                ],
+    "key":  {
+                "a":  {
+                          "item":  "minecraft:phantom_membrane"
+                      },
+                "b":  {
+                          "item":  "minecraft:nether_star"
+                      },
+                "c":  {
+                          "item":  "dcc:talisman_base"
+                      },
+                "d":  {
+                          "item":  "minecraft:feather"
+                      }
+            }
+}

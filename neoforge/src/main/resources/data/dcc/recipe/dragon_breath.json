@@ -1,0 +1,26 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "result":  {
+                   "count":  1,
+                   "id":  "minecraft:dragon_breath"
+               },
+    "pattern":  [
+                    "aba",
+                    "aca",
+                    "ada"
+                ],
+    "key":  {
+                "a":  {
+                          "item":  "minecraft:glass"
+                      },
+                "b":  {
+                          "item":  "minecraft:blaze_powder"
+                      },
+                "c":  {
+                          "item":  "minecraft:ender_eye"
+                      },
+                "d":  {
+                          "item":  "minecraft:lava_bucket"
+                      }
+            }
+}

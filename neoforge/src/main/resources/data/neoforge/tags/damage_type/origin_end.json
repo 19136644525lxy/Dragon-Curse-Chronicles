@@ -1,8 +1,5 @@
 {
   "values": [
-    "forge:bypasses_armor",
-    "forge:bypasses_magic",
-    "forge:bypasses_invulnerability",
-    "forge:bypasses_effects"
+    "#minecraft:bypasses_armor"
   ]
 }

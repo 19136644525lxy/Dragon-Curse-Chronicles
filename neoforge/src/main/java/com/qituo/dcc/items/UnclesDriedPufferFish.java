@@ -38,7 +38,7 @@ public class UnclesDriedPufferFish extends Item {
     private static final Logger LOGGER = LoggerFactory.getLogger(UnclesDriedPufferFish.class);
     private static final int COOLDOWN_TICKS = 100;   // 5秒冷却
     private static final double LASER_MAX_DISTANCE = 50.0;
-    private static final double HIT_RADIUS = 2.0;     // 激光命中半径（格）
+    private static final double HIT_RADIUS = 15.0;    // 激光命中半径（格）：光束周围该半径内全部命中，无遮挡判定
 
     public UnclesDriedPufferFish(Properties properties) {
         super(properties);
@@ -91,10 +91,9 @@ public class UnclesDriedPufferFish extends Item {
 
         // ---------- 3) 仅服务端：伤害 + 粒子入队 + 冲击音效 ----------
         if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
-            // 3.1 激光伤害：AABB 初筛 + 点到线段二次过滤
-            AABB laserBox = new AABB(start, end).inflate(5.0);
-            List<Entity> entities = level.getEntities(player, laserBox);
-            LOGGER.info("[PufferFish] candidate entities: {}", entities.size());
+            // 3.1 激光伤害：光束轴线 15 格半径内的全部实体命中，不做遮挡判定
+            AABB searchBox = new AABB(start, end).inflate(HIT_RADIUS);
+            List<Entity> entities = serverLevel.getEntities(player, searchBox);
             float damage = DamagePresets.getDamage(10);
 
             for (Entity target : entities) {

@@ -61,17 +61,24 @@ public class TalismanCreativeTab {
             })
             .build());
     
-    // 创建带有指定附魔的附魔书（过渡方案：通过StoredEnchantments NBT直接写入）
+    /**
+     * 创建带有指定等级始源之力附魔的附魔书
+     *
+     * 1.21 附魔是数据驱动的 Holder，必须写入 DataComponents.STORED_ENCHANTMENTS 组件，
+     * 而不是手搓 NBT（旧实现写 CUSTOM_DATA，原版附魔系统读不到）。
+     * Holder 在服务端启动后才解析；创造栏可能在解析前构建，此时返回空白附魔书兜底。
+     */
     private static ItemStack createEnchantedBookNbt(int level) {
         ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-        CompoundTag tag = new CompoundTag();
-        ListTag storedEnchantments = new ListTag();
-        CompoundTag ench = new CompoundTag();
-        ench.putString("id", ModEnchantments.ORIGIN_POWER_KEY.toString());
-        ench.putInt("lvl", level);
-        storedEnchantments.add(ench);
-        tag.put("StoredEnchantments", storedEnchantments);
-        book.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+        net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> holder =
+                ModEnchantments.getOriginPowerHolder();
+        if (holder == null) {
+            return book;
+        }
+        var mutable = new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(
+                net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+        mutable.set(holder, Math.max(1, Math.min(10, level)));
+        net.minecraft.world.item.enchantment.EnchantmentHelper.setEnchantments(book, mutable.toImmutable());
         return book;
     }
     

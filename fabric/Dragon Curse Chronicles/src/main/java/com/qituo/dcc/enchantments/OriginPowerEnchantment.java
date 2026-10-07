@@ -87,6 +87,10 @@ public class OriginPowerEnchantment extends Enchantment {
      */
     private static ActionResult onPlayerAttack(PlayerEntity player, World world, Hand hand, Entity entity, HitResult hitResult) {
         try {
+            // 该回调在客户端与服务端都会触发，仅在服务端结算，避免双倍伤害与双倍击杀链
+            if (world.isClient) {
+                return ActionResult.PASS;
+            }
             if (entity instanceof LivingEntity target) {
                 if (target.getCommandTags().contains(TAG_TARGET_PROCESSED)) {
                     return ActionResult.PASS;
@@ -122,15 +126,10 @@ public class OriginPowerEnchantment extends Enchantment {
                     return true;
                 }
 
-                for (EquipmentSlot slot : EquipmentSlot.values()) {
-                    if (slot.getType() == EquipmentSlot.Type.ARMOR) {
-                        ItemStack stack = player.getEquippedStack(slot);
-                        int level = EnchantmentHelper.getLevel(ModEnchantments.ORIGIN_POWER, stack);
-                        if (level > 0) {
-                            applyDamageReflection(player, source, amount, level);
-                            break;
-                        }
-                    }
+                // 反弹概率按「4 件盔甲的总等级」计算，与 Forge/NeoForge 一致
+                int totalLevel = OriginPowerArmorHandler.getTotalArmorLevel(player);
+                if (totalLevel > 0) {
+                    applyDamageReflection(player, source, amount, totalLevel);
                 }
             }
         } catch (Throwable e) {
@@ -139,9 +138,15 @@ public class OriginPowerEnchantment extends Enchantment {
         return true;
     }
 
-    private static void applyDamageReflection(PlayerEntity player, net.minecraft.entity.damage.DamageSource source, float amount, int level) {
+    /**
+     * 伤害反弹
+     * 概率 = min(0.6, 总等级/100 * 1.5)，由 OriginPowerArmorHandler.getReflectionChance 统一提供。
+     * 原先此处误用「第一件有附魔护甲的单件等级/100」，既重复了公式又漏掉了 ×1.5 与 60% 上限。
+     */
+    private static void applyDamageReflection(PlayerEntity player, net.minecraft.entity.damage.DamageSource source, float amount, int totalLevel) {
         try {
-            if (Math.random() >= level / 100.0F) return;
+            float chance = OriginPowerArmorHandler.getReflectionChance(totalLevel);
+            if (chance <= 0.0F || player.getRandom().nextFloat() >= chance) return;
 
             Entity sourceEntity = source.getAttacker();
             if (sourceEntity == null || sourceEntity == player || player.getCommandTags().contains(TAG_ANTI_LOOP)) return;
@@ -151,7 +156,7 @@ public class OriginPowerEnchantment extends Enchantment {
             try {
                 float damage = amount;
                 var damageSource = ModDamageSources.causeOriginEndDamage(player);
-                
+
                 // 使用EntityBypassHelper确保伤害生效
                 if (sourceEntity instanceof LivingEntity livingSource) {
                     EntityBypassHelper.killEntity(livingSource, damageSource, damage);

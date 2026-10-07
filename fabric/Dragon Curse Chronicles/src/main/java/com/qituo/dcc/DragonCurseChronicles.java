@@ -85,9 +85,9 @@ public class DragonCurseChronicles implements ModInitializer {
             if (overworld != null) {
                 com.qituo.dcc.events.MeteorShowerEvent.onServerTick(overworld);
                 com.qituo.dcc.events.TalismanEffectsEvent.onServerTick(overworld);
-                // 始源之力盔甲效果（护盾/再生/光环等周期性效果）
-                com.qituo.dcc.enchantments.OriginPowerArmorHandler.onServerTick(overworld);
             }
+            // 始源之力盔甲效果（护盾/再生/光环等周期性效果）：遍历全服玩家，跨维度生效
+            com.qituo.dcc.enchantments.OriginPowerArmorHandler.onServerTick(server);
             // 智能粒子调度器消费队列（接收 MinecraftServer，无需维度判断）
             com.qituo.dcc.particles.SmartParticleDispatcher.onServerTick(server);
         });

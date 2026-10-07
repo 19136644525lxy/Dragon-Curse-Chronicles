@@ -1,0 +1,23 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "result":  {
+                   "count":  1,
+                   "id":  "minecraft:dragon_egg"
+               },
+    "pattern":  [
+                    "aba",
+                    "bcb",
+                    "aba"
+                ],
+    "key":  {
+                "a":  {
+                          "item":  "minecraft:shulker_shell"
+                      },
+                "b":  {
+                          "item":  "minecraft:ender_pearl"
+                      },
+                "c":  {
+                          "item":  "minecraft:egg"
+                      }
+            }
+}
