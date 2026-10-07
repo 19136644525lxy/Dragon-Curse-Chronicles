@@ -32,4 +32,9 @@ public class SnakeTalisman extends TalismanBase {
             false // 不显示图标
         ));
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.2f, 0.8f, 0.4f};
+    }
 }

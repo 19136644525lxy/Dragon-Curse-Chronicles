@@ -35,12 +35,8 @@ public class DragonCurseChronicles {
         com.qituo.dcc.config.MeteorShowerConfig.loadConfig();
         com.qituo.dcc.config.TalismanConfig.loadConfig();
 
-        // 注册网络（始源光环开关等，后续迁移 CustomPayload）
-        try {
-            com.qituo.dcc.network.ModNetwork.register();
-        } catch (Throwable t) {
-            LOGGER.warn("ModNetwork.register() not yet ported to NeoForge", t);
-        }
+        // 注册网络（始源光环开关等）
+        com.qituo.dcc.network.ModNetwork.register();
 
         // 绑定所有 DeferredRegister 到 modEventBus
         TalismanItems.ITEMS.register(modEventBus);
@@ -50,11 +46,7 @@ public class DragonCurseChronicles {
         com.qituo.dcc.enchantments.ModEnchantments.ENCHANTMENTS.register(modEventBus);
         com.qituo.dcc.entity.EntityTypes.ENTITY_TYPES.register(modEventBus);
         MENUS.register(modEventBus);
-        try {
-            com.qituo.dcc.recipes.ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
-        } catch (Throwable t) {
-            LOGGER.warn("ModRecipeSerializers not yet ported", t);
-        }
+        com.qituo.dcc.recipes.ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
 
         // 全局事件总线订阅
         NeoForge.EVENT_BUS.addListener(this::onReload);
@@ -62,21 +54,13 @@ public class DragonCurseChronicles {
     }
 
     private void onReload(AddReloadListenerEvent event) {
-        try {
-            com.qituo.dcc.items.TalismanExtractorItem.reloadConfigs();
-        } catch (Throwable ignore) {}
-        try {
-            com.qituo.dcc.config.TalismanConfig.reloadConfig();
-        } catch (Throwable ignore) {}
+        com.qituo.dcc.items.TalismanExtractorItem.reloadConfigs();
+        com.qituo.dcc.config.TalismanConfig.reloadConfig();
         LOGGER.info("Reloaded Talisman Power Extractor configuration");
     }
 
     private void onRegisterCommands(RegisterCommandsEvent event) {
-        try {
-            com.qituo.dcc.commands.TalismanConfigCommand.register(event.getDispatcher());
-        } catch (Throwable ignore) {}
-        try {
-            com.qituo.dcc.commands.MeteorShowerCommand.register(event.getDispatcher());
-        } catch (Throwable ignore) {}
+        com.qituo.dcc.commands.TalismanConfigCommand.register(event.getDispatcher());
+        com.qituo.dcc.commands.MeteorShowerCommand.register(event.getDispatcher());
     }
 }

@@ -104,4 +104,14 @@ public class MouseTalisman extends TalismanBase {
             }
         }
     }
+
+    @Override
+    public String getZodiacName() {
+        return "mouse";
+    }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.75f, 0.75f, 0.75f};
+    }
 }

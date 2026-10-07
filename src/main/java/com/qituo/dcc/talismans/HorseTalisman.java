@@ -47,4 +47,9 @@ public class HorseTalisman extends TalismanBase {
             }
         }
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.5f, 0.5f, 0.3f};
+    }
 }

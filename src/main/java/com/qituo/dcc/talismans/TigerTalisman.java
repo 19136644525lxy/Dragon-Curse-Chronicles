@@ -16,4 +16,9 @@ public class TigerTalisman extends TalismanBase {
         // 虎符咒效果暂未实现，后续将添加善恶分离功能
         sendMessage(player, "虎符咒：暂未实现，后续将添加善恶分离功能");
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{1.0f, 0.55f, 0.0f};
+    }
 }

@@ -142,4 +142,9 @@ public class RabbitTalisman extends TalismanBase {
         net.minecraft.network.chat.Component prefix = net.minecraft.network.chat.Component.translatable("dcc.mod_prefix");
         player.sendSystemMessage(net.minecraft.network.chat.Component.literal("").append(prefix).append(message));
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.85f, 0.75f, 0.95f};
+    }
 }

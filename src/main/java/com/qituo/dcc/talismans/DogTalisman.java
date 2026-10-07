@@ -56,4 +56,9 @@ public class DogTalisman extends TalismanBase {
             true
         ));
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.8f, 0.7f, 0.5f};
+    }
 }

@@ -54,4 +54,9 @@ public class CowTalisman extends TalismanBase {
         
         // 增加攻击范围（通过力量效果间接实现）
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.65f, 0.45f, 0.25f};
+    }
 }

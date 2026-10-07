@@ -227,4 +227,9 @@ public class DragonTalisman extends TalismanBase {
     }
     
 
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{1.0f, 0.84f, 0.0f};
+    }
 }

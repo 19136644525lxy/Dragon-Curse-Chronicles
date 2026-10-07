@@ -16,4 +16,9 @@ public class MonkeyTalisman extends TalismanBase {
         // 猴符咒效果暂未实现，后续将添加变形之力功能
         sendMessage(player, "猴符咒：暂未实现，后续将添加变形之力功能");
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.6f, 0.3f, 0.1f};
+    }
 }

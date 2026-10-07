@@ -88,6 +88,8 @@ public class DragonCurseChronicles implements ModInitializer {
                 // 始源之力盔甲效果（护盾/再生/光环等周期性效果）
                 com.qituo.dcc.enchantments.OriginPowerArmorHandler.onServerTick(overworld);
             }
+            // 智能粒子调度器消费队列（接收 MinecraftServer，无需维度判断）
+            com.qituo.dcc.particles.SmartParticleDispatcher.onServerTick(server);
         });
 
         // 服务器启动事件（用于资源重载）

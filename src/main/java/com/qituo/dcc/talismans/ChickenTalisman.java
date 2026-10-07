@@ -146,4 +146,9 @@ public class ChickenTalisman extends TalismanBase {
         player.sendSystemMessage(net.minecraft.network.chat.Component.literal("").append(prefix).append(message));
 
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.9f, 0.75f, 0.1f};
+    }
 }

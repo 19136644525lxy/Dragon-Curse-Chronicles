@@ -324,4 +324,9 @@ public class PigTalisman extends TalismanBase {
     }
     
 
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{1.0f, 0.75f, 0.85f};
+    }
 }

@@ -179,4 +179,9 @@ public class SheepTalisman extends TalismanBase {
     private void sendMessage(Player player, Component message) {
         player.sendSystemMessage(message);
     }
+
+    @Override
+    public float[] getZodiacColor() {
+        return new float[]{0.9f, 0.9f, 0.95f};
+    }
 }
