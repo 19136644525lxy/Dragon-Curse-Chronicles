@@ -76,6 +76,7 @@ public class DragonCurseChronicles implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             com.qituo.dcc.commands.TalismanConfigCommand.register(dispatcher);
             com.qituo.dcc.commands.MeteorShowerCommand.register(dispatcher);
+            com.qituo.dcc.commands.DccCommand.register(dispatcher);
         });
 
         // 服务器 tick 回调（替代 Forge 的 TickEvent.ServerTickEvent）

@@ -71,5 +71,6 @@ public class DragonCurseChronicles {
     private void onRegisterCommands(RegisterCommandsEvent event) {
         com.qituo.dcc.commands.TalismanConfigCommand.register(event.getDispatcher());
         com.qituo.dcc.commands.MeteorShowerCommand.register(event.getDispatcher());
+        com.qituo.dcc.commands.DccCommand.register(event.getDispatcher());
     }
 }

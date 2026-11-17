@@ -106,12 +106,70 @@ Jump to the English introduction: [README_en.md](https://github.com/19136644525l
 
 ### 唐扇魔方（Cube of Tang Shan）
 - **用法**：提取羊符咒，步骤与提取器相同，对羊右键
-- **获取方式**：流星雨事件宝箱（35% 概率）
+- **获取方式**：流星雨事件宝箱，默认 10% 概率（可用 `/meteorshower config cube` 调整）
 
 ### 流星雨事件
-- **触发时机**：主世界午夜 00:00，每次 30% 概率
-- **手动触发**：OP 玩家执行 `/meteorshower start`
+- **触发时机**：主世界午夜 00:00，每次 5% 概率判定（可在配置中调整）
+- **确认机制**：概率判定通过后，系统随机询问一名主世界玩家，聊天栏出现 **[确认启动流星雨]** / **[取消]** 可点击按钮；默认 60 秒未确认则自动取消，被询问玩家中途下线也会取消。确认前会有全员提示
+- **前置条件**：所有在线玩家都必须在主世界；若有玩家处于其它维度则本次不触发并提示
+- **默认状态**：`enableMeteorShower = false`，即**默认关闭**，需用指令或配置文件开启
+- **手动触发**：OP 玩家执行 `/meteorshower start`（跳过概率判定与确认，直接开始）
 - **奖励**：陨石坑内生成宝箱，含唐扇魔方、符咒基等稀有物品
+
+---
+
+## 指令一览
+
+> 权限等级：**2** 对应 OP（单人档需开启作弊）。三平台指令名称、参数与权限完全一致。
+
+### `/meteorshower` —— 流星雨
+
+| 指令 | 权限 | 说明 |
+|---|---|---|
+| `/meteorshower status` | 无 | 查看事件状态：进行中 / 等待某玩家确认 / 未进行 |
+| `/meteorshower confirm` | 无 | 确认启动流星雨（由聊天栏按钮触发，也可手动输入） |
+| `/meteorshower cancel` | 无 | 取消流星雨（同样可由按钮触发） |
+| `/meteorshower start` | 2 | 管理员强制立即启动，跳过概率判定与确认流程 |
+| `/meteorshower config enable` | 2 | 启用流星雨事件 |
+| `/meteorshower config disable` | 2 | 禁用流星雨事件 |
+| `/meteorshower config get` | 2 | 查看当前配置（启用状态 / 触发概率 / 唐扇魔方概率） |
+| `/meteorshower config probability <0.0~1.0>` | 2 | 设置午夜触发概率，如 `0.05` = 5% |
+| `/meteorshower config cube <0.0~1.0>` | 2 | 设置宝箱中唐扇魔方的出现概率，如 `0.10` = 10% |
+
+**示例**
+```mcfunction
+/meteorshower config enable           # 先开启事件（默认关闭）
+/meteorshower config probability 0.05 # 午夜触发概率设为 5%
+/meteorshower config cube 0.10        # 宝箱出唐扇魔方概率设为 10%
+/meteorshower config get              # 复查配置
+/meteorshower start                   # 立即手动触发一次
+/meteorshower status                  # 查看当前状态
+```
+
+> 概率为 `0.0~1.0` 的小数（不是百分数）。全部配置项同时也持久化在 `config/dcc/meteor_shower.properties`。
+
+### `/talismanconfig` —— 符咒配置（整体需要权限 2）
+
+| 指令 | 说明 |
+|---|---|
+| `/talismanconfig flyspeed get` | 查看羊符咒灵魂出窍的飞行速度 |
+| `/talismanconfig flyspeed set <0.01~10.0>` | 设置飞行速度，默认 `0.5`（原版创造飞行约为 `0.05`） |
+| `/talismanconfig reload` | 重新加载配置 |
+
+**示例**
+```mcfunction
+/talismanconfig flyspeed get
+/talismanconfig flyspeed set 1.0
+/talismanconfig reload
+```
+
+> 写入 `config/dcc/talisman_config.properties`。
+
+### 游戏规则
+
+| 游戏规则 | 默认 | 说明 |
+|---|---|---|
+| `allowTalismanExtraction` | `true` | 是否允许使用符咒之力提取器。可用 `/gamerule allowTalismanExtraction false` 关闭以防止滥用 |
 
 ---
 

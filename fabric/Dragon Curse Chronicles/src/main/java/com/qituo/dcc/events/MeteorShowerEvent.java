@@ -77,13 +77,22 @@ public class MeteorShowerEvent {
      * 失败 → 聊天栏通知
      */
     private static void checkTimeAndTriggerMeteorShower(ServerWorld world) {
-        long timeOfDay = world.getTime() % 24000;
+        // 必须用 getTimeOfDay()（当天时间 0-23999），对应 Forge/NeoForge 的 level.getDayTime()。
+        // 此前误用 world.getTime()：Yarn 文档明确 getTime() 是"每 tick 自增、不可修改"的
+        // 调度计时（等价于 Forge 的 getGameTime()），只有 getTimeOfDay() 才是昼夜时间，
+        // 也就是会被 /time set 与 doDaylightCycle 影响的那个值。
+        // 后果：只要世界里执行过 /time set，两者就会脱节，(getTime() % 24000) 再也落不到
+        // 18000-18099 的午夜窗口，于是自然触发与"询问玩家确认"整条链路永远不会发生。
+        long timeOfDay = world.getTimeOfDay() % 24000;
         // 午夜窗口扩大到100 ticks（5秒），防止服务器卡顿跳过
         boolean isMidnight = timeOfDay >= 18000 && timeOfDay <= 18099;
 
         if (isMidnight) {
             if (!hasCheckedForMeteorShower) {
                 hasCheckedForMeteorShower = true;
+                DragonCurseChronicles.LOGGER.info(
+                        "流星雨：进入午夜判定窗口（timeOfDay={}），事件启用={}",
+                        timeOfDay, MeteorShowerConfig.isMeteorShowerEnabled());
 
                 if (!MeteorShowerConfig.isMeteorShowerEnabled()) {
                     return;
@@ -607,11 +616,10 @@ public class MeteorShowerEvent {
 
         Text message;
         if (treasureChestPos != null) {
+            // 坐标部分做成可点击：点击执行 /dcc tp 传送过去（权限不足时由指令给出提示）
             message = Text.translatable(
-                "dcc.message.meteor_shower.end_with_chest",
-                treasureChestPos.getX(),
-                treasureChestPos.getY(),
-                treasureChestPos.getZ()
+                    "dcc.message.meteor_shower.end_with_chest",
+                    com.qituo.dcc.commands.DccCommand.buildClickableCoords(treasureChestPos)
             );
         } else {
             message = Text.translatable("dcc.message.meteor_shower.end_no_chest");
@@ -619,6 +627,11 @@ public class MeteorShowerEvent {
 
         sendGlobalMessage(world, message);
         DragonCurseChronicles.LOGGER.info("流星雨事件结束！");
+    }
+
+    /** 获取最近一次流星雨宝箱坐标；没有则为 null */
+    public static BlockPos getTreasureChestPos() {
+        return treasureChestPos;
     }
 
     private static void sendGlobalMessage(ServerWorld world, Text message) {

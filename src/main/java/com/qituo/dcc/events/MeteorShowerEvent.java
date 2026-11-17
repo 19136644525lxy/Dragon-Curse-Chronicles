@@ -611,11 +611,10 @@ public class MeteorShowerEvent {
 
         Component message;
         if (treasureChestPos != null) {
+            // 坐标部分做成可点击：点击执行 /dcc tp 传送过去（权限不足时由指令给出提示）
             message = Component.translatable(
-                "dcc.message.meteor_shower.end_with_chest",
-                treasureChestPos.getX(),
-                treasureChestPos.getY(),
-                treasureChestPos.getZ()
+                    "dcc.message.meteor_shower.end_with_chest",
+                    com.qituo.dcc.commands.DccCommand.buildClickableCoords(treasureChestPos)
             );
         } else {
             message = Component.translatable("dcc.message.meteor_shower.end_no_chest");
@@ -623,6 +622,11 @@ public class MeteorShowerEvent {
 
         sendGlobalMessage(level, message);
         DragonCurseChronicles.LOGGER.info("流星雨事件结束！");
+    }
+
+    /** 获取最近一次流星雨宝箱坐标；没有则为 null */
+    public static BlockPos getTreasureChestPos() {
+        return treasureChestPos;
     }
 
     private static void sendGlobalMessage(ServerLevel level, Component message) {
